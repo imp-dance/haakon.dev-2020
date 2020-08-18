@@ -1,12 +1,14 @@
 import React from "react";
-import FancyButton from "./buttons/FancyButton";
+import { BrowserRouter, Route } from "react-router-dom";
+
+import LandingPage from "../landing-page/LandingPage";
 
 function App() {
   return (
     <div className="App">
-      <FancyButton>Contact me</FancyButton>
-      <FancyButton>Articles</FancyButton>
-      <FancyButton>Contact me</FancyButton>
+      <BrowserRouter>
+        <Route path="/" exact component={LandingPage}></Route>
+      </BrowserRouter>
     </div>
   );
 }

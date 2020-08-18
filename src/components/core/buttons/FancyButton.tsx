@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import constants from "../../../styles/constants";
 
 interface Props {
   children: React.ReactNode;
+  secondary?: boolean;
 }
 
-const FancyButton: React.FC<Props> = ({ children, ...props }) => {
+const FancyButton: React.FC<Props> = ({ secondary, children, ...props }) => {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -25,24 +27,34 @@ const FancyButton: React.FC<Props> = ({ children, ...props }) => {
   } as React.CSSProperties;
 
   return (
-    <StyledButton {...props} ref={ref} onMouseMove={mouseMove} style={styles}>
+    <StyledButton
+      {...props}
+      ref={ref}
+      onMouseMove={mouseMove}
+      style={styles}
+      secondary={secondary}
+    >
       {children}
     </StyledButton>
   );
 };
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<Props>`
   transition: all 0.2s ease-in-out;
-  background: linear-gradient(150deg, #b15c5c, #746ec3);
+  background: ${(props) =>
+    props.secondary
+      ? "linear-gradient(150deg, #171727, #2e2e65)"
+      : "linear-gradient(150deg, #b15c5c, #746ec3)"};
   position: relative;
-  font-family: sans-serif;
   font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   color: #fff;
-  padding: 15px 30px;
+  padding: 1em 2em;
   border-radius: 4px;
-  border: 2px solid transparent;
+  border: 2px solid
+    ${(props) =>
+      props.secondary ? constants.colors.secondary : constants.colors.primary};
   cursor: pointer;
   overflow: hidden;
   opacity: 0.9;
@@ -54,8 +66,8 @@ const StyledButton = styled.button`
     top: calc(var(--y) * 1px);
     left: calc(var(--x) * 1px);
     transform: translate(-50%, -50%);
-    width: 10em;
-    height: 10em;
+    width: 8em;
+    height: 8em;
     background: radial-gradient(#ffffff, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
     opacity: 0;
