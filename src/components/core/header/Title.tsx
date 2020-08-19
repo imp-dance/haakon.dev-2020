@@ -43,10 +43,23 @@ const animation = keyframes`
 const StyledTitle = styled.h1`
   display: inline-flex;
   animation: ${fadeInUp} 0.3s ease-in-out;
+  .header-titleRotator {
+    span {
+      @media screen and (max-width: 570px) {
+        display: none;
+        &:first-child {
+          display: inline-block;
+        }
+      }
+    }
+  }
   &:hover {
     .header-titleRotator {
       span {
         animation: ${animation} 4.5s ease-in-out infinite;
+        @media screen and (max-width: 570px) {
+          animation: none;
+        }
       }
     }
   }

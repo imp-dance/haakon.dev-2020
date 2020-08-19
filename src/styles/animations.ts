@@ -16,7 +16,7 @@ export const fadeUpButtons = keyframes`
 
 export const fadeIn = keyframes`
     from{
-        opacity:0;
+        opacity:0.2;
     }
 `;
 

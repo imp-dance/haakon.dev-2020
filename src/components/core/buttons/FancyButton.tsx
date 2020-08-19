@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import constants from "../../../styles/constants";
+import useMouseMove from "../../../hooks/useMouseMove";
 
 interface Props {
   children: React.ReactNode;
@@ -8,23 +9,8 @@ interface Props {
 }
 
 const FancyButton: React.FC<Props> = ({ secondary, children, ...props }) => {
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const ref = useRef<HTMLButtonElement>(null);
-
-  const mouseMove = (event: React.MouseEvent) => {
-    const { pageX, pageY } = event;
-    if (ref !== null && ref.current) {
-      setCoordinates({
-        x: pageX - ref.current.offsetLeft,
-        y: pageY - ref.current.offsetTop,
-      });
-    }
-  };
-
-  const styles = {
-    "--x": coordinates.x,
-    "--y": coordinates.y,
-  } as React.CSSProperties;
+  const [mouseMove, styles] = useMouseMove(ref);
 
   return (
     <StyledButton

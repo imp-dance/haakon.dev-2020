@@ -4,16 +4,20 @@ import styled from "styled-components";
 import Header from "../core/header/Header";
 import { Container } from "../core/layout";
 import constants from "../../styles/constants";
-import { fadeIn, fadeUpButtons, expandOut } from "../../styles/animations";
+import { fadeIn, fadeUpButtons } from "../../styles/animations";
 
 import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
+import Accordion from "../core/Accordion";
+import ExperienceTable from "./ExperienceTable";
+
+const { colors, typography, whitespace } = constants;
 
 const LandingPage: React.FC = () => {
   return (
     <>
       <Header />
       <LandingPageContainer>
-        <IntroSection>
+        <DarkSection>
           <Container>
             <IntroTitle>
               <i>Hi,</i> <i>my</i> <i>name</i> <i>is</i> <i>Håkon</i>{" "}
@@ -28,12 +32,46 @@ const LandingPage: React.FC = () => {
             </p>
           </Container>
           <HeaderSVG />
-        </IntroSection>
-        <Showcase>
+        </DarkSection>
+        <LightSection>
           <Container>
-            <IntroTitle>Check out some my work</IntroTitle>
+            <Accordion label="Experience" render={<ExperienceTable />} />
+            <Accordion
+              label="Technologies"
+              render={
+                <i>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                  pharetra suscipit odio, auctor iaculis quam tincidunt non.
+                  Orci varius natoque penatibus et magnis dis parturient montes,
+                  nascetur ridiculus mus. In mollis maximus erat sed tincidunt.
+                  Sed elementum, arcu ut aliquam tincidunt, mauris lorem
+                  tristique nunc, id mollis eros neque eu nunc. In egestas diam
+                  fermentum, suscipit lectus quis, ullamcorper tortor. Donec
+                  rutrum ligula et lectus malesuada scelerisque non quis nibh.
+                  Nunc risus lectus, dignissim sed viverra consectetur, mattis a
+                  justo. Morbi pharetra metus eget neque venenatis consequat
+                  sollicitudin ut ipsum. Fusce aliquet tellus a orci tempor, ut
+                  hendrerit{" "}
+                </i>
+              }
+            />
           </Container>
-        </Showcase>
+        </LightSection>
+        <DarkSection>
+          <Container>
+            <IntroTitle>Psst, I also make music</IntroTitle>
+            <p>You can find my music everywhere as sl1ck.</p>
+            <p>
+              <a href="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
+                Spotify
+              </a>
+              , <a href="https://soundcloud.com/sl1ck">Soundcloud</a>,{" "}
+              <a href="https://www.youtube.com/channel/UCH_FcfP7oNrQXaC2RngA84Q">
+                YouTube
+              </a>
+            </p>
+          </Container>
+        </DarkSection>
       </LandingPageContainer>
     </>
   );
@@ -41,19 +79,20 @@ const LandingPage: React.FC = () => {
 
 const LandingPageContainer = styled.div`
   z-index: 1;
-  background: ${constants.colors.bg};
+  background: ${colors.bg};
 
   section {
-    padding: ${constants.whitespace.xxl} 0;
+    padding: ${whitespace.xxl} ${whitespace.l};
   }
 `;
 
 const IntroTitle = styled.h2`
-  font-size: ${constants.typography.xl};
+  font-size: ${typography.xl};
   > i {
     font-style: normal;
     animation: ${fadeUpButtons} 0.4s ease-in-out;
     animation-fill-mode: both;
+    will-change: opacity, transform;
     &:nth-child(1) {
       animation-delay: 0s;
     }
@@ -75,28 +114,35 @@ const IntroTitle = styled.h2`
   }
 `;
 
-const IntroSection = styled.section`
+const DarkSection = styled.section`
   position: relative;
   overflow: hidden;
-  color: ${constants.colors.lightPink};
-
+  color: ${colors.lightPink};
   > svg {
     position: absolute;
-    bottom: 0;
+    top: 0;
     width: 100vw;
     right: 0;
-    transform: rotate(80deg);
+    transform: translate(0px, 50%) rotate(80deg);
     z-index: 1;
     pointer-events: none;
     user-select: none;
   }
 
+  a {
+    color: ${colors.lightPink};
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   #headerPath {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
-    animation: dash 3s cubic-bezier(0.29, 0.74, 0.8, 0.34) forwards;
+    animation: dash 2s cubic-bezier(0.29, 0.74, 0.8, 0.34) forwards;
+    will-change: stroke-dashoffset;
     animation-fill-mode: both;
-    animation-delay: 2s;
+    animation-delay: 1s;
   }
   @keyframes dash {
     to {
@@ -105,30 +151,33 @@ const IntroSection = styled.section`
   }
 
   p {
-    font-size: ${constants.typography.m};
+    font-size: ${typography.m};
     max-width: 700px;
     animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
     animation-fill-mode: both;
-    animation-delay: 2s;
+    animation-delay: 1.5s;
   }
 
   p,
   h2 {
     position: relative;
     z-index: 2;
-    background: ${constants.colors.bg};
+    background: ${colors.bg};
   }
   h2 {
     display: inline-block;
   }
 `;
 
-const Showcase = styled.section`
-  background: ${constants.colors.white};
-  animation: ${fadeIn} 0.5s ease-in-out;
-  animation-delay: 3.9s;
-  animation-fill-mode: both;
-  min-height: 400px;
+const LightSection = styled.section`
+  background: ${colors.white};
+  .accordion-container {
+    animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
+    animation-fill-mode: both;
+    animation-delay: 2.4s;
+  }
 `;
 
 export default LandingPage;

@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 import { Container } from "../layout";
 import FancyButton from "../buttons/FancyButton";
@@ -31,7 +31,7 @@ const HeaderContainer = styled(Container)`
 
 const StyledHeader = styled.div`
   background: ${constants.colors.white};
-  padding: 0.5em;
+  padding: 0.5em ${constants.whitespace.l};
   position: relative;
   z-index: 2;
 
@@ -53,6 +53,12 @@ const StyledHeader = styled.div`
 const HeaderAlignment = styled.div`
   display: flex;
   align-items: center;
+  @media screen and (max-width: 570px) {
+    flex-direction: column;
+    h1 {
+      margin-bottom: ${constants.whitespace.m} !important;
+    }
+  }
 `;
 
 const LeftColumn = styled.div`
