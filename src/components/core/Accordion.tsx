@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { debounce } from "ts-debounce";
 import styled from "styled-components";
 import constants from "../../styles/constants";
+import useMouseMove from "../../hooks/useMouseMove";
 
 const { typography, colors, whitespace } = constants;
 
@@ -22,6 +23,9 @@ const Accordion: React.FC<Props> = ({ label, render }) => {
   const [open, setOpen] = useState(false);
   const [accordionHeight, setAccordionHeight] = useState(0);
   const accordionRef = useRef<HTMLDivElement>(null);
+  const accordionButtonRef = useRef<HTMLButtonElement>(null);
+
+  const [mouseMove, styles] = useMouseMove(accordionButtonRef);
 
   useEffect(() => {
     const updateHeight = () => {
@@ -43,7 +47,14 @@ const Accordion: React.FC<Props> = ({ label, render }) => {
       margin={open ? accordionHeight : 0}
       className="accordion-container"
     >
-      <AccordionButton onClick={() => setOpen(!open)}>
+      <AccordionButton
+        onClick={(event: React.MouseEvent) => {
+          setOpen(!open);
+          mouseMove(event);
+        }}
+        ref={accordionButtonRef}
+        style={styles}
+      >
         {label}
         <Icon open={open} />
       </AccordionButton>
@@ -73,6 +84,32 @@ const AccordionButton = styled.button`
   padding: ${whitespace.m};
   cursor: pointer;
   position: relative;
+  overflow: hidden;
+  &:after {
+    content: "";
+    transition: transform 0.9s cubic-bezier(0.15, 0.65, 0.79, 0.99),
+      opacity 0.6s cubic-bezier(0.15, 0.65, 0.79, 0.99);
+    position: absolute;
+    border-radius: 50%;
+    top: calc(var(--y) * 1px);
+    width: 5em;
+    height: 5em;
+    left: calc(var(--x) * 1px);
+    transform: translate(-50%, -50%) scale(7);
+    opacity: 0;
+    pointer-events: none;
+    background: ${colors.beige};
+    outline: none !important;
+    box-shadow: none;
+    border: none;
+  }
+  &:active {
+    &:after {
+      transition: none;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.3;
+    }
+  }
 `;
 
 const Icon = styled.i<OpenProps>`

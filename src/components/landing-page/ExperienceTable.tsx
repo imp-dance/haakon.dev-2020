@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import useMouseMove from "../../hooks/useMouseMove";
 
@@ -74,7 +74,7 @@ const Entry: React.FC<EntryProps> = ({ isJob, date, content, url, title }) => {
   const buttonRef = useRef<HTMLTableDataCellElement>(null);
   const [mouseMove, styles] = useMouseMove(buttonRef);
   return (
-    <ProjectEntry>
+    <EntryContainer>
       <td valign="top">{date}</td>
       <ProjectButton
         valign="top"
@@ -86,7 +86,7 @@ const Entry: React.FC<EntryProps> = ({ isJob, date, content, url, title }) => {
         <strong>{title}</strong>
         {content}
       </ProjectButton>
-    </ProjectEntry>
+    </EntryContainer>
   );
 };
 
@@ -139,7 +139,7 @@ const ProjectButton = styled.td`
   }
 `;
 
-const ProjectEntry = styled.tr`
+const EntryContainer = styled.tr`
   font-size: ${typography.s};
   opacity: 0.8;
   > td {
@@ -167,7 +167,5 @@ const ProjectEntry = styled.tr`
     display: block;
   }
 `;
-
-const JobEntry = styled(ProjectEntry)``;
 
 export default ExperienceTable;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import constants from "../../../styles/constants";
 import useMouseMove from "../../../hooks/useMouseMove";

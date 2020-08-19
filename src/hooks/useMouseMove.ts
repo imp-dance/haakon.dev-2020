@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 
-interface returnStyles {
-  "--x": number;
-  "--y": number;
-}
-
 const getTotalOffset = (el: HTMLElement) => {
   let a: any = el,
     x = 0,
