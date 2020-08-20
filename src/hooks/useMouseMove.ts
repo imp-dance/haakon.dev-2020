@@ -11,6 +11,7 @@ const getTotalOffset = (el: HTMLElement) => {
   }
   return { offsetX: x, offsetY: y };
 };
+
 function useMouseMove(
   reference: React.RefObject<HTMLElement>
 ): [(e: React.MouseEvent) => void, React.CSSProperties] {
