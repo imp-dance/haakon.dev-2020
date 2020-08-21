@@ -33,6 +33,10 @@ button {
   margin: 0;
 }
 
+button:focus {
+  outline: 5px auto rgba(0, 150, 255, 1);
+}
+
 .App {
   // border-top: 10px solid #403a73;
   border-top: 10px solid #c371a3;
