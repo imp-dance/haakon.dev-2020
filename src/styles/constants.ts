@@ -21,5 +21,6 @@ export default {
     l: "2rem",
     m: "1rem",
     s: "0.5rem",
+    container: "900px",
   },
 };

@@ -8,7 +8,8 @@ import { fadeIn, fadeUpButtons } from "../../styles/animations";
 
 import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
 import Accordion from "../core/Accordion";
-import ExperienceTable from "./ExperienceTable";
+import ExperienceTable from "./experience-table/ExperienceTable";
+import ExternalLink from "../core/links/ExternalLink";
 
 const { colors, typography, whitespace } = constants;
 
@@ -37,22 +38,18 @@ const LandingPage: React.FC = () => {
           <Container>
             <Accordion label="Experience" render={<ExperienceTable />} />
             <Accordion
-              label="Technologies"
+              label="Tools & Technologies"
               render={
-                <i>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  pharetra suscipit odio, auctor iaculis quam tincidunt non.
-                  Orci varius natoque penatibus et magnis dis parturient montes,
-                  nascetur ridiculus mus. In mollis maximus erat sed tincidunt.
-                  Sed elementum, arcu ut aliquam tincidunt, mauris lorem
-                  tristique nunc, id mollis eros neque eu nunc. In egestas diam
-                  fermentum, suscipit lectus quis, ullamcorper tortor. Donec
-                  rutrum ligula et lectus malesuada scelerisque non quis nibh.
-                  Nunc risus lectus, dignissim sed viverra consectetur, mattis a
-                  justo. Morbi pharetra metus eget neque venenatis consequat
-                  sollicitudin ut ipsum. Fusce aliquet tellus a orci tempor, ut
-                  hendrerit{" "}
-                </i>
+                <div>
+                  <h3>Javascript</h3>
+                  <p>ES6, React, TypeScript, Node, Electron, jQuery</p>
+                  <h3>CSS</h3>
+                  <p>Sass, styled-components, animations, responsive design</p>
+                  <h3>HTML</h3>
+                  <p>HTML5, ARIA, Pug</p>
+                  <h3>Tools</h3>
+                  <p>Git, Webpack, VSCode</p>
+                </div>
               }
             />
           </Container>
@@ -62,13 +59,17 @@ const LandingPage: React.FC = () => {
             <IntroTitle>Psst, I also make music</IntroTitle>
             <p>You can find my music everywhere as sl1ck.</p>
             <p>
-              <a href="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
+              <ExternalLink to="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
                 Spotify
-              </a>
-              , <a href="https://soundcloud.com/sl1ck">Soundcloud</a>,{" "}
-              <a href="https://www.youtube.com/channel/UCH_FcfP7oNrQXaC2RngA84Q">
+              </ExternalLink>
+              ,{" "}
+              <ExternalLink to="https://soundcloud.com/sl1ck">
+                Soundcloud
+              </ExternalLink>
+              ,{" "}
+              <ExternalLink to="https://www.youtube.com/channel/UCH_FcfP7oNrQXaC2RngA84Q">
                 YouTube
-              </a>
+              </ExternalLink>
             </p>
           </Container>
         </DarkSection>
