@@ -55,7 +55,7 @@ const Accordion: React.FC<Props> = ({ label, render }) => {
         ref={accordionButtonRef}
         style={styles}
       >
-        {label}
+        <span>{label}</span>
         <Icon open={open} />
       </AccordionButton>
       <AccordionContent open={open} ref={accordionRef}>
@@ -85,6 +85,13 @@ const AccordionButton = styled.button`
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  > span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    width: calc(100% - 25px);
+  }
   &:after {
     content: "";
     transition: transform 0.9s cubic-bezier(0.15, 0.65, 0.79, 0.99),

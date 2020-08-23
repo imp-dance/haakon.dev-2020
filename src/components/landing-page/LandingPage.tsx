@@ -10,6 +10,8 @@ import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
 import Accordion from "../core/Accordion";
 import ExperienceTable from "./experience-table/ExperienceTable";
 import ExternalLink from "../core/links/ExternalLink";
+import ToolsShowcase from "./ToolsShowcase";
+import landingPageData from "../../data/landingPage";
 
 const { colors, typography, whitespace } = constants;
 
@@ -20,17 +22,8 @@ const LandingPage: React.FC = () => {
       <LandingPageContainer>
         <DarkSection>
           <Container>
-            <IntroTitle>
-              <i>Hi,</i> <i>my</i> <i>name</i> <i>is</i> <i>Håkon</i>{" "}
-              <i>Underbakke.</i>
-            </IntroTitle>
-            <p>
-              I'm a Norwegian frontend developer currently working for Idean.
-            </p>
-            <p>
-              I have been doing web development professionally for the last 4
-              years. These days, I mostly work with React and Typescript.
-            </p>
+            <IntroTitle>{landingPageData.header.title}</IntroTitle>
+            {landingPageData.header.text}
           </Container>
           <HeaderSVG />
         </DarkSection>
@@ -39,18 +32,7 @@ const LandingPage: React.FC = () => {
             <Accordion label="Experience" render={<ExperienceTable />} />
             <Accordion
               label="Tools & Technologies"
-              render={
-                <div>
-                  <h3>Javascript</h3>
-                  <p>ES6, React, TypeScript, Node, Electron, jQuery</p>
-                  <h3>CSS</h3>
-                  <p>Sass, styled-components, animations, responsive design</p>
-                  <h3>HTML</h3>
-                  <p>HTML5, ARIA, Pug</p>
-                  <h3>Tools</h3>
-                  <p>Git, Webpack, VSCode</p>
-                </div>
-              }
+              render={<ToolsShowcase />}
             />
           </Container>
         </LightSection>

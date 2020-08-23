@@ -6,7 +6,7 @@ import useMouseMove from "../../../hooks/useMouseMove";
 interface Props {
   children: React.ReactNode;
   secondary?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const FancyButton: React.FC<Props> = ({ secondary, children, ...props }) => {
