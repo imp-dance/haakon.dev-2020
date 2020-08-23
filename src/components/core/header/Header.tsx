@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Container } from "../layout";
@@ -6,8 +6,11 @@ import FancyButton from "../buttons/FancyButton";
 import Title from "./Title";
 import constants from "../../../styles/constants";
 import { fadeUpButtons } from "../../../styles/animations";
+import useMouseMove from "../../../hooks/useMouseMove";
 
 const Header: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const getInTouch = () => setIsOpen(true);
   return (
     <StyledHeader>
       <HeaderContainer>
@@ -16,7 +19,7 @@ const Header: React.FC = () => {
             <Title />
           </LeftColumn>
           <RightColumn>
-            <FancyButton>Get in touch</FancyButton>
+            <FancyButton onClick={getInTouch}>Get in touch</FancyButton>
             <FancyButton secondary>Articles</FancyButton>
           </RightColumn>
         </HeaderAlignment>

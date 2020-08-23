@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import useMouseMove from "../../../hooks/useMouseMove";
 import constants from "../../../styles/constants";
-import ExternalLink from "../../core/links/ExternalLink";
 import Dialog from "./Dialog";
+import landingPageData from "../../../data/landingPage";
 
 const { colors, typography, whitespace } = constants;
 
@@ -23,108 +23,31 @@ const ExperienceTable: React.FC = () => {
       <TableTitle>Work</TableTitle>
       <ExperienceTableContainer>
         <tbody>
-          <Entry
-            isJob={true}
-            title="Idean Norway (Capgemini Norge AS)"
-            date="2020 - Present"
-            content="Front End Developer"
-            longText={
-              <>
-                <p>
-                  I started working as a frontend developer for Idean in April
-                  of 2020. Since then I've been able to take part in a couple of
-                  projects, namely the CityforCity initiative - as well as an
-                  internal Equinor project.
-                </p>
-                <p>
-                  Working at Idean has been my first official web developer
-                  position, and has allowed me to work with larger teams of
-                  other developers and designers, which has greatly accelerated
-                  my growth and learning.
-                </p>
-                <p>
-                  I have worked using the scrum framework at a project at
-                  Equinor, which has been a great experience.
-                </p>
-              </>
-            }
-            url="https://idean.com"
-          />
-          <Entry
-            isJob={true}
-            title="LIGL AS"
-            date="2016 - 2020"
-            content="Legal Tech Developer | Web Developer | IT-Consultant"
-            longText={
-              <>
-                <p>
-                  I worked for LIGL AS for 4 years, from August 2016 - April
-                  2020.
-                </p>
-                <p>
-                  During my time at LIGL I worked with a great range of tasks
-                  ranging from office IT-support to web development and legal
-                  tech development.
-                </p>
-                <p>
-                  While working at LIGL, I learned how to use ContractExpress
-                  Author to automate legal documents. I also designed a website
-                  that interacts with these documents, complete with a login
-                  system, rating system, backend statistics, rating and sorting,
-                  and much more. This website came in many iterations, but the
-                  final version which is still up today is called{" "}
-                  <ExternalLink to="https://ida.ligl.no">
-                    Ida by LIGL
-                  </ExternalLink>
-                  . .
-                </p>
-                <p>
-                  Other than these projects, I've also developed and designed
-                  their website,{" "}
-                  <ExternalLink to="https://ligl.no">ligl.no</ExternalLink>. I
-                  mostly made this in PHP, as the project was started before I
-                  really had much experience with Javascript frameworks.
-                </p>
-              </>
-            }
-          />
+          {landingPageData.experienceTable.work.map((workItem) => (
+            <Entry
+              isJob={true}
+              title={workItem.title}
+              content={workItem.position}
+              date={workItem.date}
+              longText={workItem.text}
+              url={workItem.url}
+            />
+          ))}
         </tbody>
       </ExperienceTableContainer>
       <TableTitle>Projects</TableTitle>
       <ExperienceTableContainer>
         <tbody>
-          <Entry
-            isJob={false}
-            title="Ida by LIGL"
-            date="2019"
-            content="Released first major version of Ida by LIGL."
-            longText={`Ida by LIGL was a project I worked on at LIGL and that I still maintain 
-            today. Ida is a tool for anyone to generate top quality legal documents. I worked on 
-            both the document automation part (using ContractExpress Author) as well as our web 
-            portal for free users.`}
-            url="https://ida.ligl.no"
-          />
-          <Entry
-            isJob={false}
-            title="Eirik Underbakke Portfolio"
-            date="2015"
-            content="Developed website & backend system based on his own design."
-            longText={`This was my first project using a modern Javascript framework, made 
-            in 2015. It was my first and only project using AngularJS. Designed by my brother, 
-            Eirik Underbakke`}
-            url="https://eirik.underbakke.net/"
-          />
-          <Entry
-            isJob={false}
-            title="Ryfylke Bok & IT"
-            date="2015"
-            content="Developed & designed their website in-house while working summer job."
-            longText={`I was working for Ryfylke Bok & IT initially as summer-help. I worked 
-            the cash register, as well as a little bit in the IT-department. Since their website 
-            was quite outdated, I offered to build them a new one. They have kept my design 
-            ever since.`}
-            url="https://bok-it.no"
-          />
+          {landingPageData.experienceTable.projects.map((projectItem) => (
+            <Entry
+              isJob={false}
+              title={projectItem.title}
+              content={projectItem.shortText}
+              date={projectItem.date}
+              longText={projectItem.text}
+              url={projectItem.url}
+            />
+          ))}
         </tbody>
       </ExperienceTableContainer>
     </div>
