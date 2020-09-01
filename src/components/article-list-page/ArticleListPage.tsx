@@ -26,6 +26,15 @@ interface ArticleItem {
   modified: string;
   slug: string;
   id: number;
+  _links: FeaturedMedia;
+}
+
+interface FeaturedMedia {
+  ["wp:featuredmedia"]: Array<FeaturedMediaItem>;
+}
+
+interface FeaturedMediaItem {
+  href: string;
 }
 
 interface ArticleContent {
@@ -35,18 +44,21 @@ interface ArticleContent {
 
 const ArticleListPage: React.FC = () => {
   const [data, setData] = useState<ArticleItem[] | null>(null);
+  const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
   const [error, setError] = useState(false);
   useEffect(() => {
     fetch("https://impedans.me/web/wp-json/wp/v2/posts/?per_page=100")
       .then((res) => res.json())
-      .then((json) =>
+      .then((response) => {
+        const filteredItems = response.filter(
+          (item: ArticleItem) =>
+            item.categories.includes(2) || item.categories.includes(3)
+        );
         setData(
-          json.filter(
-            (item: ArticleItem) =>
-              item.categories.includes(2) || item.categories.includes(3)
-          )
-        )
-      )
+          filteredItems.filter((item: any, index: number) => index !== 0)
+        );
+        setFeaturedItem(filteredItems[0]);
+      })
       .catch((err) => setError(true));
   }, []);
   return (
@@ -54,17 +66,21 @@ const ArticleListPage: React.FC = () => {
       <Header />
       <DarkSection>
         <Container>
-          <h2>
-            {!data && <LoadingText>[loading]</LoadingText>}
-            {data && "/articles"}
-          </h2>
+          {!data && (
+            <h2>
+              <LoadingText></LoadingText>
+            </h2>
+          )}
 
-          {data !== null && (
-            <ArticlesContainer>
-              {data.map((item) => (
-                <ArticlePreview item={item} />
-              ))}
-            </ArticlesContainer>
+          {data !== null && featuredItem !== null && (
+            <>
+              <FeaturedItem item={featuredItem} />
+              <ArticlesContainer>
+                {data.map((item) => (
+                  <ArticlePreview item={item} />
+                ))}
+              </ArticlesContainer>
+            </>
           )}
         </Container>
       </DarkSection>
@@ -72,13 +88,66 @@ const ArticleListPage: React.FC = () => {
   );
 };
 
-const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
+const FeaturedItem: React.FC<ArticlePreviewProps> = ({ item }) => {
+  const [featuredImage, setFeaturedImage] = useState<string | null>(null);
   const history = useHistory();
+  useEffect(() => {
+    if (item._links["wp:featuredmedia"] && item._links["wp:featuredmedia"][0]) {
+      fetch(item._links["wp:featuredmedia"][0].href)
+        .then((res) => res.json())
+        .then((response: any) => {
+          if (response.media_details) {
+            setFeaturedImage(response.media_details.sizes.full.source_url);
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  }, []);
+
+  const openArticle = () => history.push(`/article/${item.slug}`);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const { key } = e;
+    if (key === " " || key === "Enter") {
+      openArticle();
+    }
+  };
+
   return (
-    <StyledArticle
-      onClick={() => history.push(`/article/${item.slug}`)}
+    <StyledFeaturedItem
       tabIndex={0}
       role="button"
+      aria-label={item.title.rendered}
+      onClick={openArticle}
+      onKeyDown={onKeyDown}
+    >
+      {featuredImage && <img src={featuredImage} alt="Featured" />}
+      <h3>
+        <span>{parse(item.title.rendered)}</span>
+      </h3>
+      {parse(item.excerpt.rendered)}
+    </StyledFeaturedItem>
+  );
+};
+
+const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
+  const history = useHistory();
+
+  const openArticle = () => history.push(`/article/${item.slug}`);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const { key } = e;
+    if (key === " " || key === "Enter") {
+      openArticle();
+    }
+  };
+
+  return (
+    <StyledArticle
+      onClick={openArticle}
+      tabIndex={0}
+      role="button"
+      onKeyDown={onKeyDown}
       aria-label={item.title.rendered}
     >
       <h3>
@@ -88,6 +157,43 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
     </StyledArticle>
   );
 };
+
+const StyledFeaturedItem = styled.div`
+  margin: ${whitespace.m} 0;
+  padding: ${whitespace.m};
+  background: ${colors.bgDark};
+  animation: ${fadeIn} 0.2s ease-in-out;
+  animation-fill-mode: both;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translate(0px, -30%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  > p,
+  > h3 {
+    position: relative;
+    z-index: 1;
+  }
+  &:focus {
+    outline: 5px auto rgba(0, 150, 255, 1);
+  }
+  &:hover {
+    transform: scale(1.01);
+  }
+  > p {
+    font-size: ${typography.s};
+    opacity: 0.6;
+    background: ${colors.bg}fa;
+    line-height: 1.5rem;
+  }
+`;
 
 const StyledArticle = styled.div`
   transition: transform 0.2s ease-in-out;
@@ -136,7 +242,7 @@ const ArticlesContainer = styled.div`
     opacity: 0;
   }
   > div:nth-child(1) {
-    animation-delay: 0s;
+    animation-delay: 50ms;
   }
   > div:nth-child(2) {
     animation-delay: 100ms;

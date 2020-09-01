@@ -24,17 +24,19 @@ const Modal: React.FC<ModalProps> = ({ open, close }) => {
     <>
       <Backdrop open={open} onClick={close}>
         <ModalContainer open={open} onClick={(e) => e.stopPropagation()}>
-          <iframe
-            title="Contact"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSccn9xWFPR6JVyg0zm4eq_RWHDV5q6ChTbMVWDt4YTZiekVUA/viewform?embedded=true"
-            width="640"
-            height="808"
-            frameBorder="0"
-            marginHeight={0}
-            marginWidth={0}
-          >
-            Loading…
-          </iframe>
+          {open && (
+            <iframe
+              title="Contact"
+              src="https://docs.google.com/forms/d/e/1FAIpQLSccn9xWFPR6JVyg0zm4eq_RWHDV5q6ChTbMVWDt4YTZiekVUA/viewform?embedded=true"
+              width="640"
+              height="808"
+              frameBorder="0"
+              marginHeight={0}
+              marginWidth={0}
+            >
+              Loading…
+            </iframe>
+          )}
         </ModalContainer>
       </Backdrop>
     </>
@@ -63,6 +65,9 @@ const ModalContainer = styled.div<ModalProps>`
   transform: ${(props) =>
     props.open ? `translate(0px, 0px)` : `translate(0px, 20px) scale(0.9)`};
   cursor: default;
+  iframe {
+    color: ${colors.beige};
+  }
 `;
 
 export default GetInTouch;
