@@ -6,7 +6,7 @@ import { fadeInUp } from "../../../styles/animations";
 const Title = () => {
   const titles = ["dev", "music", "design"];
   return (
-    <StyledLink href=".">
+    <StyledLink href="/">
       <StyledTitle>
         haakon.
         <TitleRotator className="header-titleRotator">

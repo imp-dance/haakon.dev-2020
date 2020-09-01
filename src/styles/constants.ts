@@ -6,6 +6,7 @@ export default {
     lightPink: "#c79cb6",
     beige: "#f9d2ea",
     bg: "#171727",
+    bgDark: "#141421",
     white: "#f4edff",
   },
   typography: {
@@ -14,6 +15,7 @@ export default {
     l: "1.5rem",
     m: "1.2rem",
     s: "0.85rem",
+    xs: "0.7rem",
   },
   whitespace: {
     xxl: "4rem",
@@ -21,6 +23,7 @@ export default {
     l: "2rem",
     m: "1rem",
     s: "0.5rem",
+    xs: "0.2rem",
     container: "900px",
   },
 };

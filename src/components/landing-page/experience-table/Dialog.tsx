@@ -1,10 +1,14 @@
 import React from "react";
-import styled, { keyframes, css } from "styled-components";
+import styled, { css } from "styled-components";
 
 import { fadeIn } from "../../../styles/animations";
 import FancyButton from "../../core/buttons/FancyButton";
 import constants from "../../../styles/constants";
 import { EntryProps } from "./ExperienceTable";
+import {
+  DialogAnimation,
+  DialogOutAnimation,
+} from "../../../styles/animations";
 
 const { colors, whitespace } = constants;
 
@@ -47,20 +51,6 @@ const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
     </>
   );
 };
-
-const DialogAnimation = keyframes`
-  from {
-    transform:translate(-50%, calc(-50% + 10px)) scale(.9);
-    opacity:0;
-  }
-`;
-
-const DialogOutAnimation = keyframes`
-  to {
-    transform:translate(-50%, calc(-50% + 10px)) scale(.9);
-    opacity:0;
-  }
-`;
 
 const StyledDialog = styled.div<StyledDialogInterface>`
   width: ${constants.whitespace.container};

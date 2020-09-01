@@ -79,7 +79,7 @@ const landingPageData = {
             </p>
           </>
         ),
-        url: "https://idean.com",
+        url: "https://ligl.no/en",
       },
     ],
     projects: [
