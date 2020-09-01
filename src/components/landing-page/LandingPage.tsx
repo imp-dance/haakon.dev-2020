@@ -2,32 +2,32 @@ import React from "react";
 import styled from "styled-components";
 
 import Header from "../core/header/Header";
-import { Container } from "../core/layout";
-import constants from "../../styles/constants";
-import { fadeIn, fadeUpButtons } from "../../styles/animations";
-
-import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
+import { Container, DarkSection, LightSection } from "../core/layout";
 import Accordion from "../core/Accordion";
 import ExperienceTable from "./experience-table/ExperienceTable";
 import ExternalLink from "../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
-import landingPageData from "../../data/landingPage";
 
-const { colors, typography, whitespace } = constants;
+import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
+import landingPageData from "../../data/landingPage";
+import { fadeUpButtons, fadeIn } from "../../styles/animations";
+import constants from "../../styles/constants";
+
+const { colors, typography } = constants;
 
 const LandingPage: React.FC = () => {
   return (
     <>
       <Header />
       <LandingPageContainer>
-        <DarkSection>
+        <IntroSection>
           <Container>
             <IntroTitle>{landingPageData.header.title}</IntroTitle>
             {landingPageData.header.text}
           </Container>
           <HeaderSVG />
-        </DarkSection>
-        <LightSection>
+        </IntroSection>
+        <InfoSection>
           <Container>
             <Accordion label="Experience" render={<ExperienceTable />} />
             <Accordion
@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
               render={<ToolsShowcase />}
             />
           </Container>
-        </LightSection>
+        </InfoSection>
         <DarkSection>
           <Container>
             <IntroTitle>Psst, I also make music</IntroTitle>
@@ -65,7 +65,56 @@ const LandingPageContainer = styled.div`
   background: ${colors.bg};
 
   section {
-    padding: ${whitespace.xxl} ${whitespace.l};
+  }
+`;
+
+const IntroSection = styled(DarkSection)`
+  p {
+    animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
+    animation-fill-mode: both;
+    animation-delay: 1.5s;
+  }
+  p,
+  h2 {
+    position: relative;
+    z-index: 1;
+    background: ${colors.bg};
+  }
+  h2 {
+    display: inline-block;
+  }
+  > svg {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    right: 0;
+    transform: translate(0px, 50%) rotate(80deg);
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  #headerPath {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 2s cubic-bezier(0.29, 0.74, 0.8, 0.34) forwards;
+    will-change: stroke-dashoffset;
+    animation-fill-mode: both;
+    animation-delay: 1s;
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+`;
+
+const InfoSection = styled(LightSection)`
+  .accordion-container {
+    animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
+    animation-fill-mode: both;
+    animation-delay: 2.4s;
   }
 `;
 
@@ -94,72 +143,6 @@ const IntroTitle = styled.h2`
     &:nth-child(6) {
       animation-delay: 1.1s;
     }
-  }
-`;
-
-const DarkSection = styled.section`
-  position: relative;
-  overflow: hidden;
-  color: ${colors.lightPink};
-  > svg {
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    right: 0;
-    transform: translate(0px, 50%) rotate(80deg);
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  a {
-    color: ${colors.lightPink};
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  #headerPath {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: dash 2s cubic-bezier(0.29, 0.74, 0.8, 0.34) forwards;
-    will-change: stroke-dashoffset;
-    animation-fill-mode: both;
-    animation-delay: 1s;
-  }
-  @keyframes dash {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  p {
-    font-size: ${typography.m};
-    max-width: 700px;
-    animation: ${fadeIn} 0.2s ease-in-out;
-    will-change: opacity;
-    animation-fill-mode: both;
-    animation-delay: 1.5s;
-  }
-
-  p,
-  h2 {
-    position: relative;
-    z-index: 2;
-    background: ${colors.bg};
-  }
-  h2 {
-    display: inline-block;
-  }
-`;
-
-const LightSection = styled.section`
-  background: ${colors.white};
-  .accordion-container {
-    animation: ${fadeIn} 0.2s ease-in-out;
-    will-change: opacity;
-    animation-fill-mode: both;
-    animation-delay: 2.4s;
   }
 `;
 

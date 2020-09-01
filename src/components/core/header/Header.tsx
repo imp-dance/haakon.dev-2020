@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { Container } from "../layout";
@@ -6,11 +7,10 @@ import FancyButton from "../buttons/FancyButton";
 import Title from "./Title";
 import constants from "../../../styles/constants";
 import { fadeUpButtons } from "../../../styles/animations";
-import useMouseMove from "../../../hooks/useMouseMove";
+import GetInTouch from "./GetInTouch";
 
 const Header: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const getInTouch = () => setIsOpen(true);
+  const history = useHistory();
   return (
     <StyledHeader>
       <HeaderContainer>
@@ -19,8 +19,17 @@ const Header: React.FC = () => {
             <Title />
           </LeftColumn>
           <RightColumn>
-            <FancyButton onClick={getInTouch}>Get in touch</FancyButton>
-            <FancyButton secondary>Articles</FancyButton>
+            <GetInTouch />
+            <FancyButton
+              secondary
+              onClick={() =>
+                window.location.pathname === "/articles"
+                  ? window.location.reload()
+                  : history.push("/articles")
+              }
+            >
+              Articles
+            </FancyButton>
           </RightColumn>
         </HeaderAlignment>
       </HeaderContainer>
