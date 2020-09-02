@@ -3,12 +3,7 @@ import ExternalLink from "../components/core/links/ExternalLink";
 
 const landingPageData = {
   header: {
-    title: (
-      <>
-        <i>Hi,</i> <i>my</i> <i>name</i> <i>is</i> <i>Håkon</i>{" "}
-        <i>Underbakke.</i>
-      </>
-    ),
+    title: "Hi, my name is Håkon Underbakke.",
     text: (
       <>
         <p>I'm a Norwegian frontend developer currently working for Idean.</p>
@@ -144,7 +139,23 @@ const landingPageData = {
     },
     {
       title: "Tools",
-      items: ["Git", "Webpack", "VSCode", "Visual Studio"],
+      items: [
+        "Git",
+        "VSCode",
+        "VSTS / Azure DevOps Services",
+        "Webpack",
+        "Babel",
+      ],
+    },
+    {
+      title: "Other",
+      items: [
+        "ContractExpress Author",
+        "Batch",
+        "Bash/Shell",
+        "Logic Pro X",
+        "Adobe Photoshop",
+      ],
     },
   ],
 };

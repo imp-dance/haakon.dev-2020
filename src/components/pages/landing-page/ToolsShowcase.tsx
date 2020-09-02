@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import landingPageData from "../../data/landingPage";
-import constants from "../../styles/constants";
+import landingPageData from "../../../data/landingPage";
+import constants from "../../../styles/constants";
 
 interface ItemInterface {
   title: string;

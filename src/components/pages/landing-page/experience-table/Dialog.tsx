@@ -1,14 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { fadeIn } from "../../../styles/animations";
-import FancyButton from "../../core/buttons/FancyButton";
-import constants from "../../../styles/constants";
+import { fadeIn } from "../../../../styles/animations";
+import FancyButton from "../../../core/buttons/FancyButton";
+import constants from "../../../../styles/constants";
 import { EntryProps } from "./ExperienceTable";
 import {
   DialogAnimation,
   DialogOutAnimation,
-} from "../../../styles/animations";
+} from "../../../../styles/animations";
 
 const { colors, whitespace } = constants;
 
@@ -37,15 +37,18 @@ const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
             <i>{content.date + " " + content.content}</i>
           )}
         </p>
-        <LongText>{content.longText}</LongText>
+        <LongText>{openOn && content.longText}</LongText>
         <DialogFooter>
           <FancyButton
             secondary
             onClick={() => window.open(content.url, "_blank")}
+            tabIndex={openOn ? 0 : -1}
           >
             Visit website
           </FancyButton>
-          <BackButton onClick={close}>Close</BackButton>
+          <BackButton onClick={close} tabIndex={openOn ? 0 : -1}>
+            Close
+          </BackButton>
         </DialogFooter>
       </StyledDialog>
     </>

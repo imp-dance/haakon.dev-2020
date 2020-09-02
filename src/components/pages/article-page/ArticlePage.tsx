@@ -3,14 +3,14 @@ import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import parse from "html-react-parser";
 
-import Header from "../core/header/Header";
+import Header from "../../core/header/Header";
 import {
   Container,
   DarkSection,
   LightSection,
   LoadingText,
-} from "../core/layout";
-import constants from "../../styles/constants";
+} from "../../core/layout";
+import constants from "../../../styles/constants";
 
 const { colors, whitespace, typography } = constants;
 
@@ -41,26 +41,21 @@ interface ArticleContent {
 
 const ArticleListPage: React.FC<ArticleProps> = ({ match }) => {
   const [data, setData] = useState<ArticleItem | null>(null);
-  const [error, setError] = useState(false);
   useEffect(() => {
     fetch(
       `https://impedans.me/web/wp-json/wp/v2/posts/?slug=${match.params.slug}`
     )
       .then((res) => res.json())
       .then((data) => setData(data[0]))
-      .catch((err) => setError(true));
-  }, []);
+      .catch((err) => console.error(err));
+  }, [match.params.slug]);
   return (
     <>
       <Header />
       <DarkSection>
         <Container>
           <ArticleTitle>
-            {data ? (
-              parse(data.title.rendered)
-            ) : (
-              <LoadingText>[loading]</LoadingText>
-            )}
+            {data ? parse(data.title.rendered) : <LoadingText />}
           </ArticleTitle>
           {data && (
             <ArticleContainer>{parse(data.content.rendered)}</ArticleContainer>
@@ -78,7 +73,8 @@ const ArticleTitle = styled.h2`
 const ArticleContainer = styled(LightSection)`
   padding: ${whitespace.l};
   color: ${colors.bgDark};
-  p {
+  p,
+  li {
     max-width: 700px;
     font-size: ${typography.s};
     line-height: 1.5rem;

@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import Header from "../core/header/Header";
-import { Container, DarkSection, LightSection } from "../core/layout";
-import Accordion from "../core/Accordion";
+import Header from "../../core/header/Header";
+import { Container, DarkSection, LightSection } from "../../core/layout";
+import Accordion from "../../core/Accordion";
 import ExperienceTable from "./experience-table/ExperienceTable";
-import ExternalLink from "../core/links/ExternalLink";
+import ExternalLink from "../../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
 
-import { ReactComponent as HeaderSVG } from "../../assets/svg/vector.svg";
-import landingPageData from "../../data/landingPage";
-import { fadeUpButtons, fadeIn } from "../../styles/animations";
-import constants from "../../styles/constants";
+import { ReactComponent as HeaderSVG } from "../../../assets/svg/vector.svg";
+import landingPageData from "../../../data/landingPage";
+import { fadeUpButtons, fadeIn } from "../../../styles/animations";
+import constants from "../../../styles/constants";
 
 const { colors, typography } = constants;
 
@@ -22,7 +22,11 @@ const LandingPage: React.FC = () => {
       <LandingPageContainer>
         <IntroSection>
           <Container>
-            <IntroTitle>{landingPageData.header.title}</IntroTitle>
+            <IntroTitle>
+              {landingPageData.header.title.split(" ").map((item) => (
+                <i>{item} </i>
+              ))}
+            </IntroTitle>
             {landingPageData.header.text}
           </Container>
           <HeaderSVG />

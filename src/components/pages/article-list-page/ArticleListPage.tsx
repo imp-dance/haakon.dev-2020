@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import parse from "html-react-parser";
 
-import Header from "../core/header/Header";
-import { Container, DarkSection, LoadingText } from "../core/layout";
-import { fadeIn } from "../../styles/animations";
-import constants from "../../styles/constants";
+import Header from "../../core/header/Header";
+import { Container, DarkSection, LoadingText } from "../../core/layout";
+import { fadeIn } from "../../../styles/animations";
+import constants from "../../../styles/constants";
 
 const { colors, whitespace, typography } = constants;
 
@@ -45,7 +45,6 @@ interface ArticleContent {
 const ArticleListPage: React.FC = () => {
   const [data, setData] = useState<ArticleItem[] | null>(null);
   const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
-  const [error, setError] = useState(false);
   useEffect(() => {
     fetch("https://impedans.me/web/wp-json/wp/v2/posts/?per_page=100")
       .then((res) => res.json())
@@ -59,7 +58,7 @@ const ArticleListPage: React.FC = () => {
         );
         setFeaturedItem(filteredItems[0]);
       })
-      .catch((err) => setError(true));
+      .catch((err) => console.error(err));
   }, []);
   return (
     <>
@@ -68,7 +67,7 @@ const ArticleListPage: React.FC = () => {
         <Container>
           {!data && (
             <h2>
-              <LoadingText></LoadingText>
+              <LoadingText />
             </h2>
           )}
 
@@ -102,7 +101,7 @@ const FeaturedItem: React.FC<ArticlePreviewProps> = ({ item }) => {
         })
         .catch((err) => console.error(err));
     }
-  }, []);
+  }, [item._links]);
 
   const openArticle = () => history.push(`/article/${item.slug}`);
 

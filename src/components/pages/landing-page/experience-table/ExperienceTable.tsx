@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
-import useMouseMove from "../../../hooks/useMouseMove";
-import constants from "../../../styles/constants";
+import useMouseMove from "../../../../hooks/useMouseMove";
+import constants from "../../../../styles/constants";
 import Dialog from "./Dialog";
-import landingPageData from "../../../data/landingPage";
+import landingPageData from "../../../../data/landingPage";
 
 const { colors, typography, whitespace } = constants;
 
@@ -66,6 +66,12 @@ const Entry: React.FC<EntryProps> = ({
   const [isDialogOpen, setDialogOpen] = useState(false);
   const buttonRef = useRef<HTMLTableDataCellElement>(null);
   const [mouseMove, styles] = useMouseMove(buttonRef);
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const { key } = e;
+    if (key === " " || key === "Enter") {
+      !isDialogOpen && setDialogOpen(true);
+    }
+  };
   return (
     <EntryContainer>
       <td valign="top">{date}</td>
@@ -74,6 +80,8 @@ const Entry: React.FC<EntryProps> = ({
         ref={buttonRef}
         role="button"
         onMouseMove={mouseMove}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
         style={styles}
         onClick={!isDialogOpen ? () => setDialogOpen(true) : undefined}
       >

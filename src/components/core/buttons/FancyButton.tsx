@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
   secondary?: boolean;
   onClick?: (e: React.MouseEvent) => void;
+  tabIndex?: number;
 }
 
 const FancyButton: React.FC<Props> = ({ secondary, children, ...props }) => {
