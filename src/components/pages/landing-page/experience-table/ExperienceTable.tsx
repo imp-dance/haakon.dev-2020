@@ -69,6 +69,7 @@ const Entry: React.FC<EntryProps> = ({
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
     if (key === " " || key === "Enter") {
+      e.preventDefault();
       !isDialogOpen && setDialogOpen(true);
     }
   };

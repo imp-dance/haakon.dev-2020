@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
 import styled from "styled-components";
 import parse from "html-react-parser";
 
+import { ArticleItem, ArticlePageProps } from "../../../interfaces/Article";
 import Header from "../../core/header/Header";
 import {
   Container,
@@ -14,51 +14,33 @@ import constants from "../../../styles/constants";
 
 const { colors, whitespace, typography } = constants;
 
-interface MatchParams {
-  slug: string;
-}
-
-interface ArticleProps extends RouteComponentProps<MatchParams> {}
-
-interface ArticleItem {
-  author: number;
-  categories: Array<number>;
-  tags: Array<number>;
-  content: ArticleContent;
-  excerpt: ArticleContent;
-  title: ArticleContent;
-  guid: ArticleContent;
-  date: string;
-  modified: string;
-  slug: string;
-  id: number;
-}
-
-interface ArticleContent {
-  protected?: boolean;
-  rendered: string;
-}
-
-const ArticleListPage: React.FC<ArticleProps> = ({ match }) => {
-  const [data, setData] = useState<ArticleItem | null>(null);
+const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
+  const [item, setItem] = useState<ArticleItem | null>(null);
   useEffect(() => {
     fetch(
       `https://impedans.me/web/wp-json/wp/v2/posts/?slug=${match.params.slug}`
     )
       .then((res) => res.json())
-      .then((data) => setData(data[0]))
+      .then((res) => setItem(res[0]))
       .catch((err) => console.error(err));
   }, [match.params.slug]);
+  useEffect(() => {
+    if (item) {
+      (window as any).Prism.highlightAll();
+    }
+  }, [item]);
   return (
     <>
       <Header />
       <DarkSection>
         <Container>
           <ArticleTitle>
-            {data ? parse(data.title.rendered) : <LoadingText />}
+            {item ? parse(item.title.rendered) : <LoadingText />}
           </ArticleTitle>
-          {data && (
-            <ArticleContainer>{parse(data.content.rendered)}</ArticleContainer>
+          {item && (
+            <ArticleContainer className="language-js">
+              {parse(item.content.rendered)}
+            </ArticleContainer>
           )}
         </Container>
       </DarkSection>
@@ -68,16 +50,26 @@ const ArticleListPage: React.FC<ArticleProps> = ({ match }) => {
 
 const ArticleTitle = styled.h2`
   margin: 0 0 ${whitespace.l};
+  font-size: ${typography.xl};
 `;
 
 const ArticleContainer = styled(LightSection)`
   padding: ${whitespace.l};
   color: ${colors.bgDark};
+  > *:first-child {
+    margin-top: 0;
+  }
+  > p:first-child:not(:empty) {
+    padding: ${whitespace.m};
+    border-left: ${whitespace.m} solid ${colors.lightPink};
+    background: ${colors.beige};
+    max-width: 100%;
+  }
   p,
   li {
     max-width: 700px;
     font-size: ${typography.s};
-    line-height: 1.5rem;
+    line-height: 1.6rem;
   }
   img,
   iframe,
@@ -88,12 +80,19 @@ const ArticleContainer = styled(LightSection)`
     background: ${colors.beige};
   }
   code {
-    padding: ${whitespace.xs};
+    padding: 0.1em ${whitespace.s} !important;
+    background: ${colors.gray};
   }
   pre > code {
-    padding: 0;
+    padding: 0 !important;
     background: ${colors.bgDark};
     color: ${colors.beige};
+  }
+  a {
+    color: ${colors.primary};
+    &:hover {
+      text-decoration: none;
+    }
   }
   pre {
     background: ${colors.bgDark};
@@ -102,5 +101,38 @@ const ArticleContainer = styled(LightSection)`
     font-size: ${typography.s};
     line-height: 1.4rem;
   }
+  h3,
+  h4 {
+    margin: ${whitespace.l} 0 ${whitespace.m};
+  }
+  h3 {
+    font-size: ${typography.xl};
+  }
+  h4 {
+    font-size: ${typography.l};
+    &:before {
+      content: "# ";
+      opacity: 0.5;
+    }
+  }
+  blockquote {
+    background: ${colors.gray};
+    margin: 0;
+    padding: ${whitespace.m};
+  }
+  .wp-block-columns {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    > div:first-child {
+      padding-right: ${whitespace.m};
+    }
+    > div:last-child {
+      max-width: 40%;
+      img {
+        border: ${whitespace.m} solid ${colors.bg};
+      }
+    }
+  }
 `;
-export default ArticleListPage;
+export default ArticlePage;

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import landingPageData from "../../../data/landingPage";
 import constants from "../../../styles/constants";
 
+const { colors, whitespace, typography } = constants;
+
 interface ItemInterface {
   title: string;
   items: string[];
@@ -24,21 +26,21 @@ const Item: React.FC<ItemInterface> = ({ title, items }) => {
   return (
     <StyledItem>
       <h3>{title}</h3>
-      <div>
+      <InnerItemContainer>
         {items.map((item) => (
           <span>{item}</span>
         ))}
-      </div>
+      </InnerItemContainer>
     </StyledItem>
   );
 };
 
 const StyledItem = styled.div`
-  border-bottom: 1px solid ${constants.colors.lightPink};
-  padding: ${constants.whitespace.m} 0;
+  border-bottom: 1px solid ${colors.lightPink};
+  padding: ${whitespace.m} 0;
   h3 {
-    margin: 0 0 ${constants.whitespace.s};
-    padding: 0 ${constants.whitespace.m};
+    margin: 0 0 ${whitespace.s};
+    padding: 0 ${whitespace.m};
     &:before {
       content: "# ";
     }
@@ -46,14 +48,14 @@ const StyledItem = styled.div`
   }
   > div {
     display: flex;
-    margin-left: ${constants.whitespace.m};
+    margin-left: ${whitespace.m};
     > span {
       border-radius: 2px;
-      background: ${constants.colors.beige};
-      padding: ${constants.whitespace.s} ${constants.whitespace.m};
+      background: ${colors.beige};
+      padding: ${whitespace.s} ${whitespace.m};
       display: inline-block;
-      margin-right: ${constants.whitespace.s};
-      font-size: ${constants.typography.s};
+      margin-right: ${whitespace.s};
+      font-size: ${typography.s};
       color: #000;
       white-space: nowrap;
     }
@@ -62,14 +64,18 @@ const StyledItem = styled.div`
 
 const ToolsContainer = styled.div`
   > p {
-    margin: 0 0 ${constants.whitespace.m};
+    margin: 0 0 ${whitespace.m};
   }
 `;
 
 const ItemContainer = styled.div`
-  background: ${constants.colors.bg};
-  color: ${constants.colors.lightPink};
+  background: ${colors.bg};
+  color: ${colors.lightPink};
+`;
+
+const InnerItemContainer = styled.div`
   overflow: auto;
+  padding-bottom: ${whitespace.s};
 `;
 
 export default ToolsShowcase;

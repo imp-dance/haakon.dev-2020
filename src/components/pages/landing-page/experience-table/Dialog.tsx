@@ -56,7 +56,7 @@ const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
 };
 
 const StyledDialog = styled.div<StyledDialogInterface>`
-  width: ${constants.whitespace.container};
+  width: 100%;
   position: fixed;
   top: 50%;
   left: 50%;

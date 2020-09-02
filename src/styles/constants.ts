@@ -2,6 +2,7 @@ export default {
   colors: {
     primary: "#403a73",
     secondary: "#b15c5c",
+    gray: "#d7d7ec",
     pink: "#c371a3",
     lightPink: "#c79cb6",
     beige: "#f9d2ea",

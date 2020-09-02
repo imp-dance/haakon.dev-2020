@@ -33,10 +33,28 @@ const LandingPage: React.FC = () => {
         </IntroSection>
         <InfoSection>
           <Container>
-            <Accordion label="Experience" render={<ExperienceTable />} />
+            <Accordion label="Work & Experience" render={<ExperienceTable />} />
             <Accordion
               label="Tools & Technologies"
               render={<ToolsShowcase />}
+            />
+            <Accordion
+              label="Links & References"
+              render={
+                <>
+                  <ExternalLink to="https://github.com/imp-dance">
+                    Github
+                  </ExternalLink>
+                  ,
+                  <ExternalLink to="https://codepen.io/schart">
+                    Codepen
+                  </ExternalLink>
+                  ,
+                  <ExternalLink to="https://www.linkedin.com/in/hakonunderbakke/">
+                    Linkedin
+                  </ExternalLink>
+                </>
+              }
             />
           </Container>
         </InfoSection>

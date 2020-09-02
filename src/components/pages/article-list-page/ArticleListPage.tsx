@@ -3,44 +3,13 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import parse from "html-react-parser";
 
+import { ArticleItem, ArticlePreviewProps } from "../../../interfaces/Article";
 import Header from "../../core/header/Header";
 import { Container, DarkSection, LoadingText } from "../../core/layout";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 
 const { colors, whitespace, typography } = constants;
-
-interface ArticlePreviewProps {
-  item: ArticleItem;
-}
-
-interface ArticleItem {
-  author: number;
-  categories: Array<number>;
-  tags: Array<number>;
-  content: ArticleContent;
-  excerpt: ArticleContent;
-  title: ArticleContent;
-  guid: ArticleContent;
-  date: string;
-  modified: string;
-  slug: string;
-  id: number;
-  _links: FeaturedMedia;
-}
-
-interface FeaturedMedia {
-  ["wp:featuredmedia"]: Array<FeaturedMediaItem>;
-}
-
-interface FeaturedMediaItem {
-  href: string;
-}
-
-interface ArticleContent {
-  protected?: boolean;
-  rendered: string;
-}
 
 const ArticleListPage: React.FC = () => {
   const [data, setData] = useState<ArticleItem[] | null>(null);
