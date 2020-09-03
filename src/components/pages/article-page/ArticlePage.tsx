@@ -28,7 +28,8 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       (window as any).Prism.highlightAll();
     }
     if (window.location.hash) {
-      const el = document.querySelector(window.location.hash);
+      const filteredHash = window.location.hash.split("#")[2];
+      const el = document.querySelector("#" + filteredHash);
       if (el) {
         const offset = 20;
         const elPos = el.getBoundingClientRect().top;
