@@ -158,5 +158,22 @@ const landingPageData = {
       ],
     },
   ],
+  linksAndReferences: [
+    {
+      title: "Github",
+      url: "https://github.com/imp-dance",
+      context: "Projects & Work",
+    },
+    {
+      title: "Codepen",
+      url: "https://codepen.io/schart",
+      context: "Doodles & Sketches",
+    },
+    {
+      title: "Linkedin",
+      url: "https://linkedin.com/in/hakonunderbakke",
+      context: "Experience & Connections",
+    },
+  ],
 };
 export default landingPageData;

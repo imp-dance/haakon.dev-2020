@@ -11,22 +11,33 @@ import {
   LoadingText,
 } from "../../core/layout";
 import constants from "../../../styles/constants";
+import { GetPostBySlug } from "../../core/API";
 
 const { colors, whitespace, typography } = constants;
 
 const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [item, setItem] = useState<ArticleItem | null>(null);
+
   useEffect(() => {
-    fetch(
-      `https://impedans.me/web/wp-json/wp/v2/posts/?slug=${match.params.slug}`
-    )
-      .then((res) => res.json())
-      .then((res) => setItem(res[0]))
+    GetPostBySlug(match.params.slug)
+      .then((res: any) => setItem(res[0]))
       .catch((err) => console.error(err));
   }, [match.params.slug]);
   useEffect(() => {
     if (item) {
       (window as any).Prism.highlightAll();
+    }
+    if (window.location.hash) {
+      const el = document.querySelector(window.location.hash);
+      if (el) {
+        const offset = 20;
+        const elPos = el.getBoundingClientRect().top;
+        const offsetPos = elPos - offset;
+        window.scrollTo({
+          top: offsetPos,
+          behavior: "smooth",
+        });
+      }
     }
   }, [item]);
   return (
@@ -59,7 +70,8 @@ const ArticleContainer = styled(LightSection)`
   > *:first-child {
     margin-top: 0;
   }
-  > p:first-child:not(:empty) {
+  > p:first-child:not(:empty),
+  .introSection {
     padding: ${whitespace.m};
     border-left: ${whitespace.m} solid ${colors.lightPink};
     background: ${colors.beige};
@@ -82,6 +94,7 @@ const ArticleContainer = styled(LightSection)`
   code {
     padding: 0.1em ${whitespace.s} !important;
     background: ${colors.gray};
+    margin: ${whitespace.m} 0;
   }
   pre > code {
     padding: 0 !important;
@@ -135,4 +148,5 @@ const ArticleContainer = styled(LightSection)`
     }
   }
 `;
+
 export default ArticlePage;

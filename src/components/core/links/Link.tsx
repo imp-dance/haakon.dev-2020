@@ -2,10 +2,15 @@ import React from "react";
 
 interface Props {
   to: string;
+  className?: string;
 }
 
-const Link: React.FC<Props> = ({ to, children }) => {
-  return <a href={to}>{children}</a>;
+const Link: React.FC<Props> = ({ to, children, className, ...props }) => {
+  return (
+    <a {...props} href={to} className={className}>
+      {children}
+    </a>
+  );
 };
 
 export default Link;

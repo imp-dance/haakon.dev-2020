@@ -8,21 +8,21 @@ import Header from "../../core/header/Header";
 import { Container, DarkSection, LoadingText } from "../../core/layout";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
+import { GetAllPosts } from "../../core/API";
 
 const { colors, whitespace, typography } = constants;
 
 const ArticleListPage: React.FC = () => {
-  const [data, setData] = useState<ArticleItem[] | null>(null);
+  const [postList, setPostList] = useState<ArticleItem[] | null>(null);
   const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
   useEffect(() => {
-    fetch("https://impedans.me/web/wp-json/wp/v2/posts/?per_page=100")
-      .then((res) => res.json())
-      .then((response) => {
+    GetAllPosts()
+      .then((response: any) => {
         const filteredItems = response.filter(
           (item: ArticleItem) =>
             item.categories.includes(2) || item.categories.includes(3)
-        );
-        setData(
+        ); // Remove uncategorized posts
+        setPostList(
           filteredItems.filter((item: any, index: number) => index !== 0)
         );
         setFeaturedItem(filteredItems[0]);
@@ -34,17 +34,17 @@ const ArticleListPage: React.FC = () => {
       <Header />
       <DarkSection>
         <Container>
-          {!data && (
+          {!postList && (
             <h2>
               <LoadingText />
             </h2>
           )}
 
-          {data !== null && featuredItem !== null && (
+          {postList !== null && featuredItem !== null && (
             <>
               <FeaturedItem item={featuredItem} />
               <ArticlesContainer>
-                {data.map((item) => (
+                {postList.map((item) => (
                   <ArticlePreview item={item} />
                 ))}
               </ArticlesContainer>

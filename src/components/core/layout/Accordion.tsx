@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { debounce } from "ts-debounce";
 import styled from "styled-components";
-import constants from "../../styles/constants";
-import useMouseMove from "../../hooks/useMouseMove";
+import constants from "../../../styles/constants";
+import useMouseMove from "../../../hooks/useMouseMove";
 
 const { typography, colors, whitespace } = constants;
 

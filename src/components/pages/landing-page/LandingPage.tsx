@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import Header from "../../core/header/Header";
-import { Container, DarkSection, LightSection } from "../../core/layout";
-import Accordion from "../../core/Accordion";
+import {
+  Container,
+  DarkSection,
+  LightSection,
+  Accordion,
+} from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
 import ExternalLink from "../../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
@@ -13,7 +17,7 @@ import landingPageData from "../../../data/landingPage";
 import { fadeUpButtons, fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 
-const { colors, typography } = constants;
+const { colors, typography, whitespace } = constants;
 
 const LandingPage: React.FC = () => {
   return (
@@ -41,19 +45,14 @@ const LandingPage: React.FC = () => {
             <Accordion
               label="Links & References"
               render={
-                <>
-                  <ExternalLink to="https://github.com/imp-dance">
-                    Github
-                  </ExternalLink>
-                  ,
-                  <ExternalLink to="https://codepen.io/schart">
-                    Codepen
-                  </ExternalLink>
-                  ,
-                  <ExternalLink to="https://www.linkedin.com/in/hakonunderbakke/">
-                    Linkedin
-                  </ExternalLink>
-                </>
+                <LinksAndReferences>
+                  <p>You can find me on...</p>
+                  {landingPageData.linksAndReferences.map((item, index) => (
+                    <LinkReference to={item.url}>
+                      {item.title} {item.context && <span>{item.context}</span>}
+                    </LinkReference>
+                  ))}
+                </LinksAndReferences>
               }
             />
           </Container>
@@ -61,7 +60,9 @@ const LandingPage: React.FC = () => {
         <DarkSection>
           <Container>
             <IntroTitle>Psst, I also make music</IntroTitle>
-            <p>You can find my music everywhere as sl1ck.</p>
+            <p>
+              You can find my music everywhere as <strong>sl1ck</strong>.
+            </p>
             <p>
               <ExternalLink to="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
                 Spotify
@@ -165,6 +166,36 @@ const IntroTitle = styled.h2`
     &:nth-child(6) {
       animation-delay: 1.1s;
     }
+  }
+`;
+
+const LinksAndReferences = styled.div`
+  background: ${colors.gray};
+  padding: ${whitespace.m};
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const LinkReference = styled(ExternalLink)`
+  display: flex;
+  align-items: center;
+  padding: ${whitespace.s};
+  background: ${colors.beige};
+  color: ${colors.bgDark};
+  margin: 0 0 ${whitespace.s};
+  text-decoration: none;
+  span {
+    margin-left: auto;
+    font-size: ${typography.s};
+    opacity: 0.4;
+  }
+  &:hover {
+    background: ${colors.bg};
+    color: ${colors.white};
   }
 `;
 
