@@ -42,19 +42,14 @@ const LandingPage: React.FC = () => {
               label="Tools & Technologies"
               render={<ToolsShowcase />}
             />
-            <Accordion
-              label="Links & References"
-              render={
-                <LinksAndReferences>
-                  <p>You can find me on...</p>
-                  {landingPageData.linksAndReferences.map((item, index) => (
-                    <LinkReference to={item.url}>
-                      {item.title} {item.context && <span>{item.context}</span>}
-                    </LinkReference>
-                  ))}
-                </LinksAndReferences>
-              }
-            />
+            <LinksAndReferences className="linksAndReferences">
+              <p>You can find me on...</p>
+              {landingPageData.linksAndReferences.map((item, index) => (
+                <LinkReference to={item.url}>
+                  {item.title} {item.context && <span>{item.context}</span>}
+                </LinkReference>
+              ))}
+            </LinksAndReferences>
           </Container>
         </InfoSection>
         <DarkSection>
@@ -133,7 +128,8 @@ const IntroSection = styled(DarkSection)`
 `;
 
 const InfoSection = styled(LightSection)`
-  .accordion-container {
+  .accordion-container,
+  .linksAndReferences {
     animation: ${fadeIn} 0.2s ease-in-out;
     will-change: opacity;
     animation-fill-mode: both;

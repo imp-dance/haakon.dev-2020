@@ -9,6 +9,7 @@ const { typography, colors, whitespace } = constants;
 interface Props {
   render: React.ReactNode;
   label: React.ReactNode;
+  startOpen?: boolean;
 }
 
 interface OpenProps {
@@ -19,8 +20,8 @@ interface ContainerProps {
   margin: number;
 }
 
-const Accordion: React.FC<Props> = ({ label, render }) => {
-  const [open, setOpen] = useState(false);
+const Accordion: React.FC<Props> = ({ label, render, startOpen }) => {
+  const [open, setOpen] = useState(startOpen ? true : false);
   const [accordionHeight, setAccordionHeight] = useState(0);
   const accordionRef = useRef<HTMLDivElement>(null);
   const accordionButtonRef = useRef<HTMLButtonElement>(null);
