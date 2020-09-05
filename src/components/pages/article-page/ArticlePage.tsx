@@ -127,11 +127,15 @@ const ArticleContainer = styled(LightSection)`
   iframe,
   code,
   pre,
-  video {
+  video,
+  .wp-block-image {
     max-width: 100%;
-    background: ${colors.beige};
+    background: ${colors.bg};
     font-size: ${typography.s};
     margin: ${whitespace.m} 0;
+  }
+  img {
+    margin: 0;
   }
   code {
     padding: 0.1em ${whitespace.s} !important;
@@ -185,8 +189,11 @@ const ArticleContainer = styled(LightSection)`
     }
     > div:last-child {
       max-width: 40%;
-      img {
-        border: ${whitespace.m} solid ${colors.bg};
+    }
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      > div:last-child {
+        max-width: 100%;
       }
     }
   }
