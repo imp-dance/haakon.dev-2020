@@ -68,20 +68,23 @@ const ArticleTitle = styled.h2`
 const ArticleContainer = styled(LightSection)`
   padding: ${whitespace.l};
   color: ${colors.bgDark};
+  font-family: "IBM Plex Sans", sans-serif;
   > *:first-child {
     margin-top: 0;
   }
   > p:first-child:not(:empty),
   .introSection {
     padding: ${whitespace.m};
-    border-left: ${whitespace.m} solid ${colors.lightPink};
-    background: ${colors.beige};
+    border-left: ${whitespace.m} solid ${colors.pink};
+    background: linear-gradient(to right, ${colors.beige}, ${colors.beige}55);
     max-width: 100%;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: ${typography.s};
   }
   p,
   li {
     max-width: 700px;
-    font-size: ${typography.s};
+    font-size: ${typography.m};
     line-height: 1.6rem;
   }
   img,
@@ -91,11 +94,14 @@ const ArticleContainer = styled(LightSection)`
   video {
     max-width: 100%;
     background: ${colors.beige};
+    font-size: ${typography.s};
+    margin: ${whitespace.m} 0;
   }
   code {
     padding: 0.1em ${whitespace.s} !important;
     background: ${colors.gray};
     margin: ${whitespace.m} 0;
+    font-family: "IBM Plex Mono", monospace;
   }
   pre > code {
     padding: 0 !important;
