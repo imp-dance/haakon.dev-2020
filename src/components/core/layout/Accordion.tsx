@@ -80,7 +80,7 @@ const AccordionButton = styled.button`
   text-align: left;
   font-size: ${typography.l};
   border: none;
-  background: ${colors.bg};
+  background: linear-gradient(150deg, #171727 30%, #2e2e65 180%);
   color: ${colors.beige};
   padding: ${whitespace.m};
   cursor: pointer;
@@ -138,7 +138,7 @@ const Icon = styled.i<OpenProps>`
     transform-origin: center;
     background: #fff;
     transform: ${(props) => (props.open ? "rotate(45deg)" : "rotate(0deg)")};
-    opacity: ${(props) => (props.open ? "1" : "0")};
+    opacity: ${(props) => (props.open ? "1" : "0.2")};
   }
   &:before {
     transform: ${(props) => (props.open ? "rotate(-45deg)" : "rotate(0deg)")};

@@ -66,12 +66,11 @@ const Backdrop = styled.div<ModalProps>`
 const ModalContainer = styled.div<ModalProps>`
   transition: all 0.2s ease-in-out;
   background: ${colors.bg};
-  padding: ${whitespace.l};
   transform: ${(props) =>
     props.open ? `translate(0px, 0px)` : `translate(0px, 20px) scale(0.9)`};
   cursor: default;
   overflow: hidden;
-  border: 3px solid ${colors.primary};
+  overflow: auto;
 `;
 
 const FrameContainer = styled.div`
@@ -85,6 +84,7 @@ const FrameContainer = styled.div`
     max-width: 100% !important;
     color: ${colors.beige};
     background: ${colors.gray};
+    max-height: calc(100vh - 100px);
   }
 `;
 

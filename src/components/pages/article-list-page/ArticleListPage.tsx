@@ -44,8 +44,11 @@ const ArticleListPage: React.FC = () => {
             <>
               <FeaturedItem item={featuredItem} />
               <ArticlesContainer>
-                {postList.map((item) => (
-                  <ArticlePreview item={item} />
+                {postList.map((item, index) => (
+                  <ArticlePreview
+                    item={item}
+                    key={`article-preview-${index}`}
+                  />
                 ))}
               </ArticlesContainer>
             </>

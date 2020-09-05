@@ -12,15 +12,24 @@ import {
 } from "../../core/layout";
 import constants from "../../../styles/constants";
 import { GetPostBySlug } from "../../core/API";
+import { Helmet } from "react-helmet";
+import Link from "../../core/links/Link";
 
 const { colors, whitespace, typography } = constants;
 
 const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [item, setItem] = useState<ArticleItem | null>(null);
+  const [is404, set404] = useState(false);
 
   useEffect(() => {
     GetPostBySlug(match.params.slug)
-      .then((res: any) => setItem(res[0]))
+      .then((res: any) => {
+        if (res.length > 0) {
+          setItem(res[0]);
+        } else {
+          set404(true);
+        }
+      })
       .catch((err) => console.error(err));
   }, [match.params.slug]);
   useEffect(() => {
@@ -41,8 +50,24 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       }
     }
   }, [item]);
-  return (
+  return is404 ? (
     <>
+      <Header />
+      <DarkSection>
+        <Container>
+          <ArticleTitle>Aw shucks, looks like a 404</ArticleTitle>
+          <p>That article doesn't exist anymore 🤷‍♂️</p>
+          <p>
+            <Link to="/#articles">Or maybe it does?</Link>
+          </p>
+        </Container>
+      </DarkSection>
+    </>
+  ) : (
+    <>
+      <Helmet>
+        <title>{item ? parse(item.title.rendered) : document.title}</title>
+      </Helmet>
       <Header />
       <DarkSection>
         <Container>

@@ -27,8 +27,8 @@ const LandingPage: React.FC = () => {
         <IntroSection>
           <Container>
             <IntroTitle>
-              {landingPageData.header.title.split(" ").map((item) => (
-                <i>{item} </i>
+              {landingPageData.header.title.split(" ").map((item, index) => (
+                <i key={`title-letter-${index}`}>{item} </i>
               ))}
             </IntroTitle>
             {landingPageData.header.text}
@@ -45,7 +45,7 @@ const LandingPage: React.FC = () => {
             <LinksAndReferences className="linksAndReferences">
               <p>You can find me on...</p>
               {landingPageData.linksAndReferences.map((item, index) => (
-                <LinkReference to={item.url}>
+                <LinkReference to={item.url} key={`link-reference-${index}`}>
                   {item.title} {item.context && <span>{item.context}</span>}
                 </LinkReference>
               ))}
