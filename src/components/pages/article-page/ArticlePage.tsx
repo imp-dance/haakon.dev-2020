@@ -69,7 +69,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
         <title>{item ? parse(item.title.rendered) : document.title}</title>
       </Helmet>
       <Header />
-      <DarkSection>
+      <ArticleSection>
         <Container>
           <ArticleTitle>
             {item ? parse(item.title.rendered) : <LoadingText />}
@@ -80,10 +80,21 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
             </ArticleContainer>
           )}
         </Container>
-      </DarkSection>
+      </ArticleSection>
     </>
   );
 };
+
+const ArticleSection = styled(DarkSection)`
+  @media screen and (max-width: 520px) {
+    padding: 0;
+    padding-top: ${whitespace.l};
+    > div > h2 {
+      padding-left: ${whitespace.l};
+      padding-right: ${whitespace.l};
+    }
+  }
+`;
 
 const ArticleTitle = styled.h2`
   margin: 0 0 ${whitespace.l};
