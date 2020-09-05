@@ -8,18 +8,24 @@ interface Props {
   secondary?: boolean;
   onClick?: (e: React.MouseEvent) => void;
   tabIndex?: number;
+  style?: React.CSSProperties;
 }
 
-const FancyButton: React.FC<Props> = ({ secondary, children, ...props }) => {
+const FancyButton: React.FC<Props> = ({
+  secondary,
+  children,
+  style,
+  ...props
+}) => {
   const ref = useRef<HTMLButtonElement>(null);
   const [mouseMove, styles] = useMouseMove(ref);
-
+  const mergedStyles = { ...styles, ...style };
   return (
     <StyledButton
       {...props}
       ref={ref}
       onMouseMove={mouseMove}
-      style={styles}
+      style={mergedStyles}
       secondary={secondary}
     >
       {children}

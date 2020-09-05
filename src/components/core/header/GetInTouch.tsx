@@ -37,6 +37,9 @@ const Modal: React.FC<ModalProps> = ({ open, close }) => {
               >
                 Loading…
               </iframe>
+              <FancyButton onClick={close} secondary>
+                Close form
+              </FancyButton>
             </FrameContainer>
           )}
         </ModalContainer>
@@ -72,9 +75,16 @@ const ModalContainer = styled.div<ModalProps>`
 `;
 
 const FrameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  button {
+    border-radius: 0px;
+    border: none !important;
+  }
   iframe {
     max-width: 100% !important;
     color: ${colors.beige};
+    background: ${colors.gray};
   }
 `;
 
