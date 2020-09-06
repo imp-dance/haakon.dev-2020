@@ -104,7 +104,7 @@ const ArticleListPage: React.FC = () => {
               )}
               {filteredArticles &&
                 filteredArticles.length <= 0 &&
-                `Can't find any articles containing "${search}"...`}
+                `Can't find any articles containing "${debouncedSearch}"...`}
             </>
           )}
         </Container>
