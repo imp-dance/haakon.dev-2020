@@ -3,24 +3,26 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import parse from "html-react-parser";
 import Pagination from "react-js-pagination";
+import { Helmet } from "react-helmet";
 
 import { ArticleItem, ArticlePreviewProps } from "../../../interfaces/Article";
-import Header from "../../core/header/Header";
 import { Container, DarkSection, LoadingText } from "../../core/layout";
+import Header from "../../core/header/Header";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import { GetAllPosts } from "../../core/API";
 import useFilterArticles from "../../../hooks/useFilterArticles";
-import { Helmet } from "react-helmet";
+import useDebounce from "../../../hooks/useDebounce";
 
 const { colors, whitespace, typography } = constants;
 
 const ArticleListPage: React.FC = () => {
   const [postList, setPostList] = useState<ArticleItem[] | null>(null);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
   const [activePage, setActivePage] = useState(1);
-  const [filteredArticles] = useFilterArticles(postList, search);
+  const [filteredArticles] = useFilterArticles(postList, debouncedSearch);
   const ITEMS_PER_PAGE = 9;
   const handlePageChange = (pageNum: number) => {
     setActivePage(pageNum);
@@ -41,10 +43,10 @@ const ArticleListPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (search) {
+    if (debouncedSearch) {
       setActivePage(1);
     }
-  }, [search]);
+  }, [debouncedSearch]);
 
   const pageFilteredList = filteredArticles?.slice(
     activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
