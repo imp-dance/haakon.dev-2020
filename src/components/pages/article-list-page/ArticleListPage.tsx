@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import parse from "html-react-parser";
+import Pagination from "react-js-pagination";
 
 import { ArticleItem, ArticlePreviewProps } from "../../../interfaces/Article";
 import Header from "../../core/header/Header";
@@ -9,12 +10,21 @@ import { Container, DarkSection, LoadingText } from "../../core/layout";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import { GetAllPosts } from "../../core/API";
+import useFilterArticles from "../../../hooks/useFilterArticles";
+import { Helmet } from "react-helmet";
 
 const { colors, whitespace, typography } = constants;
 
 const ArticleListPage: React.FC = () => {
   const [postList, setPostList] = useState<ArticleItem[] | null>(null);
+  const [search, setSearch] = useState("");
   const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
+  const [activePage, setActivePage] = useState(1);
+  const [filteredArticles] = useFilterArticles(postList, search);
+  const ITEMS_PER_PAGE = 9;
+  const handlePageChange = (pageNum: number) => {
+    setActivePage(pageNum);
+  };
   useEffect(() => {
     GetAllPosts()
       .then((response: any) => {
@@ -29,10 +39,25 @@ const ArticleListPage: React.FC = () => {
       })
       .catch((err) => console.error(err));
   }, []);
+
+  useEffect(() => {
+    if (search) {
+      setActivePage(1);
+    }
+  }, [search]);
+
+  const pageFilteredList = filteredArticles?.slice(
+    activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
+    activePage * ITEMS_PER_PAGE
+  );
+
   return (
     <>
+      <Helmet>
+        <title>Articles - haakon.dev</title>
+      </Helmet>
       <Header />
-      <DarkSection>
+      <ArticleListSection>
         <Container>
           {!postList && (
             <h2>
@@ -40,21 +65,48 @@ const ArticleListPage: React.FC = () => {
             </h2>
           )}
 
-          {postList !== null && featuredItem !== null && (
+          {pageFilteredList && featuredItem !== null && (
             <>
               <FeaturedItem item={featuredItem} />
+              <SearchInput
+                type="search"
+                value={search}
+                onChange={(e: any) => setSearch(e.target.value)}
+                placeholder="Search through articles"
+              />
               <ArticlesContainer>
-                {postList.map((item, index) => (
+                {pageFilteredList.map((item, index) => (
                   <ArticlePreview
                     item={item}
+                    index={index}
                     key={`article-preview-${index}`}
                   />
                 ))}
               </ArticlesContainer>
+              {filteredArticles && filteredArticles.length > 0 && (
+                <PaginationContainer>
+                  <Pagination
+                    activePage={activePage}
+                    itemsCountPerPage={ITEMS_PER_PAGE}
+                    totalItemsCount={
+                      filteredArticles ? filteredArticles.length : 0
+                    }
+                    itemClassFirst="firstItem"
+                    itemClassNext="nextItem"
+                    itemClassLast="lastItem"
+                    itemClassPrev="prevItem"
+                    pageRangeDisplayed={5}
+                    onChange={handlePageChange}
+                  />
+                </PaginationContainer>
+              )}
+              {filteredArticles &&
+                filteredArticles.length <= 0 &&
+                `Can't find any articles containing "${search}"...`}
             </>
           )}
         </Container>
-      </DarkSection>
+      </ArticleListSection>
     </>
   );
 };
@@ -101,7 +153,7 @@ const FeaturedItem: React.FC<ArticlePreviewProps> = ({ item }) => {
   );
 };
 
-const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
+const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item, index }) => {
   const history = useHistory();
 
   const openArticle = () => history.push(`/article/${item.slug}`);
@@ -113,6 +165,8 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
     }
   };
 
+  const indexVarStyles = { "--i": index } as React.CSSProperties;
+
   return (
     <StyledArticle
       onClick={openArticle}
@@ -120,6 +174,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
       role="button"
       onKeyDown={onKeyDown}
       aria-label={item.title.rendered}
+      style={indexVarStyles}
     >
       <h3>
         <span>{parse(item.title.rendered)}</span>
@@ -128,6 +183,91 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item }) => {
     </StyledArticle>
   );
 };
+
+const PaginationContainer = styled.div`
+  margin: ${whitespace.l} 0 0;
+  .pagination {
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    opacity: 0.4;
+    &:hover {
+      opacity: 0.8;
+    }
+    li a {
+      padding: ${whitespace.s} ${whitespace.m};
+      background: ${colors.primary};
+      color: ${colors.gray};
+      text-decoration: none;
+      border-radius: 2px;
+      font-size: ${typography.xs};
+    }
+    li.active a {
+      font-weight: bold;
+      background: ${colors.beige};
+      color: ${colors.bgDark};
+    }
+    li.disabled {
+      opacity: 0.5;
+    }
+    .firstItem a,
+    .nextItem a,
+    .lastItem a,
+    .prevItem a {
+      background: transparent;
+      color: ${colors.white};
+    }
+    li + li {
+      margin-left: ${whitespace.s};
+    }
+  }
+`;
+
+const ArticleListSection = styled(DarkSection)`
+  position: relative;
+  overflow: hidden;
+  &:after {
+    transition: opacity 0.5s ease-in-out;
+    content: "";
+    display: block;
+    width: 40vmin;
+    height: 40vmin;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(#ffffff57 1%, rgba(255, 255, 255, 0) 51%);
+    position: absolute;
+    left: calc(var(--x) * 1px);
+    top: calc(var(--y) * 1px);
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  &:hover {
+    &:after {
+      /* opacity: 0.2; */
+    }
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: ${whitespace.s};
+  margin: ${whitespace.m} 0 0;
+  border: 1px solid ${colors.primary};
+  background: ${colors.gray};
+  font-family: "IBM Plex Mono", monospace;
+  font-size: ${typography.s};
+  opacity: 0.7;
+  position: relative;
+  z-index: 1;
+
+  &:focus {
+    opacity: 1;
+    outline: 5px auto rgba(0, 150, 255, 1);
+  }
+`;
 
 const StyledFeaturedItem = styled.div`
   margin: ${whitespace.m} 0;
@@ -138,6 +278,8 @@ const StyledFeaturedItem = styled.div`
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
   > img {
     position: absolute;
     top: 0;
@@ -155,9 +297,6 @@ const StyledFeaturedItem = styled.div`
   &:focus {
     outline: 5px auto rgba(0, 150, 255, 1);
   }
-  &:hover {
-    transform: scale(1.01);
-  }
   > p {
     font-size: ${typography.s};
     opacity: 0.6;
@@ -174,6 +313,12 @@ const StyledArticle = styled.div`
   cursor: pointer;
   max-height: 150px;
   overflow: hidden;
+  --i: 0;
+  animation: ${fadeIn} 0.2s ease-in-out;
+  animation-fill-mode: both;
+  animation-delay: calc(var(--i) * 50ms);
+  opacity: 0;
+  z-index: 1;
   h3 {
     max-width: 250px;
     white-space: nowrap;
@@ -202,61 +347,10 @@ const StyledArticle = styled.div`
 `;
 
 const ArticlesContainer = styled.div`
-  margin: ${whitespace.l} 0;
+  margin: ${whitespace.m} 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: ${whitespace.s};
-  > div {
-    animation: ${fadeIn} 0.2s ease-in-out;
-    animation-fill-mode: both;
-    animation-delay: 1500ms;
-    opacity: 0;
-  }
-  > div:nth-child(1) {
-    animation-delay: 50ms;
-  }
-  > div:nth-child(2) {
-    animation-delay: 100ms;
-  }
-  > div:nth-child(3) {
-    animation-delay: 200ms;
-  }
-  > div:nth-child(4) {
-    animation-delay: 300ms;
-  }
-  > div:nth-child(5) {
-    animation-delay: 400ms;
-  }
-  > div:nth-child(6) {
-    animation-delay: 500ms;
-  }
-  > div:nth-child(7) {
-    animation-delay: 600ms;
-  }
-  > div:nth-child(8) {
-    animation-delay: 700ms;
-  }
-  > div:nth-child(9) {
-    animation-delay: 800ms;
-  }
-  > div:nth-child(10) {
-    animation-delay: 900ms;
-  }
-  > div:nth-child(11) {
-    animation-delay: 1000ms;
-  }
-  > div:nth-child(12) {
-    animation-delay: 1100ms;
-  }
-  > div:nth-child(13) {
-    animation-delay: 1200ms;
-  }
-  > div:nth-child(14) {
-    animation-delay: 1300ms;
-  }
-  > div:nth-child(15) {
-    animation-delay: 1400ms;
-  }
 `;
 
 export default ArticleListPage;

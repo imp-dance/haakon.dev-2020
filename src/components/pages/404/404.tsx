@@ -14,7 +14,12 @@ const Page404 = () => {
       <Header />
       <DarkSection>
         <Container>
-          <Title>👾 Where did I leave this page again? </Title>
+          <Title>
+            <span role="img" aria-label="Alien emoji">
+              👾
+            </span>{" "}
+            Where did I leave this page again?{" "}
+          </Title>
           <Text>
             <p>I can't seem to find what you were looking for...</p>
             <p>

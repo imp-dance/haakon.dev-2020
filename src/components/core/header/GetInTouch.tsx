@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import FancyButton from "../buttons/FancyButton";
 import constants from "../../../styles/constants";
-const { colors, whitespace } = constants;
+const { colors } = constants;
 
 const GetInTouch: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -20,6 +20,20 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ open, close }) => {
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      close && close();
+    }
+  };
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("keydown", onKeyDown);
+    } else {
+      document.removeEventListener("keydown", onKeyDown);
+    }
+    return () => document.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line
+  }, [open]);
   return (
     <>
       <Backdrop open={open} onClick={close}>

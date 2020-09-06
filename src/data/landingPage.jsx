@@ -105,7 +105,7 @@ const landingPageData = {
             by my brother, Eirik Underbakke.
           </p>
         ),
-        url: "https://eirik.underbakke.no",
+        url: "https://eirik.underbakke.net",
       },
       {
         title: "Ryfylke Bok & IT",

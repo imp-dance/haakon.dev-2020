@@ -56,7 +56,12 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       <DarkSection>
         <Container>
           <ArticleTitle>Aw shucks, looks like a 404</ArticleTitle>
-          <p>That article doesn't exist anymore 🤷‍♂️</p>
+          <p>
+            That article doesn't exist anymore{" "}
+            <span role="img" aria-label="Man shrugging">
+              🤷‍♂️
+            </span>
+          </p>
           <p>
             <Link to="/#articles">Or maybe it does?</Link>
           </p>
