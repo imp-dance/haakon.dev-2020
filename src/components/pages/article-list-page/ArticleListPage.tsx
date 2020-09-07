@@ -6,7 +6,12 @@ import Pagination from "react-js-pagination";
 import { Helmet } from "react-helmet";
 
 import { ArticleItem, ArticlePreviewProps } from "../../../interfaces/Article";
-import { Container, DarkSection, LoadingText } from "../../core/layout";
+import {
+  Container,
+  DarkSection,
+  LoadingText,
+  Spinner,
+} from "../../core/layout";
 import Header from "../../core/header/Header";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
@@ -27,6 +32,7 @@ const ArticleListPage: React.FC = () => {
   const debouncedSearch = useDebounce(search, 300);
   const articleContainerRef = useRef<HTMLDivElement>(null);
   const [filteredArticles] = useFilterArticles(postList, debouncedSearch);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const ITEMS_PER_PAGE = 9;
 
   const handlePageChange = (pageNum: number) => {
@@ -52,6 +58,7 @@ const ArticleListPage: React.FC = () => {
     if (debouncedSearch) {
       setActivePage(1);
     }
+    setLoadingSearch(false);
   }, [debouncedSearch]);
 
   useEffect(() => {
@@ -62,6 +69,12 @@ const ArticleListPage: React.FC = () => {
     }
     // eslint-disable-next-line
   }, [activePage]);
+
+  useEffect(() => {
+    if (search) {
+      setLoadingSearch(true);
+    }
+  }, [search]);
 
   useEffect(() => {
     const listener = (e: any) => {
@@ -97,12 +110,15 @@ const ArticleListPage: React.FC = () => {
               <OnlyOnMobile>
                 Showing {pageFilteredList.length} articles.
               </OnlyOnMobile>
-              <SearchInput
-                type="search"
-                value={search}
-                onChange={(e: any) => setSearch(e.target.value)}
-                placeholder="Search through articles"
-              />
+              <SearchInputContainer>
+                <SearchInput
+                  type="search"
+                  value={search}
+                  onChange={(e: any) => setSearch(e.target.value)}
+                  placeholder="Search through articles"
+                />
+                <Spinner active={loadingSearch} />
+              </SearchInputContainer>
               <ArticlesContainer ref={articleContainerRef}>
                 {pageFilteredList.map((item, index) => (
                   <ArticlePreview
@@ -289,11 +305,26 @@ const OnlyOnMobile = styled.div`
   }
 `;
 
+const SearchInputContainer = styled.div`
+  position: relative;
+  > i {
+    position: absolute;
+    top: -33px;
+    right: ${whitespace.l};
+    z-index: 1;
+    border-top-color: rgba(255, 255, 255, 0.5);
+    border-right-color: rgba(255, 255, 255, 0.5);
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+    border-left-color: ${colors.primary};
+  }
+`;
+
 const SearchInput = styled.input`
   width: 100%;
   padding: ${whitespace.s};
   margin: ${whitespace.m} 0 0;
   border: 1px solid ${colors.primary};
+  border-radius: 2px;
   background: ${colors.gray};
   font-family: "IBM Plex Mono", monospace;
   font-size: ${typography.s};

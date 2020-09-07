@@ -23,7 +23,11 @@ export const useFilterArticles = (
         // Let's parse relevant content:
         const parsedTitle = parse(item.title.rendered).toString().toLowerCase();
         const strippedContent = stripHTML(item.content.rendered);
-        const parsedSearch = search.toLowerCase().trim();
+        const parsedSearch = search
+          .toString()
+          .toLowerCase()
+          .trim()
+          .replace(/[|&;$%@"<>()+,]/g, ""); // Strip away potential regex
 
         // Then do actual search:
         if (
