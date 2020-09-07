@@ -81,6 +81,15 @@ const RightColumn = styled.div`
   display: flex;
   align-items: center;
 
+  @media screen and (max-width: 360px) {
+    flex-direction: column;
+    button {
+      width: 100%;
+      margin: 0 !important;
+      font-size: ${constants.typography.xs};
+    }
+  }
+
   button {
     margin-right: 1em;
     animation: ${fadeUpButtons} 0.3s ease-in-out;
