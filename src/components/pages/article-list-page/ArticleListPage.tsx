@@ -359,7 +359,7 @@ const StyledFeaturedItem = styled.div`
     left: 0;
     width: 100%;
     transform: translate(0px, -30%);
-    opacity: 0.4;
+    opacity: 0.1;
     pointer-events: none;
   }
   > p,
