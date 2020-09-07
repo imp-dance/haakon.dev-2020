@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import parse from "html-react-parser";
@@ -19,14 +19,20 @@ const { colors, whitespace, typography } = constants;
 const ArticleListPage: React.FC = () => {
   const [postList, setPostList] = useState<ArticleItem[] | null>(null);
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 300);
+  const [isMobile, setMobile] = useState(
+    window.matchMedia("(max-width: 420px)").matches
+  );
   const [featuredItem, setFeaturedItem] = useState<ArticleItem | null>(null);
   const [activePage, setActivePage] = useState(1);
+  const debouncedSearch = useDebounce(search, 300);
+  const articleContainerRef = useRef<HTMLDivElement>(null);
   const [filteredArticles] = useFilterArticles(postList, debouncedSearch);
   const ITEMS_PER_PAGE = 9;
+
   const handlePageChange = (pageNum: number) => {
     setActivePage(pageNum);
   };
+
   useEffect(() => {
     GetAllPosts()
       .then((response: any) => {
@@ -47,6 +53,24 @@ const ArticleListPage: React.FC = () => {
       setActivePage(1);
     }
   }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (articleContainerRef?.current && isMobile) {
+      articleContainerRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+    // eslint-disable-next-line
+  }, [activePage]);
+
+  useEffect(() => {
+    const listener = (e: any) => {
+      setMobile(e.matches);
+    };
+    window.matchMedia("(max-width: 420px)").addListener(listener);
+    return () =>
+      window.matchMedia("(max-width: 420px)").removeListener(listener);
+  }, []);
 
   const pageFilteredList = filteredArticles?.slice(
     activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
@@ -70,13 +94,16 @@ const ArticleListPage: React.FC = () => {
           {pageFilteredList && featuredItem !== null && (
             <>
               <FeaturedItem item={featuredItem} />
+              <OnlyOnMobile>
+                Showing {pageFilteredList.length} articles.
+              </OnlyOnMobile>
               <SearchInput
                 type="search"
                 value={search}
                 onChange={(e: any) => setSearch(e.target.value)}
                 placeholder="Search through articles"
               />
-              <ArticlesContainer>
+              <ArticlesContainer ref={articleContainerRef}>
                 {pageFilteredList.map((item, index) => (
                   <ArticlePreview
                     item={item}
@@ -253,6 +280,15 @@ const ArticleListSection = styled(DarkSection)`
   }
 `;
 
+const OnlyOnMobile = styled.div`
+  display: none;
+  font-size: ${typography.xs};
+  margin: ${whitespace.m} 0 0;
+  @media screen and (max-width: 420px) {
+    display: block;
+  }
+`;
+
 const SearchInput = styled.input`
   width: 100%;
   padding: ${whitespace.s};
@@ -264,6 +300,10 @@ const SearchInput = styled.input`
   opacity: 0.7;
   position: relative;
   z-index: 1;
+
+  @media screen and (max-width: 420px) {
+    font-size: 16px;
+  }
 
   &:focus {
     opacity: 1;
