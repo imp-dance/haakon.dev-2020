@@ -188,6 +188,7 @@ const LinkReference = styled(ExternalLink)`
     margin-left: auto;
     font-size: ${typography.s};
     opacity: 0.4;
+    text-align: right;
   }
   &:hover {
     background: ${colors.bg};
