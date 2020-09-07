@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { fadeIn } from "../../../../styles/animations";
@@ -23,6 +23,20 @@ interface StyledDialogInterface {
 }
 
 const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      close && close();
+    }
+  };
+  useEffect(() => {
+    if (openOn) {
+      document.addEventListener("keydown", onKeyDown);
+    } else {
+      document.removeEventListener("keydown", onKeyDown);
+    }
+    return () => document.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line
+  }, [openOn]);
   return (
     <>
       {openOn && <BackDrop />}
