@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import styled from "styled-components";
 import parse from "html-react-parser";
 
 import { ArticleItem, ArticlePageProps } from "../../../interfaces/Article";
-import Header from "../../core/header/Header";
 import {
   Container,
   DarkSection,
@@ -11,11 +10,12 @@ import {
   LoadingText,
 } from "../../core/layout";
 import constants from "../../../styles/constants";
+import { fadeIn } from "../../../styles/animations";
 import { GetPostBySlug } from "../../core/API";
 import { Helmet } from "react-helmet";
-import Link from "../../core/links/Link";
 
 const { colors, whitespace, typography } = constants;
+const Article404 = lazy(() => import("../404/Article404"));
 
 const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [item, setItem] = useState<ArticleItem | null>(null);
@@ -51,29 +51,14 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
     }
   }, [item]);
   return is404 ? (
-    <>
-      <Header />
-      <DarkSection>
-        <Container>
-          <ArticleTitle>Aw shucks, looks like a 404</ArticleTitle>
-          <p>
-            That article doesn't exist anymore{" "}
-            <span role="img" aria-label="Man shrugging">
-              🤷‍♂️
-            </span>
-          </p>
-          <p>
-            <Link to="/#articles">Or maybe it does?</Link>
-          </p>
-        </Container>
-      </DarkSection>
-    </>
+    <Suspense fallback={<>...</>}>
+      <Article404 />
+    </Suspense>
   ) : (
     <>
       <Helmet>
         <title>{item ? parse(item.title.rendered) : document.title}</title>
       </Helmet>
-      <Header />
       <ArticleSection>
         <Container>
           <ArticleTitle>
@@ -109,6 +94,7 @@ const ArticleTitle = styled.h2`
 const ArticleContainer = styled(LightSection)`
   padding: ${whitespace.l};
   color: ${colors.bgDark};
+  animation: ${fadeIn} 0.2s ease-in-out;
   font-family: "IBM Plex Sans", sans-serif;
   > *:first-child {
     margin-top: 0;

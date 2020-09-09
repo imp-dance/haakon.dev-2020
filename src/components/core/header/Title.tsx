@@ -2,11 +2,12 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 import { fadeInUp } from "../../../styles/animations";
+import Link from "../links/Link";
 
 const Title = () => {
   const titles = ["dev", "music", "design"];
   return (
-    <StyledLink href="/">
+    <StyledLink to="/">
       <StyledTitle>
         haakon.
         <TitleRotator className="header-titleRotator">
@@ -74,7 +75,7 @@ const TitleRotator = styled.div`
   }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;

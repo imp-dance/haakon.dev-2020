@@ -70,6 +70,10 @@ const StyledButton = styled.button<Props>`
     outline: none;
   }
 
+  &:active {
+    transform: translate(0px, 1px);
+  }
+
   &:hover {
     opacity: 1;
     border-color: #fff;

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import Header from "../../core/header/Header";
 import {
   Container,
   DarkSection,
@@ -22,7 +21,6 @@ const { colors, typography, whitespace } = constants;
 const LandingPage: React.FC = () => {
   return (
     <>
-      <Header />
       <LandingPageContainer>
         <IntroSection>
           <Container>

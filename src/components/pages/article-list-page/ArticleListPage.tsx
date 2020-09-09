@@ -12,7 +12,6 @@ import {
   LoadingText,
   Spinner,
 } from "../../core/layout";
-import Header from "../../core/header/Header";
 import { fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import { GetAllPosts } from "../../core/API";
@@ -95,7 +94,6 @@ const ArticleListPage: React.FC = () => {
       <Helmet>
         <title>Articles - haakon.dev</title>
       </Helmet>
-      <Header />
       <ArticleListSection>
         <Container>
           {!postList && (
@@ -273,6 +271,7 @@ const PaginationContainer = styled.div`
 const ArticleListSection = styled(DarkSection)`
   position: relative;
   overflow: hidden;
+  animation: ${fadeIn} 0.2s ease-in-out;
   &:after {
     transition: opacity 0.5s ease-in-out;
     content: "";

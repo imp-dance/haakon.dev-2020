@@ -23,9 +23,9 @@ const Header: React.FC = () => {
             <FancyButton
               secondary
               onClick={() =>
-                window.location.pathname === "/articles"
+                window.location.hash === "#/articles"
                   ? window.location.reload()
-                  : history.push("/articles")
+                  : history && history.push("/articles")
               }
             >
               Articles

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-
-import LandingPage from "../pages/landing-page/LandingPage";
-import ArticleListPage from "../pages/article-list-page/ArticleListPage";
-import ArticlePage from "../pages/article-page/ArticlePage";
 import Page404 from "../pages/404/404";
 import { Container } from "../core/layout";
 import constants from "../../styles/constants";
 import FancyButton from "./buttons/FancyButton";
+import Header from "./header/Header";
+
+const LandingPage = lazy(() => import("../pages/landing-page/LandingPage"));
+const ArticleListPage = lazy(
+  () => import("../pages/article-list-page/ArticleListPage")
+);
+const ArticlePage = lazy(() => import("../pages/article-page/ArticlePage"));
 const { whitespace, colors } = constants;
 
 function App() {
@@ -17,12 +20,15 @@ function App() {
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorBoundaryComponent}>
         <HashRouter>
-          <Switch>
-            <Route path="/" exact component={LandingPage}></Route>
-            <Route path="/articles" exact component={ArticleListPage}></Route>
-            <Route path="/article/:slug" component={ArticlePage}></Route>
-            <Route component={Page404} />
-          </Switch>
+          <Header />
+          <Suspense fallback={<p>Fetching page...</p>}>
+            <Switch>
+              <Route path="/" exact component={LandingPage}></Route>
+              <Route path="/articles" exact component={ArticleListPage}></Route>
+              <Route path="/article/:slug" component={ArticlePage}></Route>
+              <Route component={Page404} />
+            </Switch>
+          </Suspense>
         </HashRouter>
       </ErrorBoundary>
     </div>
