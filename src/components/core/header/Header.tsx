@@ -81,7 +81,7 @@ const RightColumn = styled.div`
   display: flex;
   align-items: center;
 
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 380px) {
     flex-direction: column;
     button {
       width: 100%;
