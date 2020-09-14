@@ -12,7 +12,7 @@ import {
   LoadingText,
   Spinner,
 } from "../../core/layout";
-import { fadeIn } from "../../../styles/animations";
+import { fadeIn, fadeInUp } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import { GetAllPosts } from "../../core/API";
 import useFilterArticles from "../../../hooks/useFilterArticles";
@@ -23,6 +23,7 @@ const { colors, whitespace, typography } = constants;
 const ArticleListPage: React.FC = () => {
   const [postList, setPostList] = useState<ArticleItem[] | null>(null);
   const [search, setSearch] = useState("");
+  const [isFiltering, setFiltering] = useState(false);
   const [isMobile, setMobile] = useState(
     window.matchMedia("(max-width: 420px)").matches
   );
@@ -30,6 +31,7 @@ const ArticleListPage: React.FC = () => {
   const [activePage, setActivePage] = useState(1);
   const debouncedSearch = useDebounce(search, 300);
   const articleContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [filteredArticles] = useFilterArticles(postList, debouncedSearch);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const ITEMS_PER_PAGE = 9;
@@ -76,6 +78,12 @@ const ArticleListPage: React.FC = () => {
   }, [search]);
 
   useEffect(() => {
+    if (isFiltering && searchInputRef && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isFiltering]);
+
+  useEffect(() => {
     const listener = (e: any) => {
       setMobile(e.matches);
     };
@@ -105,24 +113,48 @@ const ArticleListPage: React.FC = () => {
           {pageFilteredList && featuredItem !== null && (
             <>
               <FeaturedItem item={featuredItem} />
-              <OnlyOnMobile>
-                Showing {pageFilteredList.length} articles.
-              </OnlyOnMobile>
               <SearchInputContainer>
-                <SearchInput
-                  type="search"
-                  value={search}
-                  onChange={(e: any) => setSearch(e.target.value)}
-                  placeholder="Search through articles"
-                />
+                {!isFiltering ? (
+                  <FilterButtonContainer onClick={() => setFiltering(true)}>
+                    Filter
+                    <FilterButton
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 16 16"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6 10.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11a.5.5 0 01-.5-.5z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </FilterButton>
+                  </FilterButtonContainer>
+                ) : (
+                  <SearchInput
+                    type="search"
+                    ref={searchInputRef}
+                    value={search}
+                    onChange={(e: any) => setSearch(e.target.value)}
+                    placeholder="Search through articles"
+                  />
+                )}
+
                 <Spinner active={loadingSearch} />
               </SearchInputContainer>
+              <OnlyOnMobile>
+                Showing {pageFilteredList.length + " "}
+                {pageFilteredList.length === 1 ? "article" : "articles"}.
+              </OnlyOnMobile>
               <ArticlesContainer ref={articleContainerRef}>
                 {pageFilteredList.map((item, index) => (
                   <ArticlePreview
                     item={item}
                     index={index}
-                    key={`article-preview-${index}`}
+                    key={`article-preview-${index}-${item.id}`}
                   />
                 ))}
               </ArticlesContainer>
@@ -227,6 +259,44 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item, index }) => {
   );
 };
 
+const FilterButtonContainer = styled.a`
+  margin-left: auto;
+  cursor: pointer;
+  font-size: ${typography.s};
+  position: relative;
+  @media screen and (max-width: 420px) {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+  }
+  &:after {
+    transition: 0.2s;
+    background: ${colors.lightPink};
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: calc(100% + 2px);
+    pointer-events: none;
+    opacity: 0.5;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+  }
+  &:hover {
+    &:after {
+      transform: scaleX(1);
+    }
+  }
+`;
+
+const FilterButton = styled.svg`
+  transition: 0.2s;
+  margin-left: 0.5rem;
+  transform: translate(0px, 2px);
+  cursor: pointer;
+`;
+
 const PaginationContainer = styled.div`
   margin: ${whitespace.l} 0 0;
   .pagination {
@@ -299,6 +369,7 @@ const OnlyOnMobile = styled.div`
   display: none;
   font-size: ${typography.xs};
   margin: ${whitespace.m} 0 0;
+  text-align: center;
   @media screen and (max-width: 420px) {
     display: block;
   }
@@ -306,6 +377,8 @@ const OnlyOnMobile = styled.div`
 
 const SearchInputContainer = styled.div`
   position: relative;
+  margin: ${whitespace.m} 0 0;
+  display: flex;
   > i {
     position: absolute;
     top: -33px;
@@ -316,12 +389,15 @@ const SearchInputContainer = styled.div`
     border-bottom-color: rgba(255, 255, 255, 0.5);
     border-left-color: ${colors.primary};
   }
+  @media screen and (max-width: 420px) {
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const SearchInput = styled.input`
   width: 100%;
   padding: ${whitespace.s};
-  margin: ${whitespace.m} 0 0;
   border: 1px solid ${colors.primary};
   border-radius: 2px;
   background: ${colors.gray};
@@ -329,6 +405,7 @@ const SearchInput = styled.input`
   font-size: ${typography.s};
   opacity: 0.7;
   position: relative;
+  animation: ${fadeInUp} 0.3s ease-in-out;
   z-index: 1;
 
   @media screen and (max-width: 420px) {
@@ -372,8 +449,9 @@ const StyledFeaturedItem = styled.div`
   > p {
     font-size: ${typography.s};
     opacity: 0.6;
-    background: ${colors.bg}fa;
+    background: ${colors.bg}66;
     line-height: 1.5rem;
+    padding: ${whitespace.s};
   }
 `;
 
