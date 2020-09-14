@@ -7,6 +7,7 @@ import { Container } from "../core/layout";
 import constants from "../../styles/constants";
 import FancyButton from "./buttons/FancyButton";
 import Header from "./header/Header";
+import Footer from "./Footer";
 
 const LandingPage = lazy(() => import("../pages/landing-page/LandingPage"));
 const ArticleListPage = lazy(
@@ -29,6 +30,7 @@ function App() {
               <Route component={Page404} />
             </Switch>
           </Suspense>
+          <Footer />
         </HashRouter>
       </ErrorBoundary>
     </div>
