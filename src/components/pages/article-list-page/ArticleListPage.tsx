@@ -98,7 +98,7 @@ const ArticleListPage: React.FC = () => {
       window.matchMedia("(max-width: 420px)").removeListener(listener);
   }, []);
 
-  const pageFilteredList = filteredArticles?.slice(
+  const renderArticleList = filteredArticles?.slice(
     activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
     activePage * ITEMS_PER_PAGE
   );
@@ -116,7 +116,7 @@ const ArticleListPage: React.FC = () => {
             </h2>
           )}
 
-          {pageFilteredList && featuredItem !== null && (
+          {renderArticleList && featuredItem !== null && (
             <>
               <FeaturedItem item={featuredItem} />
               <SearchInputContainer>
@@ -159,11 +159,11 @@ const ArticleListPage: React.FC = () => {
                 <Spinner active={loadingSearch} />
               </SearchInputContainer>
               <OnlyOnMobile>
-                Showing {pageFilteredList.length + " "}
-                {pageFilteredList.length === 1 ? "article" : "articles"}.
+                Showing {renderArticleList.length + " "}
+                {renderArticleList.length === 1 ? "article" : "articles"}.
               </OnlyOnMobile>
               <ArticlesContainer ref={articleContainerRef}>
-                {pageFilteredList.map((item, index) => (
+                {renderArticleList.map((item, index) => (
                   <ArticlePreview
                     item={item}
                     index={index}
@@ -264,11 +264,12 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   useEffect(() => {
     if (item && categories) {
       const categoryList: string[] = [];
-      item.categories.forEach((categoryID) =>
-        categoryList.push(
-          categories.filter((item) => item.id === categoryID)[0].name
-        )
-      );
+      item.categories.forEach((categoryID) => {
+        const filter = categories.filter((item) => item.id === categoryID);
+        if (filter && filter.length > 0) {
+          categoryList.push(filter[0].name);
+        }
+      });
       setCategoryNames(categoryList);
     }
   }, [item, categories]);
@@ -351,7 +352,7 @@ const FilterButton = styled.button`
     }
   }
   &:focus {
-    outline: 5px auto rgba(0, 150, 255, 1);
+    outline: none;
   }
 `;
 
@@ -503,6 +504,7 @@ const StyledFeaturedItem = styled.div`
   position: relative;
   z-index: 1;
   > img {
+    transition: 0.3s;
     position: absolute;
     top: 0;
     left: 0;
@@ -517,7 +519,37 @@ const StyledFeaturedItem = styled.div`
     z-index: 1;
   }
   &:focus {
-    outline: 5px auto rgba(0, 150, 255, 1);
+    outline: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-image: linear-gradient(150deg, rgb(177, 92, 92), rgb(116, 110, 195));
+    border-image-slice: 1;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s, opacity 0.4s;
+    z-index: 2;
+  }
+  &:hover,
+  &:focus {
+    > img {
+      transform: translate(0px, -31%);
+      opacity: 0.01;
+    }
+    &::before {
+      transition: transform 0.3s, opacity 1.2s;
+      transform: scaleX(1);
+      opacity: 1;
+    }
   }
   > p {
     font-size: ${typography.s};
@@ -535,7 +567,6 @@ const StyledArticle = styled.div`
   position: relative;
   cursor: pointer;
   max-height: 150px;
-  overflow: hidden;
   --i: 0;
   animation: ${fadeIn} 0.2s ease-in-out;
   animation-fill-mode: both;
@@ -551,21 +582,49 @@ const StyledArticle = styled.div`
   > p {
     font-size: ${typography.s};
     opacity: 0.6;
+    max-height: 58px;
+    overflow: hidden;
   }
-  &:focus {
-    outline: 5px auto rgba(0, 150, 255, 1);
-  }
-  &:hover {
-    transform: scale(1.01);
-  }
-  &:after {
+  &::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     height: 70px;
+    z-index: 1;
+    pointer-events: none;
     background: linear-gradient(to top, ${colors.bgDark}, rgba(0, 0, 0, 0));
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-image: linear-gradient(150deg, rgb(177, 92, 92), rgb(116, 110, 195));
+    border-image-slice: 1;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s, opacity 0.4s;
+    z-index: 2;
+    pointer-events: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:hover,
+  &:focus {
+    &::before {
+      transition: transform 0.3s, opacity 1.2s;
+      transform: scaleX(1);
+      opacity: 0.7;
+    }
   }
 `;
 

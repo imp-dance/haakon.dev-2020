@@ -18,6 +18,7 @@ const Footer = () => {
 };
 
 const StyledFooter = styled.footer`
+  margin-top: auto;
   text-align: center;
   padding: 0 0 ${whitespace.l};
 `;

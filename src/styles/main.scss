@@ -42,4 +42,7 @@ button:focus {
 .App {
   // border-top: 10px solid #403a73;
   border-top: 10px solid #c371a3;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
