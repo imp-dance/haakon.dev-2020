@@ -3,6 +3,7 @@ import { RouteComponentProps } from "react-router";
 export interface ArticlePreviewProps {
   item: ArticleItem;
   index?: number;
+  categories?: any[];
 }
 
 export interface ArticleItem {

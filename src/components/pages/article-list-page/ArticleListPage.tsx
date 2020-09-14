@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import parse from "html-react-parser";
 import Pagination from "react-js-pagination";
 import { Helmet } from "react-helmet";
@@ -14,7 +14,7 @@ import {
 } from "../../core/layout";
 import { fadeIn, fadeInUp } from "../../../styles/animations";
 import constants from "../../../styles/constants";
-import { GetAllPosts } from "../../core/API";
+import { GetAllPosts, GetCategories } from "../../core/API";
 import useFilterArticles from "../../../hooks/useFilterArticles";
 import useDebounce from "../../../hooks/useDebounce";
 
@@ -23,6 +23,7 @@ const { colors, whitespace, typography } = constants;
 const ArticleListPage: React.FC = () => {
   const [postList, setPostList] = useState<ArticleItem[] | null>(null);
   const [search, setSearch] = useState("");
+  const [categories, setCategories] = useState([]);
   const [isFiltering, setFiltering] = useState(false);
   const [isMobile, setMobile] = useState(
     window.matchMedia("(max-width: 420px)").matches
@@ -51,6 +52,11 @@ const ArticleListPage: React.FC = () => {
           filteredItems.filter((item: any, index: number) => index !== 0)
         );
         setFeaturedItem(filteredItems[0]);
+      })
+      .catch((err) => console.error(err));
+    GetCategories()
+      .then((response: any) => {
+        setCategories(response);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -115,27 +121,34 @@ const ArticleListPage: React.FC = () => {
               <FeaturedItem item={featuredItem} />
               <SearchInputContainer>
                 {!isFiltering ? (
-                  <FilterButtonContainer onClick={() => setFiltering(true)}>
+                  <FilterButton
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setFiltering(true)}
+                  >
                     Filter
-                    <FilterButton
+                    <FilterIcon
                       stroke="currentColor"
                       fill="currentColor"
-                      stroke-width="0"
+                      strokeWidth="0"
                       viewBox="0 0 16 16"
                       height="1em"
                       width="1em"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M6 10.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11a.5.5 0 01-.5-.5z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       ></path>
-                    </FilterButton>
-                  </FilterButtonContainer>
+                    </FilterIcon>
+                  </FilterButton>
                 ) : (
                   <SearchInput
                     type="search"
+                    onBlur={() => {
+                      if (search.trim() === "") setFiltering(false);
+                    }}
                     ref={searchInputRef}
                     value={search}
                     onChange={(e: any) => setSearch(e.target.value)}
@@ -154,6 +167,7 @@ const ArticleListPage: React.FC = () => {
                   <ArticlePreview
                     item={item}
                     index={index}
+                    categories={categories}
                     key={`article-preview-${index}-${item.id}`}
                   />
                 ))}
@@ -228,8 +242,13 @@ const FeaturedItem: React.FC<ArticlePreviewProps> = ({ item }) => {
   );
 };
 
-const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item, index }) => {
+const ArticlePreview: React.FC<ArticlePreviewProps> = ({
+  item,
+  index,
+  categories,
+}) => {
   const history = useHistory();
+  const [categoryNames, setCategoryNames] = useState<string[]>([]);
 
   const openArticle = () => history.push(`/article/${item.slug}`);
 
@@ -241,6 +260,18 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item, index }) => {
   };
 
   const indexVarStyles = { "--i": index } as React.CSSProperties;
+
+  useEffect(() => {
+    if (item && categories) {
+      const categoryList: string[] = [];
+      item.categories.forEach((categoryID) =>
+        categoryList.push(
+          categories.filter((item) => item.id === categoryID)[0].name
+        )
+      );
+      setCategoryNames(categoryList);
+    }
+  }, [item, categories]);
 
   return (
     <StyledArticle
@@ -255,15 +286,45 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ item, index }) => {
         <span>{parse(item.title.rendered)}</span>
       </h3>
       {parse(item.excerpt.rendered)}
+      <TagContainer>
+        {categoryNames &&
+          categoryNames.map((category) => <Tag>{category}</Tag>)}
+      </TagContainer>
     </StyledArticle>
   );
 };
+const TagContainer = styled.div`
+  position: absolute;
+  z-index: 1;
+  bottom: ${whitespace.s};
+  right: ${whitespace.s};
+  display: flex;
+  opacity: 0.5;
+  pointer-events: none;
+`;
+const Tag = styled.b`
+  display: inline-block;
+  padding: ${whitespace.s};
+  border-radius: 2px;
+  background: ${colors.bg};
+  font-size: ${typography.xs};
+  margin-left: ${whitespace.s};
+  pointer-events: none;
+  &:before {
+    content: "#";
+    opacity: 0.7;
+  }
+`;
 
-const FilterButtonContainer = styled.a`
+const FilterButton = styled.button`
   margin-left: auto;
+  border: none;
+  background: transparent;
+  color: ${colors.lightPink};
   cursor: pointer;
   font-size: ${typography.s};
   position: relative;
+  animation: ${fadeInUp} 0.3s ease-in-out;
   @media screen and (max-width: 420px) {
     text-align: center;
     justify-content: center;
@@ -283,18 +344,21 @@ const FilterButtonContainer = styled.a`
     right: 0;
     transform: scaleX(0);
   }
-  &:hover {
+  &:hover,
+  &:focus {
     &:after {
       transform: scaleX(1);
     }
   }
+  &:focus {
+    outline: 5px auto rgba(0, 150, 255, 1);
+  }
 `;
 
-const FilterButton = styled.svg`
+const FilterIcon = styled.svg`
   transition: 0.2s;
   margin-left: 0.5rem;
   transform: translate(0px, 2px);
-  cursor: pointer;
 `;
 
 const PaginationContainer = styled.div`
@@ -381,7 +445,7 @@ const SearchInputContainer = styled.div`
   display: flex;
   > i {
     position: absolute;
-    top: -33px;
+    top: 10px;
     right: ${whitespace.l};
     z-index: 1;
     border-top-color: rgba(255, 255, 255, 0.5);
@@ -395,17 +459,26 @@ const SearchInputContainer = styled.div`
   }
 `;
 
+const inputAnimation = keyframes`
+  from {
+    transform:scaleX(0);
+    opacity:0;
+  }
+`;
+
 const SearchInput = styled.input`
   width: 100%;
   padding: ${whitespace.s};
+  -webkit-appearance: none;
   border: 1px solid ${colors.primary};
   border-radius: 2px;
-  background: ${colors.gray};
+  background: ${colors.gray}ee;
   font-family: "IBM Plex Mono", monospace;
   font-size: ${typography.s};
   opacity: 0.7;
   position: relative;
-  animation: ${fadeInUp} 0.3s ease-in-out;
+  transform-origin: right;
+  animation: ${inputAnimation} 0.3s ease-in-out;
   z-index: 1;
 
   @media screen and (max-width: 420px) {

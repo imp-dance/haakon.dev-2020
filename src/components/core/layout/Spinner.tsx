@@ -19,8 +19,7 @@ const StyledSpinner = styled.i`
     width: 1em;
     height: 1em;
   }
-  margin: 60px auto;
-  position: relative;
+  margin: 0px auto;
   text-indent: -9999em;
   border-top: 0.1em solid rgba(255, 255, 255, 0.2);
   border-right: 0.1em solid rgba(255, 255, 255, 0.2);
