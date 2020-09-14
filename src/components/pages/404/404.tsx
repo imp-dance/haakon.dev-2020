@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { DarkSection, Container } from "../../core/layout";
-import Header from "../../core/header/Header";
 import Link from "../../core/links/Link";
 import constants from "../../../styles/constants";
 
@@ -11,7 +10,6 @@ const { typography, whitespace } = constants;
 const Page404 = () => {
   return (
     <>
-      <Header />
       <DarkSection>
         <Container>
           <Title>
