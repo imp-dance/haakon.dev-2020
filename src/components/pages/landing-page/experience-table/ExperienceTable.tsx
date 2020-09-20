@@ -19,36 +19,32 @@ export interface EntryProps {
 
 const ExperienceTable: React.FC = () => {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <TableTitle>Work</TableTitle>
       <ExperienceTableContainer>
-        <tbody>
-          {landingPageData.experienceTable.work.map((workItem) => (
-            <Entry
-              isJob={true}
-              title={workItem.title}
-              content={workItem.position}
-              date={workItem.date}
-              longText={workItem.text}
-              url={workItem.url}
-            />
-          ))}
-        </tbody>
+        {landingPageData.experienceTable.work.map((workItem) => (
+          <Entry
+            isJob={true}
+            title={workItem.title}
+            content={workItem.position}
+            date={workItem.date}
+            longText={workItem.text}
+            url={workItem.url}
+          />
+        ))}
       </ExperienceTableContainer>
       <TableTitle>Projects</TableTitle>
       <ExperienceTableContainer>
-        <tbody>
-          {landingPageData.experienceTable.projects.map((projectItem) => (
-            <Entry
-              isJob={false}
-              title={projectItem.title}
-              content={projectItem.shortText}
-              date={projectItem.date}
-              longText={projectItem.text}
-              url={projectItem.url}
-            />
-          ))}
-        </tbody>
+        {landingPageData.experienceTable.projects.map((projectItem) => (
+          <Entry
+            isJob={false}
+            title={projectItem.title}
+            content={projectItem.shortText}
+            date={projectItem.date}
+            longText={projectItem.text}
+            url={projectItem.url}
+          />
+        ))}
       </ExperienceTableContainer>
     </div>
   );
@@ -64,7 +60,7 @@ const Entry: React.FC<EntryProps> = ({
   ...props
 }) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const buttonRef = useRef<HTMLTableDataCellElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [mouseMove, styles] = useMouseMove(buttonRef);
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
@@ -75,9 +71,8 @@ const Entry: React.FC<EntryProps> = ({
   };
   return (
     <EntryContainer>
-      <td valign="top">{date}</td>
+      <DateColumn>{date}</DateColumn>
       <ProjectButton
-        valign="top"
         ref={buttonRef}
         role="button"
         onMouseMove={mouseMove}
@@ -98,6 +93,12 @@ const Entry: React.FC<EntryProps> = ({
   );
 };
 
+const DateColumn = styled.div`
+  width: 70px;
+  padding: ${whitespace.s};
+  text-align: center;
+`;
+
 const TableTitle = styled.h3`
   padding: ${whitespace.m};
   &:first-child {
@@ -108,20 +109,43 @@ const TableTitle = styled.h3`
   }
 `;
 
-const ExperienceTableContainer = styled.table`
+const ExperienceTableContainer = styled.div`
   width: 100%;
   background: ${colors.beige};
   padding: ${whitespace.m};
 `;
 
-const ProjectButton = styled.td`
+const ProjectButton = styled.button`
   transition: transform 0.1s ease-in-out;
   will-change: transform, background;
   cursor: pointer;
   overflow: hidden;
+  border: none;
+  background: ${colors.beige};
+  width: 100%;
+  text-align: left;
+  padding: ${whitespace.s};
   strong {
     position: relative;
     z-index: 2;
+  }
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    background: transparent;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid;
+    will-change: transform, opacity;
+    border-image: linear-gradient(150deg, rgb(177, 92, 92), rgb(116, 110, 195));
+    border-image-slice: 1;
+    transition: all 0.3s ease-in-out;
+    transform: scaleX(0);
+    opacity: 0;
   }
   &:after {
     content: "";
@@ -139,28 +163,27 @@ const ProjectButton = styled.td`
     z-index: 1;
   }
   &:hover {
-    transform: scale(1.01);
+    /* transform: scale(1.01); */
+    &:before {
+      transform: scaleX(1);
+      opacity: 1;
+    }
     &:after {
       opacity: 0.5;
     }
   }
 `;
 
-const EntryContainer = styled.tr`
+const EntryContainer = styled.div`
   font-size: ${typography.s};
   opacity: 1;
-  > td {
-    padding-bottom: ${whitespace.m};
-    &:first-child {
-      padding-top: ${whitespace.s};
-      padding-right: ${whitespace.m};
-      border-right: 1px solid ${colors.lightPink};
-      width: 80px;
-      text-align: center;
-    }
-    &:last-of-type {
-      padding-left: ${whitespace.m};
-    }
+  display: flex;
+  width: 100%;
+  > div {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-items: center;
   }
   strong {
     font-size: ${typography.m};

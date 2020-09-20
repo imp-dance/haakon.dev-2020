@@ -34,52 +34,65 @@ const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
     } else {
       document.removeEventListener("keydown", onKeyDown);
     }
-    return () => document.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
     // eslint-disable-next-line
   }, [openOn]);
   return (
     <>
-      {openOn && <BackDrop />}
-      <StyledDialog aria-hidden={!openOn} role="dialog" isOpen={openOn}>
-        <h2>{content.title}</h2>
-        <p>
-          {content.isJob ? (
-            <>
-              Position: <b>{content.content}</b>
-            </>
-          ) : (
-            <i>{content.date + " " + content.content}</i>
+      {openOn && <BackDrop onClick={close} />}
+      <DialogContainer
+        aria-hidden={!openOn}
+        role="dialog"
+        isOpen={openOn}
+        key={``}
+      >
+        <StyledDialog aria-hidden={!openOn}>
+          <h2>{content.title}</h2>
+          <p>
+            {content.isJob ? (
+              <>
+                Position: <b>{content.content}</b>
+              </>
+            ) : (
+              <i>{content.date + " " + content.content}</i>
+            )}
+          </p>
+          <LongText>{openOn && content.longText}</LongText>
+          {openOn && (
+            <DialogFooter>
+              <FancyButton
+                secondary
+                onClick={() => window.open(content.url, "_blank")}
+                tabIndex={openOn ? 0 : -1}
+              >
+                Visit website
+              </FancyButton>
+              <BackButton onClick={close} tabIndex={openOn ? 0 : -1}>
+                Close
+              </BackButton>
+            </DialogFooter>
           )}
-        </p>
-        <LongText>{openOn && content.longText}</LongText>
-        <DialogFooter>
-          <FancyButton
-            secondary
-            onClick={() => window.open(content.url, "_blank")}
-            tabIndex={openOn ? 0 : -1}
-          >
-            Visit website
-          </FancyButton>
-          <BackButton onClick={close} tabIndex={openOn ? 0 : -1}>
-            Close
-          </BackButton>
-        </DialogFooter>
-      </StyledDialog>
+        </StyledDialog>
+      </DialogContainer>
     </>
   );
 };
 
-const StyledDialog = styled.div<StyledDialogInterface>`
-  width: 100%;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: ${colors.beige};
-  padding: ${whitespace.l};
+const DialogContainer = styled.div<StyledDialogInterface>`
+  display: grid;
+  place-content: center;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   height: 100%;
-  overflow: auto;
-  z-index: 5;
+  visibility: visible;
+  z-index: 99;
   animation: ${(props) =>
     props.isOpen
       ? css`
@@ -88,24 +101,33 @@ const StyledDialog = styled.div<StyledDialogInterface>`
       : css`
           ${DialogOutAnimation} 0.1s ease-in-out
         `};
-  animation-fill-mode: both;
-  display: flex;
-  flex-direction: column;
   ${(props) =>
     !props.isOpen &&
     `
     pointer-events:none;
+    visibility:hidden;
   `}
+`;
+
+const StyledDialog = styled.div`
+  max-width: ${whitespace.container};
+  background: ${colors.beige};
+  padding: ${whitespace.l};
+  overflow: auto;
+  animation-fill-mode: both;
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
 `;
 
 const BackDrop = styled.div`
   transition: opacity 0.2s ease-in-out;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 98;
   background: ${colors.bg}f5;
   animation: ${fadeIn} 0.1s ease-in-out;
   cursor: pointer;

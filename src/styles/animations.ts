@@ -31,14 +31,14 @@ export const expandOut = keyframes`
 
 export const DialogAnimation = keyframes`
   from {
-    transform:translate(-50%, calc(-50% + 10px)) scale(.9);
+    transform:translate(0px, 5px) scale(.9);
     opacity:0;
   }
 `;
 
 export const DialogOutAnimation = keyframes`
   to {
-    transform:translate(-50%, calc(-50% + 10px)) scale(.9);
+    transform:translate(0px, 5px) scale(.9);
     opacity:0;
   }
 `;

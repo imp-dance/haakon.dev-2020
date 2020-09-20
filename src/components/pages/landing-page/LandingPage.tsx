@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import {
-  Container,
-  DarkSection,
-  LightSection,
-  Accordion,
-} from "../../core/layout";
+import { Container, DarkSection, LightSection } from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
 import ExternalLink from "../../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
@@ -34,12 +29,9 @@ const LandingPage: React.FC = () => {
           <HeaderSVG />
         </IntroSection>
         <InfoSection>
-          <Container>
-            <Accordion label="Work & Experience" render={<ExperienceTable />} />
-            <Accordion
-              label="Tools & Technologies"
-              render={<ToolsShowcase />}
-            />
+          <InfoSectionContainer>
+            <ExperienceTable />
+            <ToolsShowcase />
             <LinksAndReferences className="linksAndReferences">
               <p>You can find me on...</p>
               {landingPageData.linksAndReferences.map((item, index) => (
@@ -48,7 +40,7 @@ const LandingPage: React.FC = () => {
                 </LinkReference>
               ))}
             </LinksAndReferences>
-          </Container>
+          </InfoSectionContainer>
         </InfoSection>
         <DarkSection>
           <Container>
@@ -84,6 +76,20 @@ const LandingPageContainer = styled.div`
   }
 `;
 
+const InfoSectionContainer = styled(Container)`
+  > div {
+    margin: 0 0 ${whitespace.l};
+    opacity: 0.6;
+    animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
+    animation-fill-mode: both;
+    animation-delay: 2.3s;
+    &:last-child {
+      margin: none;
+    }
+  }
+`;
+
 const IntroSection = styled(DarkSection)`
   p {
     animation: ${fadeIn} 0.2s ease-in-out;
@@ -106,7 +112,7 @@ const IntroSection = styled(DarkSection)`
     width: 100vw;
     right: 0;
     transform: translate(0px, 50%) rotate(80deg);
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
     user-select: none;
   }
