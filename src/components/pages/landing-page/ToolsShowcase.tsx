@@ -77,6 +77,8 @@ const ItemContainer = styled.div`
 
 const InnerItemContainer = styled.div`
   overflow: auto;
+  user-select: all;
+  pointer-events: all;
   padding-bottom: ${whitespace.s};
 `;
 

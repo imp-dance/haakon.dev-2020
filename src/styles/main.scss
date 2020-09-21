@@ -21,6 +21,7 @@ body {
     linear-gradient(#171727 20px, transparent 1%) 50%, #1f1f38 !important;
   background-size: 22px 22px !important;
   background-attachment: fixed !important;
+  overflow-y: scroll;
 }
 
 code,
@@ -45,4 +46,39 @@ button:focus {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+@media screen and (min-width: 420px) {
+  ::-webkit-scrollbar {
+    width: 17px;
+    height: 17px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3d3c62;
+    border: 0px none #171727;
+    border-radius: 7px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f3f55;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #2e2e5c;
+  }
+  ::-webkit-scrollbar-track {
+    background: #171727;
+    border: 1px none #4a495a;
+    border-radius: 7px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: #171727;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: #171727;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
 }
