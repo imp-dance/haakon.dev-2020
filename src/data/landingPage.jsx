@@ -74,7 +74,7 @@ const landingPageData = {
             </p>
           </>
         ),
-        url: "https://ligl.no/en",
+        url: "https://ligl.no/?lang=en",
       },
     ],
     projects: [
@@ -127,11 +127,11 @@ const landingPageData = {
   toolsAndTechnologies: [
     {
       title: "JS",
-      items: ["ES6", "Typescript", "React", "Node", "Electron", "jQuery"],
+      items: ["React", "ES6", "Typescript", "Node", "Electron", "jQuery"],
     },
     {
       title: "CSS",
-      items: ["SASS", "styled-components", "Animations", "Responsive design"],
+      items: ["SCSS", "styled-components", "Animations", "Responsive design"],
     },
     {
       title: "HTML",

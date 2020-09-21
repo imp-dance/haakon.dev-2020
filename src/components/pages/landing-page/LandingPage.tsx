@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Particles from "react-tsparticles";
 
 import { Container, DarkSection, LightSection } from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
@@ -10,6 +11,7 @@ import { ReactComponent as HeaderSVG } from "../../../assets/svg/vector.svg";
 import landingPageData from "../../../data/landingPage";
 import { fadeUpButtons, fadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
+import particleOptions from "../../../data/particles.json";
 
 const { colors, typography, whitespace } = constants;
 
@@ -29,9 +31,20 @@ const LandingPage: React.FC = () => {
           <HeaderSVG />
         </IntroSection>
         <InfoSection>
-          <InfoSectionContainer>
+          <InnerContainer>
             <ExperienceTable />
-            <ToolsShowcase />
+          </InnerContainer>
+        </InfoSection>
+        <DarkSection>
+          <ToolsShowcaseContainer>
+            <Particles id="tsParticles" options={particleOptions} />
+            <InnerContainer>
+              <ToolsShowcase />
+            </InnerContainer>
+          </ToolsShowcaseContainer>
+        </DarkSection>
+        <InfoSection>
+          <Container>
             <LinksAndReferences className="linksAndReferences">
               <p>You can find me on...</p>
               {landingPageData.linksAndReferences.map((item, index) => (
@@ -40,7 +53,7 @@ const LandingPage: React.FC = () => {
                 </LinkReference>
               ))}
             </LinksAndReferences>
-          </InfoSectionContainer>
+          </Container>
         </InfoSection>
         <DarkSection>
           <Container>
@@ -68,6 +81,21 @@ const LandingPage: React.FC = () => {
   );
 };
 
+const ToolsShowcaseContainer = styled.div`
+  #tsParticles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    animation: ${fadeIn} 0.2s ease-in-out;
+    will-change: opacity;
+    animation-fill-mode: both;
+    animation-delay: 2.3s;
+  }
+`;
+
 const LandingPageContainer = styled.div`
   z-index: 1;
   background: ${colors.bg};
@@ -76,7 +104,7 @@ const LandingPageContainer = styled.div`
   }
 `;
 
-const InfoSectionContainer = styled(Container)`
+const InnerContainer = styled(Container)`
   > div {
     margin: 0 0 ${whitespace.l};
     opacity: 0.6;

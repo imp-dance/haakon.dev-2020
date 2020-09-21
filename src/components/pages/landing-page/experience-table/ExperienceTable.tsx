@@ -101,8 +101,10 @@ const DateColumn = styled.div`
 
 const TableTitle = styled.h3`
   padding: ${whitespace.m};
+  margin-top: ${whitespace.m};
   &:first-child {
     padding-top: 0px;
+    margin-top: 0px;
   }
   &:before {
     content: "# ";

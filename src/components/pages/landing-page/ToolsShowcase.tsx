@@ -63,13 +63,15 @@ const StyledItem = styled.div`
 `;
 
 const ToolsContainer = styled.div`
+  user-select: none;
+  pointer-events: none;
   > p {
     margin: 0 0 ${whitespace.m};
   }
 `;
 
 const ItemContainer = styled.div`
-  background: ${colors.bg};
+  background: ${colors.bg}99;
   color: ${colors.lightPink};
 `;
 
