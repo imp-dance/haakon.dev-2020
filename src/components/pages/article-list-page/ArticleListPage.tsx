@@ -538,6 +538,9 @@ const StyledFeaturedItem = styled.div`
     transform-origin: left;
     transition: transform 0.6s, opacity 0.4s;
     z-index: 2;
+    @media (prefers-reduced-motion) {
+      transition: none;
+    }
   }
   &:hover,
   &:focus {

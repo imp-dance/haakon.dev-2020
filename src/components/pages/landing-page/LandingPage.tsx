@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Particles from "react-tsparticles";
 
 import { Container, DarkSection, LightSection } from "../../core/layout";
@@ -9,7 +9,7 @@ import ToolsShowcase from "./ToolsShowcase";
 
 import { ReactComponent as HeaderSVG } from "../../../assets/svg/vector.svg";
 import landingPageData from "../../../data/landingPage";
-import { fadeUpButtons, fadeIn } from "../../../styles/animations";
+import { fadeUpButtons, fadeIn, heavyFadeIn } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import particleOptions from "../../../data/particles.json";
 
@@ -45,14 +45,17 @@ const LandingPage: React.FC = () => {
         </DarkSection>
         <InfoSection>
           <Container>
-            <LinksAndReferences className="linksAndReferences">
-              <p>You can find me on...</p>
-              {landingPageData.linksAndReferences.map((item, index) => (
-                <LinkReference to={item.url} key={`link-reference-${index}`}>
-                  {item.title} {item.context && <span>{item.context}</span>}
-                </LinkReference>
-              ))}
-            </LinksAndReferences>
+            <LinksAndRefContainer>
+              <LinksAndReferences className="linksAndReferences">
+                <p>You can find me on...</p>
+                {landingPageData.linksAndReferences.map((item, index) => (
+                  <LinkReference to={item.url} key={`link-reference-${index}`}>
+                    {item.title} {item.context && <span>{item.context}</span>}
+                  </LinkReference>
+                ))}
+              </LinksAndReferences>
+              <LinksAndRefBG />
+            </LinksAndRefContainer>
           </Container>
         </InfoSection>
         <DarkSection>
@@ -89,10 +92,13 @@ const ToolsShowcaseContainer = styled.div`
     right: 0;
     bottom: 0;
     opacity: 0;
-    animation: ${fadeIn} 0.2s ease-in-out;
+    animation: ${heavyFadeIn} 0.6s ease-in-out;
     will-change: opacity;
     animation-fill-mode: both;
     animation-delay: 2.3s;
+    @media (prefers-reduced-motion) {
+      display: none;
+    }
   }
 `;
 
@@ -197,6 +203,37 @@ const IntroTitle = styled.h2`
   }
 `;
 
+const LinksAndRefBGAnimation = keyframes`
+  from {
+    transform:translate(0px, 0px);
+    opacity:0;
+  }
+  to{
+    transform:translate(10px, 10px);
+    opacity:1;
+  }
+`;
+
+const LinksAndRefContainer = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+
+const LinksAndRefBG = styled.div`
+  position: absolute;
+  background: ${colors.bg};
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.7;
+  animation: ${LinksAndRefBGAnimation} 0.6s ease-in-out;
+  will-change: opacity;
+  animation-fill-mode: both;
+  animation-delay: 2.4s;
+`;
+
 const LinksAndReferences = styled.div`
   background: ${colors.gray};
   padding: ${whitespace.m};
@@ -216,15 +253,47 @@ const LinkReference = styled(ExternalLink)`
   color: ${colors.bgDark};
   margin: 0 0 ${whitespace.s};
   text-decoration: none;
+  position: relative;
+  transition: all 0.2s;
   span {
     margin-left: auto;
     font-size: ${typography.s};
     opacity: 0.4;
     text-align: right;
   }
-  &:hover {
-    background: ${colors.bg};
-    color: ${colors.white};
+  &:hover,
+  &:focus {
+    padding-left: ${whitespace.m};
+    outline: none;
+    @media (prefers-reduced-motion) {
+      padding-left: ${whitespace.s};
+      background: ${colors.bg};
+      color: ${colors.beige};
+    }
+    &::before {
+      transform: scaleX(1);
+      opacity: 1;
+      @media (prefers-reduced-motion) {
+        opacity: 0;
+      }
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+    opacity: 0;
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out, opacity 0.4s ease-in-out;
+    transform: scaleX(0);
+    border-bottom: 2px solid;
+    border-image: linear-gradient(150deg, rgb(177, 92, 92), rgb(116, 110, 195));
+    border-image-slice: 1;
   }
 `;
 

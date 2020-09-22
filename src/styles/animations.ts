@@ -14,6 +14,15 @@ export const fadeUpButtons = keyframes`
     }
 `;
 
+export const heavyFadeIn = keyframes`
+    from{
+        opacity:0;
+    }
+    to{
+      opacity:1;
+    }
+`;
+
 export const fadeIn = keyframes`
     from{
         opacity:0.2;

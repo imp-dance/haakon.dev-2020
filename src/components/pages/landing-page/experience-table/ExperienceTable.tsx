@@ -148,6 +148,9 @@ const ProjectButton = styled.button`
     transition: all 0.3s ease-in-out;
     transform: scaleX(0);
     opacity: 0;
+    @media (prefers-reduced-motion) {
+      transition: none;
+    }
   }
   &:after {
     content: "";
