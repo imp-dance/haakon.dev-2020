@@ -1,0 +1,27 @@
+image: node:12.11.1
+
+build:
+  cache:
+    paths:
+      - node_modules/
+
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - rm -rf public
+    - mv build public
+  artifacts:
+    paths:
+      - public # mandatory, other folder won't work
+  only:
+    - master # or dev, the branch you want to publish
+
+deploy: 
+    stage: deploy
+    only:
+        - master
+        deploy:
+  script:
+    - apt-get update -qq && apt-get install -y -qq lftp
+    - lftp -c "set ftp:ssl-allow no; open -u $USER,$PASS $SERVER; mirror -Rev public/ /var/www/haakon.dev/public_html/gitlab-test --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
