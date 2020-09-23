@@ -22,7 +22,7 @@ function App() {
       <ErrorBoundary FallbackComponent={ErrorBoundaryComponent}>
         <HashRouter>
           <Header />
-          <Suspense fallback={<p>Fetching page...</p>}>
+          <Suspense fallback={<></>}>
             <Switch>
               <Route path="/" exact component={LandingPage}></Route>
               <Route path="/articles" exact component={ArticleListPage}></Route>
