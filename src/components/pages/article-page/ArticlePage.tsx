@@ -127,6 +127,7 @@ const ArticleContainer = styled(LightSection)`
   }
   img {
     margin: 0;
+    display: block;
   }
   code {
     padding: 0.1em ${whitespace.s} !important;

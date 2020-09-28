@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 
 import useMouseMove from "../../../../hooks/useMouseMove";
@@ -50,6 +50,8 @@ const ExperienceTable: React.FC = () => {
   );
 };
 
+let hoistedTimeout = setTimeout(() => {});
+
 const Entry: React.FC<EntryProps> = ({
   isJob,
   date,
@@ -66,9 +68,20 @@ const Entry: React.FC<EntryProps> = ({
     const { key } = e;
     if (key === " " || key === "Enter") {
       e.preventDefault();
-      !isDialogOpen && setDialogOpen(true);
+      !isDialogOpen && openDialog();
     }
   };
+  const onClick = (e: React.MouseEvent) => {
+    !isDialogOpen && openDialog();
+    mouseMove(e);
+  };
+  const openDialog = () => {
+    hoistedTimeout = setTimeout(() => {
+      console.log("test");
+      setDialogOpen(true);
+    }, 200);
+  };
+  useEffect(() => () => clearTimeout(hoistedTimeout), []);
   return (
     <EntryContainer>
       <DateColumn>{date}</DateColumn>
@@ -79,7 +92,8 @@ const Entry: React.FC<EntryProps> = ({
         tabIndex={0}
         onKeyDown={onKeyDown}
         style={styles}
-        onClick={!isDialogOpen ? () => setDialogOpen(true) : undefined}
+        onClick={onClick}
+        title="Click to read more"
       >
         <strong>{title}</strong>
         {content}
@@ -97,6 +111,7 @@ const DateColumn = styled.div`
   width: 70px;
   padding: ${whitespace.s};
   text-align: center;
+  opacity: 0.6;
 `;
 
 const TableTitle = styled.h3`
@@ -147,34 +162,37 @@ const ProjectButton = styled.button`
     border-image-slice: 1;
     transition: all 0.3s ease-in-out;
     transform: scaleX(0);
+    transform-origin: left;
     opacity: 0;
     @media (prefers-reduced-motion) {
       transition: none;
     }
   }
-  &:after {
+  &::after {
     content: "";
     display: block;
-    width: 70%;
-    height: 8em;
-    background: radial-gradient(white 10%, transparent 70%);
     position: absolute;
-    will-change: top, left;
-    top: calc(var(--y) * 1px);
-    left: calc(var(--x) * 1px);
-    transform: translate(-50%, -50%);
-    opacity: 0;
     pointer-events: none;
-    z-index: 1;
+    background: ${colors.white};
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    left: calc(var(--x) * 1px);
+    top: calc(var(--y) * 1px);
+    transform: translate(-50%, -50%) scale(7);
+    opacity: 0;
+    transition: transform 0.6s ease-in-out, opacity 1s ease-in-out;
+  }
+  &:active::after {
+    transition: none;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.5;
   }
   &:hover {
     /* transform: scale(1.01); */
-    &:before {
+    &::before {
       transform: scaleX(1);
       opacity: 1;
-    }
-    &:after {
-      opacity: 0.5;
     }
   }
 `;

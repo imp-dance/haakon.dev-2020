@@ -48,37 +48,46 @@ button:focus {
   min-height: 100vh;
 }
 @media screen and (min-width: 420px) {
-  ::-webkit-scrollbar {
+  body::-webkit-scrollbar,
+  .c-scrollBar::-webkit-scrollbar {
     width: 17px;
     height: 17px;
   }
-  ::-webkit-scrollbar-button {
+  body::-webkit-scrollbar-button,
+  .c-scrollBar::-webkit-scrollbar-button {
     width: 0px;
     height: 0px;
   }
-  ::-webkit-scrollbar-thumb {
+  body::-webkit-scrollbar-thumb,
+  .c-scrollBar::-webkit-scrollbar-thumb {
     background: #3d3c62;
     border: 0px none #171727;
     border-radius: 7px;
   }
-  ::-webkit-scrollbar-thumb:hover {
+  body::-webkit-scrollbar-thumb:hover,
+  .c-scrollBar::-webkit-scrollbar-thumb:hover {
     background: #3f3f55;
   }
-  ::-webkit-scrollbar-thumb:active {
+  body::-webkit-scrollbar-thumb:active,
+  .c-scrollBar::-webkit-scrollbar-thumb:active {
     background: #2e2e5c;
   }
-  ::-webkit-scrollbar-track {
+  body::-webkit-scrollbar-track,
+  .c-scrollBar::-webkit-scrollbar-track {
     background: #171727;
     border: 1px none #4a495a;
     border-radius: 7px;
   }
-  ::-webkit-scrollbar-track:hover {
+  body::-webkit-scrollbar-track:hover,
+  .c-scrollBar::-webkit-scrollbar-track:hover {
     background: #171727;
   }
-  ::-webkit-scrollbar-track:active {
+  body::-webkit-scrollbar-track:active,
+  .c-scrollBar::-webkit-scrollbar-track:active {
     background: #171727;
   }
-  ::-webkit-scrollbar-corner {
+  body::-webkit-scrollbar-corner,
+  .c-scrollBar::-webkit-scrollbar-corner {
     background: transparent;
   }
 }
