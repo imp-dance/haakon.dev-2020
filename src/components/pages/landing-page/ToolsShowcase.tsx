@@ -14,8 +14,8 @@ const ToolsShowcase: React.FC = () => {
   return (
     <ToolsContainer>
       <ItemContainer>
-        {landingPageData.toolsAndTechnologies.map((item) => (
-          <Item title={item.title} items={item.items} />
+        {landingPageData.toolsAndTechnologies.map((item, index) => (
+          <Item title={item.title} items={item.items} key={`toolItem${index}`} />
         ))}
       </ItemContainer>
     </ToolsContainer>
@@ -27,8 +27,8 @@ const Item: React.FC<ItemInterface> = ({ title, items }) => {
     <StyledItem>
       <h3>{title}</h3>
       <InnerItemContainer>
-        {items.map((item) => (
-          <span>{item}</span>
+        {items.map((item, index) => (
+          <span key={`${title}-item-${index}`}>{item}</span>
         ))}
       </InnerItemContainer>
     </StyledItem>

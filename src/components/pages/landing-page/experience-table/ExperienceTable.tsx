@@ -22,7 +22,7 @@ const ExperienceTable: React.FC = () => {
     <div style={{ position: "relative" }}>
       <TableTitle>Work</TableTitle>
       <ExperienceTableContainer>
-        {landingPageData.experienceTable.work.map((workItem) => (
+        {landingPageData.experienceTable.work.map((workItem, index) => (
           <Entry
             isJob={true}
             title={workItem.title}
@@ -30,12 +30,13 @@ const ExperienceTable: React.FC = () => {
             date={workItem.date}
             longText={workItem.text}
             url={workItem.url}
+            key={`workItem${index}`}
           />
         ))}
       </ExperienceTableContainer>
       <TableTitle>Projects</TableTitle>
       <ExperienceTableContainer>
-        {landingPageData.experienceTable.projects.map((projectItem) => (
+        {landingPageData.experienceTable.projects.map((projectItem, index) => (
           <Entry
             isJob={false}
             title={projectItem.title}
@@ -43,6 +44,7 @@ const ExperienceTable: React.FC = () => {
             date={projectItem.date}
             longText={projectItem.text}
             url={projectItem.url}
+            key={`projectItem${index}`}
           />
         ))}
       </ExperienceTableContainer>

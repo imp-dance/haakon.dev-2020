@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { fadeIn } from "../../../../styles/animations";
-import FancyButton from "../../../core/buttons/FancyButton";
+import Button from "../../../core/buttons/Button";
 import constants from "../../../../styles/constants";
 import { EntryProps } from "./ExperienceTable";
 import {
@@ -62,13 +62,13 @@ const Dialog: React.FC<DialogInterface> = ({ close, content, openOn }) => {
           <LongText>{openOn && content.longText}</LongText>
           {openOn && (
             <DialogFooter>
-              <FancyButton
+              <Button
                 secondary
                 onClick={() => window.open(content.url, "_blank")}
                 tabIndex={openOn ? 0 : -1}
               >
                 Visit website
-              </FancyButton>
+              </Button>
               <BackButton onClick={close} tabIndex={openOn ? 0 : -1}>
                 Close
               </BackButton>
@@ -152,7 +152,7 @@ const DialogFooter = styled.div`
   }
 `;
 
-const BackButton = styled(FancyButton)`
+const BackButton = styled(Button)`
   background: ${colors.bg};
 `;
 

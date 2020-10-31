@@ -11,12 +11,7 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-const FancyButton: React.FC<Props> = ({
-  secondary,
-  children,
-  style,
-  ...props
-}) => {
+const Button: React.FC<Props> = ({ secondary, children, style, ...props }) => {
   const ref = useRef<HTMLButtonElement>(null);
   const [mouseMove, styles] = useMouseMove(ref);
   const mergedStyles = { ...styles, ...style };
@@ -88,4 +83,4 @@ const StyledButton = styled.button<Props>`
   }
 `;
 
-export default FancyButton;
+export default Button;

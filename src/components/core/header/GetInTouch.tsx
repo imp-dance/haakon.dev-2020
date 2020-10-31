@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import FancyButton from "../buttons/FancyButton";
+import Button from "../buttons/Button";
 import constants from "../../../styles/constants";
 const { colors } = constants;
 
@@ -8,7 +8,7 @@ const GetInTouch: React.FC = () => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <FancyButton onClick={() => setOpen(true)}>Get in touch</FancyButton>
+      <Button onClick={() => setOpen(true)}>Get in touch</Button>
       <Modal open={open} close={() => setOpen(false)} />
     </>
   );
@@ -51,9 +51,9 @@ const Modal: React.FC<ModalProps> = ({ open, close }) => {
               >
                 Loading…
               </iframe>
-              <FancyButton onClick={close} secondary>
+              <Button onClick={close} secondary>
                 Close form
-              </FancyButton>
+              </Button>
             </FrameContainer>
           )}
         </ModalContainer>

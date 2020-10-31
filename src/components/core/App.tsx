@@ -5,7 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Page404 from "../pages/404/404";
 import { Container } from "../core/layout";
 import constants from "../../styles/constants";
-import FancyButton from "./buttons/FancyButton";
+import Button from "./buttons/Button";
 import Header from "./header/Header";
 import Footer from "./Footer";
 
@@ -44,9 +44,9 @@ const ErrorBoundaryComponent = () => {
         <h2>Well this is really embarrasing...</h2>
         <p>Looks like something broke.</p>
         <p>Maybe try reloading?</p>
-        <FancyButton onClick={() => window.location.reload()} secondary>
+        <Button onClick={() => window.location.reload()} secondary>
           Reload
-        </FancyButton>
+        </Button>
       </Container>
     </ErrorBoundaryContainer>
   );

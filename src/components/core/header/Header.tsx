@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { Container } from "../layout";
-import FancyButton from "../buttons/FancyButton";
+import Button from "../buttons/Button";
 import Title from "./Title";
 import constants from "../../../styles/constants";
 import { fadeUpButtons } from "../../../styles/animations";
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           </LeftColumn>
           <RightColumn>
             <GetInTouch />
-            <FancyButton
+            <Button
               secondary
               onClick={() =>
                 window.location.hash === "#/articles"
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
               }
             >
               Articles
-            </FancyButton>
+            </Button>
           </RightColumn>
         </HeaderAlignment>
       </HeaderContainer>

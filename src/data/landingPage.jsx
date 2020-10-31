@@ -79,17 +79,54 @@ const landingPageData = {
     ],
     projects: [
       {
+        title: "City for City",
+        date: "2020",
+        shortText: "Developed frontend & implemented CMS system",
+        text: (
+          <>
+            <p>
+              CityforCity was started on a voluntary basis at Idean Bergen. The
+              initiative was a website where small local businesses that had
+              been affected by and/or made concrete changes to their operation
+              because of the covid pandemic are promoted to their local
+              community.
+            </p>
+            <p>
+              The original websites for Bergen, Stavanger and Oslo were all
+              built and hosted at Squarespace, but this soon showed itself to be
+              very limiting when the ambitions of the project grew. Squarespace
+              was generally bad at handling articles and categorisation and it
+              was difficult to implement more complex features. Because of this,
+              we decided to develop our own custom system.
+            </p>
+            <p>
+              My role in this project was sketching out and developing the new
+              system. I decided to go for GatsbyJS for static rendering, and
+              Strapi as a CMS system. After setting up the core functionality, I
+              developed the frontend design based on an Adobe XD sketch created
+              by a UX designer at Idean.
+            </p>
+          </>
+        ),
+        url: "https://about.cityforcity.com",
+      },
+      {
         title: "Ida by LIGL",
         date: "2019",
         shortText: "Released first major version of Ida by LIGL.",
         text: (
-          <p>
-            Ida by LIGL was a project I worked on at LIGL and that I still
-            maintain today. Ida is a tool for anyone to generate top quality
-            legal documents. I worked on both the document automation part
-            (using ContractExpress Author) as well as our web portal for free
-            users.
-          </p>
+          <>
+            <p>
+              Ida by LIGL was a project I worked on while at LIGL AS and that I
+              still maintain today.
+            </p>
+            <p>
+              Ida is a tool for anyone to generate top quality legal documents.
+              I worked on both the document automation part (using
+              ContractExpress Author) as well as developing and designing our
+              web portal for free users (Ida by LIGL)
+            </p>
+          </>
         ),
         url: "https://ida.ligl.no",
       },
@@ -127,7 +164,15 @@ const landingPageData = {
   toolsAndTechnologies: [
     {
       title: "JS",
-      items: ["React", "ES6", "Typescript", "Node", "Electron", "jQuery"],
+      items: [
+        "ES6",
+        "Typescript",
+        "React",
+        "Redux",
+        "Node",
+        "Electron",
+        "jQuery",
+      ],
     },
     {
       title: "CSS",
@@ -135,7 +180,7 @@ const landingPageData = {
     },
     {
       title: "HTML",
-      items: ["HTML5", "ARIA", "SEO"],
+      items: ["HTML5", "ARIA", "SEO", "Accessibility"],
     },
     {
       title: "Tools",
@@ -145,13 +190,15 @@ const landingPageData = {
         "VSTS / Azure DevOps Services",
         "Webpack",
         "Babel",
+        "NPM",
       ],
     },
     {
       title: "Other",
       items: [
+        "SQL",
+        "Firebase",
         "ContractExpress Author",
-        "Batch",
         "Bash/Shell",
         "Logic Pro X",
         "Adobe Photoshop",
