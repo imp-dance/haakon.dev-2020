@@ -72,6 +72,10 @@ const landingPageData = {
               . I mostly made this in PHP, as the project was started before I
               really had much experience with Javascript frameworks.
             </p>
+            <img
+              src="https://haakon.dev/ligl.png"
+              alt="Screenshot of ligl.no website"
+            />
           </>
         ),
         url: "https://ligl.no/?lang=en",
@@ -106,6 +110,12 @@ const landingPageData = {
               developed the frontend design based on an Adobe XD sketch created
               by a UX designer at Idean.
             </p>
+            <ExternalLink to="https://stavangerforstavanger.no">
+              <img
+                src="https://haakon.dev/city.png"
+                alt="Screenshot of cityforcity website"
+              />
+            </ExternalLink>
           </>
         ),
         url: "https://about.cityforcity.com",

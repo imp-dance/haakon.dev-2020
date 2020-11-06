@@ -6,6 +6,7 @@ export default {
     pink: "#c371a3",
     lightPink: "#c79cb6",
     beige: "#f9d2ea",
+    lightBeige: "#ffe1f4",
     bg: "#171727",
     bgDark: "#141421",
     white: "#f4edff",

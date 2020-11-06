@@ -90,6 +90,7 @@ const ModalContainer = styled.div<ModalProps>`
 const FrameContainer = styled.div`
   display: flex;
   flex-direction: column;
+  content-visibility: auto;
   button {
     border-radius: 0px;
     border: none !important;
