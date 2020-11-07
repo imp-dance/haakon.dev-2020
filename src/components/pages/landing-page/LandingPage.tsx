@@ -50,6 +50,9 @@ const LandingPage: React.FC = () => {
                 <p>You can find me on...</p>
                 {landingPageData.linksAndReferences.map((item, index) => (
                   <LinkReference to={item.url} key={`link-reference-${index}`}>
+                    <i role="img" aria-label={`Icon for ${item.title}`}>
+                      {item.icon}
+                    </i>
                     {item.title} {item.context && <span>{item.context}</span>}
                   </LinkReference>
                 ))}
@@ -96,6 +99,7 @@ const ToolsShowcaseContainer = styled.div`
     will-change: opacity;
     animation-fill-mode: both;
     animation-delay: 2.3s;
+    z-index: -1;
     @media (prefers-reduced-motion) {
       display: none;
     }
@@ -113,9 +117,9 @@ const LandingPageContainer = styled.div`
 const InnerContainer = styled(Container)`
   > div {
     margin: 0 0 ${whitespace.l};
-    opacity: 0.6;
-    animation: ${fadeIn} 0.2s ease-in-out;
-    will-change: opacity;
+    // opacity: 0.6;
+    // animation: ${fadeIn} 0.2s ease-in-out;
+    // will-change: opacity;
     animation-fill-mode: both;
     animation-delay: 2.3s;
     &:last-child {
@@ -168,8 +172,8 @@ const IntroSection = styled(DarkSection)`
 const InfoSection = styled(LightSection)`
   .accordion-container,
   .linksAndReferences {
-    animation: ${fadeIn} 0.2s ease-in-out;
-    will-change: opacity;
+    //animation: ${fadeIn} 0.2s ease-in-out;
+    //will-change: opacity;
     animation-fill-mode: both;
     animation-delay: 2.4s;
   }
@@ -231,10 +235,11 @@ const LinksAndRefBG = styled.div`
   animation: ${LinksAndRefBGAnimation} 0.6s ease-in-out;
   will-change: opacity;
   animation-fill-mode: both;
-  animation-delay: 2.4s;
+  // animation-delay: 2.4s;
 `;
 
 const LinksAndReferences = styled.div`
+  content-visibility: auto;
   background: ${colors.gray};
   padding: ${whitespace.m};
   > *:first-child {
@@ -255,6 +260,16 @@ const LinkReference = styled(ExternalLink)`
   text-decoration: none;
   position: relative;
   transition: all 0.2s;
+  i {
+    transition: all 0.1s ease-in-out;
+    display: inline-block;
+    width: 20px;
+    margin-right: ${whitespace.s};
+    transform: translate(-1px, 4px) rotate(-20deg);
+    position: absolute;
+    left: ${whitespace.s};
+    opacity: 0;
+  }
   span {
     margin-left: auto;
     font-size: ${typography.s};
@@ -263,12 +278,17 @@ const LinkReference = styled(ExternalLink)`
   }
   &:hover,
   &:focus {
-    padding-left: ${whitespace.m};
+    padding-left: ${whitespace.l};
     outline: none;
     @media (prefers-reduced-motion) {
       padding-left: ${whitespace.s};
       background: ${colors.bg};
       color: ${colors.beige};
+    }
+    i {
+      transform: translate(1px, 2px);
+      transition-duration: 0.5s;
+      opacity: 1;
     }
     &::before {
       transform: scaleX(1);

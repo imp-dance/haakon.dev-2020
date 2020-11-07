@@ -31,6 +31,7 @@ function App() {
               <Route path="/article/:slug" component={ArticlePage}></Route>
               {landingPageData.experienceTable.projects.map((project) => (
                 <Route
+                  key={`route-${project.slug}`}
                   path={project.slug}
                   component={() => (
                     <ShowoffPage
@@ -44,6 +45,7 @@ function App() {
               ))}
               {landingPageData.experienceTable.work.map((workItem) => (
                 <Route
+                  key={`route-${workItem.slug}`}
                   path={workItem.slug}
                   component={() => (
                     <ShowoffPage
