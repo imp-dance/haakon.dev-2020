@@ -16,6 +16,7 @@ export default {
     xl: "2rem",
     l: "1.5rem",
     m: "1.2rem",
+    sm: "1rem",
     s: "0.85rem",
     xs: "0.7rem",
   },

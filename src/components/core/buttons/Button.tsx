@@ -8,6 +8,7 @@ interface Props {
   secondary?: boolean;
   onClick?: (e: React.MouseEvent) => void;
   tabIndex?: number;
+  role?: string;
   style?: React.CSSProperties;
 }
 

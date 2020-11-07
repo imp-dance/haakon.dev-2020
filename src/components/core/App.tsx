@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import Page404 from "../pages/404/404";
+import ShowoffPage from "../pages/showoff-page/ShowoffPage";
 import { Container } from "../core/layout";
 import constants from "../../styles/constants";
 import Button from "./buttons/Button";
 import Header from "./header/Header";
 import Footer from "./Footer";
+import landingPageData from "../../data/landingPage";
 
 const LandingPage = lazy(() => import("../pages/landing-page/LandingPage"));
 const ArticleListPage = lazy(
@@ -27,6 +29,32 @@ function App() {
               <Route path="/" exact component={LandingPage}></Route>
               <Route path="/articles" exact component={ArticleListPage}></Route>
               <Route path="/article/:slug" component={ArticlePage}></Route>
+              {landingPageData.experienceTable.projects.map((project) => (
+                <Route
+                  path={project.slug}
+                  component={() => (
+                    <ShowoffPage
+                      {...project}
+                      isJob={false}
+                      shortText={project.shortText}
+                      longText={project.text}
+                    />
+                  )}
+                />
+              ))}
+              {landingPageData.experienceTable.work.map((workItem) => (
+                <Route
+                  path={workItem.slug}
+                  component={() => (
+                    <ShowoffPage
+                      {...workItem}
+                      isJob={true}
+                      shortText={workItem.position}
+                      longText={workItem.text}
+                    />
+                  )}
+                />
+              ))}
               <Route component={Page404} />
             </Switch>
           </Suspense>

@@ -1,5 +1,6 @@
 import React from "react";
 import ExternalLink from "../components/core/links/ExternalLink";
+import Link from "../components/core/links/Link";
 
 const landingPageData = {
   header: {
@@ -20,6 +21,7 @@ const landingPageData = {
         title: "Idean Norway (Capgemini Norge AS)",
         date: "2020 - Present",
         position: "Front End Developer",
+        slug: "/idean",
         text: (
           <>
             <p>
@@ -35,8 +37,24 @@ const landingPageData = {
               and learning.
             </p>
             <p>
-              I have worked using the scrum framework at a project at Equinor,
-              which has been a great experience.
+              We usually have <i>frontend friday</i> every week, where me and
+              the other frontenders discuss and share news and interesting
+              things related to frontend that we've picked up over the week. We
+              also sometimes do presentations for eachother on various subjects,
+              to teach and reflect.
+            </p>
+            <p>
+              One of my projects at Idean has been developing the frontend for
+              the <Link to="#/cityforcity">City for City</Link> initiative. The
+              websites were developed using Gatsby and Strapi, and were
+              published October 2020.
+            </p>
+            <p>
+              I've also been involved in an internal project at Equinor, which
+              was my first large-scale Typescript+React project. I worked on
+              developing and implementing a few new features, as well as fixing
+              bugs and testing. We used the agile SCRUM methodology, which I
+              really enjoyed working with.
             </p>
           </>
         ),
@@ -46,6 +64,7 @@ const landingPageData = {
         title: "LIGL AS",
         date: "2016 - 2020",
         position: "Legal Tech Developer | Web Developer | IT-Consultant",
+        slug: "/ligl",
         text: (
           <>
             <p>
@@ -69,8 +88,9 @@ const landingPageData = {
             <p>
               Other than these projects, I've also developed and designed their
               website, <ExternalLink to="https://ligl.no">ligl.no</ExternalLink>
-              . I mostly made this in PHP, as the project was started before I
-              really had much experience with Javascript frameworks.
+              . This project was started prior to me having much experience with
+              Javascript frameworks, so it was made with PHP, HTML, CSS and
+              jQuery.
             </p>
             <img
               src="https://haakon.dev/ligl.png"
@@ -86,6 +106,7 @@ const landingPageData = {
         title: "City for City",
         date: "2020",
         shortText: "Developed frontend & implemented CMS system",
+        slug: "/cityforcity",
         text: (
           <>
             <p>
@@ -124,6 +145,7 @@ const landingPageData = {
         title: "Ida by LIGL",
         date: "2019",
         shortText: "Released first major version of Ida by LIGL.",
+        slug: "/ida",
         text: (
           <>
             <p>
@@ -145,6 +167,7 @@ const landingPageData = {
         date: "2015",
         shortText:
           "Developed website & backend system based on his own design.",
+        slug: "/eirik",
         text: (
           <p>
             This was my first project using a modern Javascript framework, made
@@ -159,6 +182,7 @@ const landingPageData = {
         date: "2015",
         shortText:
           "Developed & designed their website in-house while working summer job.",
+        slug: "/bokit",
         text: (
           <p>
             I was working for Ryfylke Bok & IT initially as summer-help. I
