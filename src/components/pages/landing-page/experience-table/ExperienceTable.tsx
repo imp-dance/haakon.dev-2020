@@ -1,20 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 import useMouseMove from "../../../../hooks/useMouseMove";
 import constants from "../../../../styles/constants";
-import Dialog from "./Dialog";
 import landingPageData from "../../../../data/landingPage";
+import { Redirect } from "react-router-dom";
 
 const { colors, typography, whitespace } = constants;
 
 export interface EntryProps {
   isJob: boolean;
   date: string;
-  content: string;
+  content?: string;
   url?: string;
   title: string;
   longText?: React.ReactNode;
+  shortText?: React.ReactNode;
+  slug: string;
 }
 
 const ExperienceTable: React.FC = () => {
@@ -31,6 +33,7 @@ const ExperienceTable: React.FC = () => {
             longText={workItem.text}
             url={workItem.url}
             key={`workItem${index}`}
+            slug={workItem.slug}
           />
         ))}
       </ExperienceTableContainer>
@@ -45,14 +48,13 @@ const ExperienceTable: React.FC = () => {
             longText={projectItem.text}
             url={projectItem.url}
             key={`projectItem${index}`}
+            slug={projectItem.slug}
           />
         ))}
       </ExperienceTableContainer>
     </div>
   );
 };
-
-let hoistedTimeout = setTimeout(() => {});
 
 const Entry: React.FC<EntryProps> = ({
   isJob,
@@ -61,30 +63,22 @@ const Entry: React.FC<EntryProps> = ({
   url,
   title,
   longText,
+  slug,
   ...props
 }) => {
-  const [isDialogOpen, setDialogOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [mouseMove, styles] = useMouseMove(buttonRef);
+  const [redirect, setRedirect] = useState(false);
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
     if (key === " " || key === "Enter") {
       e.preventDefault();
-      !isDialogOpen && openDialog();
+      setRedirect(true);
     }
   };
-  const onClick = (e: React.MouseEvent) => {
-    !isDialogOpen && openDialog();
-    mouseMove(e);
-  };
-  const openDialog = () => {
-    hoistedTimeout = setTimeout(() => {
-      console.log("test");
-      setDialogOpen(true);
-    }, 200);
-  };
-  useEffect(() => () => clearTimeout(hoistedTimeout), []);
-  return (
+  return redirect ? (
+    <Redirect push to={slug} />
+  ) : (
     <EntryContainer>
       <DateColumn>{date}</DateColumn>
       <ProjectButton
@@ -94,17 +88,12 @@ const Entry: React.FC<EntryProps> = ({
         tabIndex={0}
         onKeyDown={onKeyDown}
         style={styles}
-        onClick={onClick}
+        onClick={() => setRedirect(true)}
         title="Click to read more"
       >
         <strong>{title}</strong>
         {content}
       </ProjectButton>
-      <Dialog
-        close={() => setDialogOpen(false)}
-        content={{ isJob, date, content, url, title, longText }}
-        openOn={isDialogOpen}
-      />
     </EntryContainer>
   );
 };

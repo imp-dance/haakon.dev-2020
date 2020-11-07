@@ -8,14 +8,18 @@ const { colors, whitespace, typography } = constants;
 const Footer = () => {
   return (
     <StyledFooter>
-      <Container>
+      <FooterContainer>
         <SourceLink to="https://github.com/imp-dance/portfolio-redesign-v999">
-          &lt;source /&gt;
+          &lt;code src="github" open /&gt;
         </SourceLink>
-      </Container>
+      </FooterContainer>
     </StyledFooter>
   );
 };
+
+const FooterContainer = styled(Container)`
+  text-align: center;
+`;
 
 const StyledFooter = styled.footer`
   margin-top: auto;
@@ -24,14 +28,16 @@ const StyledFooter = styled.footer`
 `;
 
 const SourceLink = styled(ExternalLink)`
-  display: flex;
+  display: inline-flex;
   margin: 0 auto;
   align-items: center;
   justify-content: center;
   color: ${colors.lightPink};
   text-decoration: none;
   text-transform: uppercase;
-  font-size: ${typography.m};
+  font-size: ${typography.s};
+  padding: ${whitespace.s} ${whitespace.m};
+  font-weight: bold;
   opacity: 0.5;
   position: relative;
   svg {
