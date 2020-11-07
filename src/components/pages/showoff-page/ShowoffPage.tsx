@@ -19,12 +19,14 @@ const ShowoffPage: React.FC<EntryProps> = ({
 }) => {
   return (
     <ShowoffPageContainer>
-      <h2>{title}</h2>
-      <Subline>
-        {isJob ? <JobTag>Position</JobTag> : <ProjectTag>Project</ProjectTag>}
-        {shortText} ({date})
-      </Subline>
-      {longText}
+      <Header>
+        <h2>{title}</h2>
+        <Subline>
+          {isJob ? <JobTag>Position</JobTag> : <ProjectTag>Project</ProjectTag>}
+          {shortText} ({date})
+        </Subline>
+      </Header>
+      <Content>{longText}</Content>
       <GoButton
         role="link"
         secondary
@@ -38,13 +40,68 @@ const ShowoffPage: React.FC<EntryProps> = ({
   );
 };
 
+const Content = styled.div`
+  background: ${colors.white};
+  padding: ${whitespace.l};
+  color: ${colors.bgDark};
+  font-family: "IBM Plex Sans", sans-serif;
+  border-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  a {
+    color: ${colors.primary};
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  p {
+    font-size: ${typography.m};
+    line-height: 1.5em;
+    max-width: 750px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+`;
+
 const GoButton = styled(Button)`
   border-color: ${colors.bg};
   width: 100%;
   opacity: 0.6;
+  margin-top: ${whitespace.m};
   &:hover {
     opacity: 1;
     border-color: ${colors.primary};
+  }
+`;
+
+const Header = styled.header`
+  padding: ${whitespace.xl} ${whitespace.m};
+  h2 {
+    font-size: ${typography.xl};
+    margin: ${whitespace.m} 0;
+    animation: ${fadeInUp} 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: ${whitespace.m};
+    &:before,
+    &:after {
+      content: "";
+      flex: 1;
+      background: linear-gradient(
+        to right,
+        ${colors.primary},
+        ${colors.secondary}
+      );
+      height: 0.1em;
+      margin: 0.2em;
+      border-radius: 5px;
+      opacity: 0.3;
+    }
   }
 `;
 
@@ -53,7 +110,7 @@ const Tag = styled.span`
   justify-content: center;
   align-items: center;
   padding: ${whitespace.xs} ${whitespace.s};
-  margin-right: ${whitespace.s};
+  margin: 0 ${whitespace.s} ${whitespace.m} 0;
   border-radius: 3px;
   background: linear-gradient(
     to top right,
@@ -81,6 +138,9 @@ const Subline = styled.div`
   font-style: normal;
   margin-bottom: ${whitespace.m};
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: ${typography.s};
 `;
 
@@ -88,50 +148,9 @@ const ShowoffPageContainer = styled(Container)`
   width: 100%;
   background: ${colors.bg};
   margin: 0 auto ${whitespace.l};
-  padding: ${whitespace.l} ${whitespace.m} ${whitespace.m};
   color: ${colors.lightPink};
   animation: ${fadeIn} 0.2s ease-in-out;
   position: relative;
-  ::before,
-  ::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    border-radius: 3px;
-    background: linear-gradient(180deg, ${colors.primary}, ${colors.bg} 200px);
-    opacity: 0.2;
-    user-select: none;
-    pointer-events: none;
-  }
-  ::after {
-    right: 100%;
-    left: auto;
-    width: 10px;
-    background: linear-gradient(180deg, ${colors.bgDark}, ${colors.bg} 50%);
-    opacity: 0.7;
-  }
-  a {
-    color: ${colors.beige};
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  img {
-    display: block;
-    max-width: 100%;
-  }
-  h2 {
-    font-size: ${typography.xl};
-    margin-bottom: ${whitespace.m};
-    animation: ${fadeInUp} 0.2s ease-in-out;
-  }
-  p {
-    font-size: ${typography.sm};
-    line-height: 1.5em;
-  }
 `;
 
 export default ShowoffPage;

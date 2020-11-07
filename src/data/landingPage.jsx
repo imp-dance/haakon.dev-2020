@@ -1,4 +1,5 @@
 import React from "react";
+import { CodePen, Github, Linkedin } from "../assets/Icons";
 import ExternalLink from "../components/core/links/ExternalLink";
 import Link from "../components/core/links/Link";
 
@@ -82,14 +83,13 @@ const landingPageData = {
               rating system, backend statistics, rating and sorting, and much
               more. This website came in many iterations, but the final version
               which is still up today is called{" "}
-              <ExternalLink to="https://ida.ligl.no">Ida by LIGL</ExternalLink>.
-              .
+              <Link to="#/ida">Ida by LIGL</Link>. .
             </p>
             <p>
-              Other than these projects, I've also developed and designed their
-              website, <ExternalLink to="https://ligl.no">ligl.no</ExternalLink>
-              . This project was started prior to me having much experience with
-              Javascript frameworks, so it was made with PHP, HTML, CSS and
+              I have also developed and designed their website,{" "}
+              <ExternalLink to="https://ligl.no">ligl.no</ExternalLink>. This
+              project was started prior to me having much experience with
+              Javascript frameworks, so it was made using PHP, HTML, CSS and
               jQuery.
             </p>
             <img
@@ -149,8 +149,8 @@ const landingPageData = {
         text: (
           <>
             <p>
-              Ida by LIGL was a project I worked on while at LIGL AS and that I
-              still maintain today.
+              Ida by LIGL was a project I worked on for several years while
+              employed at LIGL AS.
             </p>
             <p>
               Ida is a tool for anyone to generate top quality legal documents.
@@ -158,6 +158,28 @@ const landingPageData = {
               ContractExpress Author) as well as developing and designing our
               web portal for free users (Ida by LIGL)
             </p>
+            <p>
+              Ida by LIGL is made using React and SCSS on the frontend, and PHP
+              on the backend.
+            </p>
+            <p>
+              I was (and am) the only developer that's worked on this project,
+              and it was a great learning experience for me regarding the
+              importance of writing maintainable code bases, as well as
+              developing my skills with React, accessibility, user experience
+              and design.
+            </p>
+            <p>
+              You can read a bit more about Ida in{" "}
+              <Link to="/#/article/imat-ida-by-ligl-a-react-powered-pwa">
+                this article
+              </Link>{" "}
+              that I've written about the project.
+            </p>
+            <img
+              src="https://ligl.no/dev8/_admin/uploads/63133-Screenshot%202019-12-16%20at%2000.02.44.png"
+              alt="Screenshot of Ida by LIGL"
+            />
           </>
         ),
         url: "https://ida.ligl.no",
@@ -169,11 +191,18 @@ const landingPageData = {
           "Developed website & backend system based on his own design.",
         slug: "/eirik",
         text: (
-          <p>
-            This was my first project using a modern Javascript framework, made
-            in 2015. It was my first and only project using AngularJS. Designed
-            by my brother, Eirik Underbakke.
-          </p>
+          <>
+            <p>
+              This was my first project using a modern Javascript framework,
+              made in 2015. Although I'm not a fan of AngularJS, it was
+              definitely an interesting and important project for me.
+            </p>
+            <p>Designed by my brother, Eirik Underbakke.</p>
+            <img
+              src="https://haakon.dev/eirik.png"
+              alt="Screenshot of website"
+            />
+          </>
         ),
         url: "https://eirik.underbakke.net",
       },
@@ -184,12 +213,20 @@ const landingPageData = {
           "Developed & designed their website in-house while working summer job.",
         slug: "/bokit",
         text: (
-          <p>
-            I was working for Ryfylke Bok & IT initially as summer-help. I
-            worked the cash register, as well as a little bit in the
-            IT-department. Since their website was quite outdated, I offered to
-            build them a new one. They have kept my design ever since.
-          </p>
+          <>
+            <p>
+              I was working for Ryfylke Bok & IT initially as summer-help. I
+              worked the cash register, as well as a little bit in the
+              IT-department.
+            </p>
+            <p>
+              {" "}
+              Since their current website was quite outdated, I offered to build
+              them a new one. It was made with just PHP, HTML, CSS and jQuery.
+              This was my first website that I've made for a professional
+              client.
+            </p>
+          </>
         ),
         url: "https://bok-it.no",
       },
@@ -244,16 +281,19 @@ const landingPageData = {
       title: "Github",
       url: "https://github.com/imp-dance",
       context: "Projects & Work",
+      icon: <Github />,
     },
     {
       title: "Codepen",
       url: "https://codepen.io/schart",
       context: "Doodles & Sketches",
+      icon: <CodePen />,
     },
     {
       title: "Linkedin",
       url: "https://linkedin.com/in/hakonunderbakke",
       context: "Experience & Connections",
+      icon: <Linkedin />,
     },
   ],
 };
