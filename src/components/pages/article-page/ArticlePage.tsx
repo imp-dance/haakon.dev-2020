@@ -72,7 +72,6 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       setCategoryNames(categoryList);
     }
   }, [item, categories]);
-  console.log(item && item.categories);
   return is404 ? (
     <Suspense fallback={<>...</>}>
       <Article404 />

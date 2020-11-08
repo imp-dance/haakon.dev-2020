@@ -4,7 +4,8 @@ import { ArticleItem } from "../interfaces/Article";
 
 export const useFilterArticles = (
   initialArticles: ArticleItem[] | null,
-  search: string
+  search: string,
+  categories?: Array<any>
 ) => {
   const [filteredArticles, setFilteredArticles] = useState<
     ArticleItem[] | null
@@ -30,11 +31,33 @@ export const useFilterArticles = (
           .replace(/[|&;$%@"<>()+,]/g, ""); // Strip away potential regex
 
         // Then do actual search:
+
         if (
           parsedTitle.search(parsedSearch) >= 0 ||
           strippedContent.search(parsedSearch) >= 0
         ) {
           newArticles.push(item);
+        } else if (categories) {
+          const allTagSearches = parsedSearch
+            .split(" ")
+            .filter((word) => word.startsWith("#"))
+            .map((item) => item.substring(1).toUpperCase());
+          if (allTagSearches.length > 0) {
+            const categoryNames: string[] = [];
+            item.categories.forEach((categoryID) => {
+              const filter = categories.filter(
+                (item) => item.id === categoryID
+              );
+              if (filter && filter.length > 0) {
+                categoryNames.push(filter[0].name);
+              }
+            });
+            const matches = categoryNames.filter((name) =>
+              allTagSearches.includes(name.toUpperCase())
+            );
+            if (matches.length === allTagSearches.length)
+              newArticles.push(item);
+          }
         }
       } else {
         console.error("initialArticles should be typeof ArticleItem");

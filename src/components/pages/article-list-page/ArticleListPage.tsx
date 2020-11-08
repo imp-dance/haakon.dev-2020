@@ -33,7 +33,11 @@ const ArticleListPage: React.FC = () => {
   const debouncedSearch = useDebounce(search, 300);
   const articleContainerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [filteredArticles] = useFilterArticles(postList, debouncedSearch);
+  const [filteredArticles] = useFilterArticles(
+    postList,
+    debouncedSearch,
+    categories
+  );
   const [loadingSearch, setLoadingSearch] = useState(false);
   const ITEMS_PER_PAGE = 9;
 
