@@ -14,6 +14,7 @@ import { fadeInUp, fadeInDown } from "../../../styles/animations";
 import { GetPostBySlug, GetCategories } from "../../core/API";
 import { Helmet } from "react-helmet";
 import Tag from "../../core/misc/Tag";
+import Link from "../../core/links/Link";
 
 const { colors, whitespace, typography } = constants;
 const Article404 = lazy(() => import("../404/Article404"));
@@ -88,7 +89,24 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
           </ArticleTitle>
           <Subtitle>
             {categoryNames.map(
-              (tag) => tag && <Tag key={`tag-${tag}`}>{tag}</Tag>
+              (tag) =>
+                tag && (
+                  <Link
+                    to={`/#/articles#${tag.toLowerCase()}`}
+                    key={`tag-${tag}`}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Tag
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    >
+                      {tag}
+                    </Tag>
+                  </Link>
+                )
             )}
           </Subtitle>
           {item && (

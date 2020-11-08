@@ -73,6 +73,20 @@ const ArticleListPage: React.FC = () => {
   }, [debouncedSearch]);
 
   useEffect(() => {
+    if (postList && window.location.hash !== "#/articles") {
+      const hashes = window.location.hash.substring(1).split("#");
+      let searchString = "";
+      for (let i = 1; i < hashes.length; i++) {
+        searchString += `#${hashes[i]} `;
+      }
+      if (searchString) {
+        setFiltering(true);
+        setSearch(searchString);
+      }
+    }
+  }, [postList]);
+
+  useEffect(() => {
     if (articleContainerRef?.current && isMobile) {
       articleContainerRef?.current?.scrollIntoView({
         behavior: "smooth",
@@ -293,7 +307,9 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
       {parse(item.excerpt.rendered)}
       <TagContainer>
         {categoryNames &&
-          categoryNames.map((category) => <Tag>{category}</Tag>)}
+          categoryNames.map((category) => (
+            <Tag key={`ar-${item.id}-${category}`}>{category}</Tag>
+          ))}
       </TagContainer>
     </StyledArticle>
   );

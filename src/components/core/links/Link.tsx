@@ -3,6 +3,7 @@ import React from "react";
 interface Props {
   to: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const Link: React.FC<Props> = ({ to, children, className, ...props }) => {

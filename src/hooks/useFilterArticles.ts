@@ -31,13 +31,8 @@ export const useFilterArticles = (
           .replace(/[|&;$%@"<>()+,]/g, ""); // Strip away potential regex
 
         // Then do actual search:
-
-        if (
-          parsedTitle.search(parsedSearch) >= 0 ||
-          strippedContent.search(parsedSearch) >= 0
-        ) {
-          newArticles.push(item);
-        } else if (categories) {
+        let tagMatch = false;
+        if (categories) {
           const allTagSearches = parsedSearch
             .split(" ")
             .filter((word) => word.startsWith("#"))
@@ -55,9 +50,15 @@ export const useFilterArticles = (
             const matches = categoryNames.filter((name) =>
               allTagSearches.includes(name.toUpperCase())
             );
-            if (matches.length === allTagSearches.length)
-              newArticles.push(item);
+            if (matches.length === allTagSearches.length) tagMatch = true;
           }
+        }
+        if (
+          parsedTitle.search(parsedSearch) >= 0 ||
+          strippedContent.search(parsedSearch) >= 0 ||
+          tagMatch
+        ) {
+          newArticles.push(item);
         }
       } else {
         console.error("initialArticles should be typeof ArticleItem");
@@ -75,7 +76,7 @@ export const useFilterArticles = (
       filter();
     }
     // eslint-disable-next-line
-  }, [search]);
+  }, [search, categories]);
 
   return [filteredArticles];
 };
