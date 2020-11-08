@@ -7,7 +7,7 @@ import Link from "../links/Link";
 const Title = () => {
   const titles = ["dev", "music", "design"];
   return (
-    <StyledLink to="/">
+    <StyledLink to="/#/">
       <StyledTitle>
         haakon.
         <TitleRotator className="header-titleRotator">

@@ -7,6 +7,13 @@ export const fadeInUp = keyframes`
     }
 `;
 
+export const fadeInDown = keyframes`
+    from{
+        transform:translate(0px, -5px) scale(0.999);
+        opacity:0;
+    }
+`;
+
 export const fadeInLeft = keyframes`
     from{
         transform:translate(-5px, 5px) scale(0.999);

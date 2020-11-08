@@ -9,7 +9,12 @@ import ToolsShowcase from "./ToolsShowcase";
 
 import { ReactComponent as HeaderSVG } from "../../../assets/svg/vector.svg";
 import landingPageData from "../../../data/landingPage";
-import { fadeUpButtons, fadeIn, heavyFadeIn } from "../../../styles/animations";
+import {
+  fadeUpButtons,
+  fadeIn,
+  heavyFadeIn,
+  fadeInUp,
+} from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import particleOptions from "../../../data/particles.json";
 
@@ -170,6 +175,7 @@ const IntroSection = styled(DarkSection)`
 `;
 
 const InfoSection = styled(LightSection)`
+  animation: ${fadeInUp} 0.4s ease-in-out;
   .accordion-container,
   .linksAndReferences {
     //animation: ${fadeIn} 0.2s ease-in-out;

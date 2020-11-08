@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense, lazy } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import parse from "html-react-parser";
 
 import { ArticleItem, ArticlePageProps } from "../../../interfaces/Article";
@@ -10,15 +10,18 @@ import {
   LoadingText,
 } from "../../core/layout";
 import constants from "../../../styles/constants";
-import { fadeIn } from "../../../styles/animations";
-import { GetPostBySlug } from "../../core/API";
+import { fadeInUp, fadeInDown } from "../../../styles/animations";
+import { GetPostBySlug, GetCategories } from "../../core/API";
 import { Helmet } from "react-helmet";
+import Tag from "../../core/misc/Tag";
 
 const { colors, whitespace, typography } = constants;
 const Article404 = lazy(() => import("../404/Article404"));
 
 const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [item, setItem] = useState<ArticleItem | null>(null);
+  const [categories, setCategories] = useState([]);
+  const [categoryNames, setCategoryNames] = useState<string[]>([""]);
   const [is404, set404] = useState(false);
 
   useEffect(() => {
@@ -29,6 +32,12 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
         } else {
           set404(true);
         }
+      })
+      .catch((err) => console.error(err));
+
+    GetCategories()
+      .then((response: any) => {
+        setCategories(response);
       })
       .catch((err) => console.error(err));
   }, [match.params.slug]);
@@ -50,6 +59,20 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       }
     }
   }, [item]);
+
+  useEffect(() => {
+    if (item && categories) {
+      const categoryList: string[] = [];
+      item.categories.forEach((categoryID) => {
+        const filter = categories.filter((item: any) => item.id === categoryID);
+        if (filter && filter.length > 0) {
+          categoryList.push((filter[0] as any).name);
+        }
+      });
+      setCategoryNames(categoryList);
+    }
+  }, [item, categories]);
+  console.log(item && item.categories);
   return is404 ? (
     <Suspense fallback={<>...</>}>
       <Article404 />
@@ -61,9 +84,14 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       </Helmet>
       <ArticleSection>
         <Container>
-          <ArticleTitle>
+          <ArticleTitle className={item ? `loadedTitle` : `notLoadedTitle`}>
             {item ? parse(item.title.rendered) : <LoadingText />}
           </ArticleTitle>
+          <Subtitle>
+            {categoryNames.map(
+              (tag) => tag && <Tag key={`tag-${tag}`}>{tag}</Tag>
+            )}
+          </Subtitle>
           {item && (
             <ArticleContainer className="language-js">
               {parse(item.content.rendered)}
@@ -74,6 +102,16 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
     </>
   );
 };
+
+const Subtitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ${whitespace.m};
+  animation: ${fadeInUp} 0.3s ease-in-out;
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+`;
 
 const ArticleSection = styled(DarkSection)`
   @media screen and (max-width: 520px) {
@@ -86,15 +124,64 @@ const ArticleSection = styled(DarkSection)`
   }
 `;
 
+const titleAnimation = keyframes`
+  from{
+    transform:scaleX(0);
+    opacity:0;
+  }
+  30%{
+    opacity:0;
+  }
+`;
+
 const ArticleTitle = styled.h2`
   margin: 0 0 ${whitespace.l};
   font-size: ${typography.xl};
+  display: flex;
+  align-items: center;
+  gap: ${whitespace.l};
+  animation: ${fadeInDown} 0.4s ease-in-out;
+  animation-fill-mode: both;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    background: linear-gradient(
+      to right,
+      ${colors.primary},
+      ${colors.secondary}
+    );
+    height: 0.1em;
+    margin: 0em;
+    border-radius: 5px;
+    opacity: 0.3;
+
+    animation: ${titleAnimation} 0.4s ease-in-out;
+    animation-fill-mode: both;
+    animation-delay: 0.3s;
+  }
+
+  ::before {
+    transform-origin: left;
+  }
+
+  ::after {
+    transform-origin: right;
+  }
+  &.notLoadedTitle {
+    &::before,
+    &::after {
+      opacity: 0;
+      animation: none;
+    }
+  }
 `;
 
 const ArticleContainer = styled(LightSection)`
   padding: ${whitespace.l};
   color: ${colors.bgDark};
-  animation: ${fadeIn} 0.2s ease-in-out;
+  animation: ${fadeInUp} 0.3s ease-in-out;
   font-family: "IBM Plex Sans", sans-serif;
   > *:first-child {
     margin-top: 0;

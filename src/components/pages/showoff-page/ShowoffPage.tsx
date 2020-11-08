@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { fadeIn, fadeInUp } from "../../../styles/animations";
+import { fadeIn, fadeInUp, fadeInDown } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import Button from "../../core/buttons/Button";
 import { Container } from "../../core/layout";
+import Tag from "../../core/misc/Tag";
 import { EntryProps } from "../landing-page/experience-table/ExperienceTable";
 
 const { colors, typography, whitespace } = constants;
@@ -17,6 +18,11 @@ const ShowoffPage: React.FC<EntryProps> = ({
   longText,
   slug,
 }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+  }, []);
   return (
     <ShowoffPageContainer>
       <Header>
@@ -41,6 +47,7 @@ const ShowoffPage: React.FC<EntryProps> = ({
 };
 
 const Content = styled.div`
+  animation: ${fadeInUp} 0.3s ease-in-out;
   background: ${colors.white};
   padding: ${whitespace.l};
   color: ${colors.bgDark};
@@ -105,25 +112,6 @@ const Header = styled.header`
   }
 `;
 
-const Tag = styled.span`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  padding: ${whitespace.xs} ${whitespace.s};
-  margin: 0 ${whitespace.s} ${whitespace.m} 0;
-  border-radius: 3px;
-  background: linear-gradient(
-    to top right,
-    ${colors.secondary},
-    ${colors.primary}
-  );
-  opacity: 0.8;
-  color: ${colors.beige};
-  user-select: none;
-  cursor: default;
-  font-size: ${typography.xs};
-`;
-
 const JobTag = styled(Tag)`
   background: linear-gradient(
     to bottom right,
@@ -142,6 +130,7 @@ const Subline = styled.div`
   align-items: center;
   justify-content: center;
   font-size: ${typography.s};
+  animation: ${fadeInDown} 0.4s ease-in-out;
 `;
 
 const ShowoffPageContainer = styled(Container)`

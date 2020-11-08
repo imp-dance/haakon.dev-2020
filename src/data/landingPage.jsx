@@ -149,7 +149,7 @@ const landingPageData = {
         text: (
           <>
             <p>
-              Ida by LIGL was a project I worked on for several years while
+              Ida by LIGL is a project that I worked on for several years while
               employed at LIGL AS.
             </p>
             <p>
