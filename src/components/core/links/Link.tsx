@@ -4,6 +4,9 @@ interface Props {
   to: string;
   className?: string;
   style?: React.CSSProperties;
+  ref?: any;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const Link: React.FC<Props> = ({ to, children, className, ...props }) => {

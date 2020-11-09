@@ -7,7 +7,18 @@ import Link from "../links/Link";
 const Title = () => {
   const titles = ["dev", "music", "design"];
   return (
-    <StyledLink to="/#/">
+    <StyledLink
+      to="/#/"
+      onKeyDown={(e) => {
+        if (e.key === " ") {
+          e.preventDefault();
+          // Why? Because it feels natural to press space to click on the link/button
+          // But, since this is a link, only "Enter" will work, space would normally
+          // make the page scroll down - which is probably not what the user wants
+          // when focusing the title.
+        }
+      }}
+    >
       <StyledTitle>
         haakon.
         <TitleRotator className="header-titleRotator">
