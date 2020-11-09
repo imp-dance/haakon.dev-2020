@@ -10,6 +10,7 @@ interface Props {
   tabIndex?: number;
   role?: string;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 const Button: React.FC<Props> = ({ secondary, children, style, ...props }) => {
