@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import Particles from "react-tsparticles";
+import { Helmet } from "react-helmet";
 
 import { Container, DarkSection, LightSection } from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
@@ -23,6 +24,9 @@ const { colors, typography, whitespace } = constants;
 const LandingPage: React.FC = () => {
   return (
     <>
+      <Helmet>
+        <title>Håkon Underbakke</title>
+      </Helmet>
       <LandingPageContainer>
         <IntroSection>
           <Container>

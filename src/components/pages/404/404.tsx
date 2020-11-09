@@ -4,12 +4,16 @@ import styled from "styled-components";
 import { DarkSection, Container } from "../../core/layout";
 import Link from "../../core/links/Link";
 import constants from "../../../styles/constants";
+import { Helmet } from "react-helmet";
 
 const { typography, whitespace } = constants;
 
 const Page404 = () => {
   return (
     <>
+      <Helmet>
+        <title>404 - haakon.dev</title>
+      </Helmet>
       <DarkSection>
         <Container>
           <Title>

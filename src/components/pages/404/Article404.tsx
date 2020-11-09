@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import constants from "../../../styles/constants";
 
@@ -10,6 +11,9 @@ const { whitespace, typography } = constants;
 const Article404 = () => {
   return (
     <>
+      <Helmet>
+        <title>404 - haakon.dev</title>
+      </Helmet>
       <DarkSection>
         <Container>
           <Title>Aw shucks, looks like a 404</Title>
