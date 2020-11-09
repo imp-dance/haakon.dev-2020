@@ -7,6 +7,9 @@ const { colors, whitespace, typography } = constants;
 
 const GetInTouch: React.FC = () => {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (window.location.hash === "#/contact") setOpen(true);
+  }, []);
   return (
     <>
       <Button onClick={() => setOpen(true)}>Get in touch</Button>

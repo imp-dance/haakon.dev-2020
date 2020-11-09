@@ -27,6 +27,7 @@ function App() {
           <Suspense fallback={<></>}>
             <Switch>
               <Route path="/" exact component={LandingPage}></Route>
+              <Route path="/contact" exact component={LandingPage}></Route>
               <Route path="/articles" exact component={ArticleListPage}></Route>
               <Route path="/article/:slug" component={ArticlePage}></Route>
               {landingPageData.experienceTable.projects.map((project) => (
