@@ -69,11 +69,16 @@ const Entry: React.FC<EntryProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [mouseMove, styles] = useMouseMove(buttonRef);
   const [redirect, setRedirect] = useState(false);
+  const doRedirect = () => {
+    setTimeout(() => {
+      setRedirect(true);
+    }, 300);
+  };
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { key } = e;
     if (key === " " || key === "Enter") {
       e.preventDefault();
-      setRedirect(true);
+      doRedirect();
     }
   };
   return redirect ? (
@@ -88,7 +93,7 @@ const Entry: React.FC<EntryProps> = ({
         tabIndex={0}
         onKeyDown={onKeyDown}
         style={styles}
-        onClick={() => setRedirect(true)}
+        onClick={() => doRedirect()}
         title="Click to read more"
       >
         <strong>{title}</strong>

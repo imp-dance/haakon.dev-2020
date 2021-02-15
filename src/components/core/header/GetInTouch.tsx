@@ -25,7 +25,7 @@ interface ModalProps {
 
 let hto = setTimeout(() => {});
 
-const Modal: React.FC<ModalProps> = ({ open, close }) => {
+export const Modal: React.FC<ModalProps> = ({ open, close }) => {
   const [fd, setFormData] = useState({
     name: "",
     reply_to: "",

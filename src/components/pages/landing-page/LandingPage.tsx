@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Particles from "react-tsparticles";
 import { Helmet } from "react-helmet";
+import Toggle from "toggle-hu-react";
 
 import { Container, DarkSection, LightSection } from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
@@ -21,7 +22,18 @@ import particleOptions from "../../../data/particles.json";
 
 const { colors, typography, whitespace } = constants;
 
+const storedShowParticles = localStorage.getItem("hus-show-particles");
+const initialShowParticles = storedShowParticles
+  ? JSON.parse(storedShowParticles)
+  : true;
+
 const LandingPage: React.FC = () => {
+  const [showParticles, setShowParticles] = useState(initialShowParticles);
+  const toggleParticles = () => {
+    const newValue = !showParticles;
+    localStorage.setItem("hus-show-particles", JSON.stringify(newValue));
+    setShowParticles(newValue);
+  };
   return (
     <>
       <Helmet>
@@ -46,7 +58,14 @@ const LandingPage: React.FC = () => {
         </InfoSection>
         <DarkSection>
           <ToolsShowcaseContainer>
-            <Particles id="tsParticles" options={particleOptions} />
+            <Toggle
+              label={showParticles ? "Hide particles" : "Show particles"}
+              checked={showParticles}
+              onChange={toggleParticles}
+            />
+            {showParticles && (
+              <Particles id="tsParticles" options={particleOptions} />
+            )}
             <InnerContainer>
               <ToolsShowcase />
             </InnerContainer>
@@ -107,11 +126,21 @@ const ToolsShowcaseContainer = styled.div`
     animation: ${heavyFadeIn} 0.6s ease-in-out;
     will-change: opacity;
     animation-fill-mode: both;
-    animation-delay: 2.3s;
     z-index: -1;
     @media (prefers-reduced-motion) {
       display: none;
     }
+  }
+  .hu-comp-toggle-label {
+    opacity: 0.5;
+    position: absolute;
+    bottom: ${whitespace.l};
+    left: ${whitespace.l};
+    font-size: ${typography.s};
+    user-select: none;
+  }
+  .hu-comp-toggle-span {
+    width: 3.5em !important;
   }
 `;
 

@@ -8,7 +8,10 @@ const landingPageData = {
     title: "Hi, my name is Håkon Underbakke.",
     text: (
       <>
-        <p>I'm a Norwegian frontend developer currently working for Idean.</p>
+        <p>
+          I'm a Norwegian frontend developer currently doing contract work for
+          my own company, <strong>Ryfylke React AS</strong>.
+        </p>
         <p>
           I have been doing web development professionally for the last 4 years.
           These days, I mostly work with React and Typescript.
@@ -19,8 +22,36 @@ const landingPageData = {
   experienceTable: {
     work: [
       {
+        title: "Ryfylke React AS",
+        date: "2021 - now",
+        position: "CEO / Front End Consultant",
+        slug: "/ryfylkereact",
+        text: (
+          <>
+            <p>
+              After 9 months at Idean, because of life circumstances, I've
+              decided to leave and start my own company. I'm soon going to move
+              out of the city, and needed to find a more long-term remote
+              option, beyond the current pandemic.
+            </p>
+            <p>
+              Although I initially looked into full-time remote positions, I
+              soon got a proposal to do contract work for a Norwegian
+              telecommunications company, which serves as a perfect springboard
+              to start my own company.
+            </p>
+            <p>
+              As of now, I'm the only employee at my company. Down the line I
+              might look into hiring more people, but for now this serves me
+              well.
+            </p>
+          </>
+        ),
+        url: "https://ryfylke.dev",
+      },
+      {
         title: "Idean Norway (Capgemini Norge AS)",
-        date: "2020 - Present",
+        date: "2020 - 2021",
         position: "Front End Developer",
         slug: "/idean",
         text: (
@@ -102,6 +133,129 @@ const landingPageData = {
       },
     ],
     projects: [
+      {
+        title: "NDLA IT-game",
+        date: "2021",
+        shortText:
+          "Developed a network-simulation game for IT-students on the Norwegian Digital Learning Arena.",
+        slug: "/ndla",
+        text: (
+          <>
+            <p>
+              This was a short project to create a network-simulation game to be
+              used in IT-education on the Norwegian Digital Learning Arena. The
+              objective of the game is to connect various nodes through switches
+              to the network, and to map the correct networks to the correct
+              devices. The design of the game was made by a Senior Visual
+              Designer at Idean, and I worked on implementing the design myself.
+            </p>
+            <p>
+              The game is made in React.JS with Typescript and
+              styled-components.
+            </p>
+            <img
+              src="https://haakon.dev/ndla.png"
+              alt="Screenshot of the NDLA project."
+            />
+          </>
+        ),
+      },
+      {
+        title: "Haystack",
+        date: "2021",
+        shortText: "Developed POC for data visualisation and anti-fraud tool.",
+        slug: "/haystack",
+        text: (
+          <>
+            <p>
+              I was hired as a consultant from Idean to work on developing the
+              frontend for the proof of concept for a data-visualisation and
+              anti-fraud software.
+            </p>
+            <p>
+              The website was developed using React.JS with TypeScript and
+              styled-components. For the graphs, we used Linkurious' Ogma
+              library. For the charts, we used Nivo.
+            </p>
+            <p>
+              The proof of concept is running on JSON-data, but the project
+              structure is set up for a future handover for further development.
+              Some of the working features include:
+            </p>
+            <ul>
+              <li>Geo/map-mode that plots all nodes with coordinates.</li>
+              <li>Creating charts based on node-data.</li>
+              <li>Expand nodes to show relations.</li>
+              <li>Adding pulses to the nodes.</li>
+              <li>Shortest-path algorhythm between nodes.</li>
+              <li>
+                Adding filters based on node-types, with conditions based on the
+                type properties.
+              </li>
+              <li>Hiding individual nodes.</li>
+              <li>Graph fullscreen-mode (for map and main graph).</li>
+            </ul>
+            <img
+              src="https://haakon.dev/haystack.png"
+              alt="Screenshot of the Haystack project."
+            />
+            <p>
+              While I'm not a visual-designer, I also made the logo draft that's
+              featured in the screenshot above using{" "}
+              <a
+                href="https://logomaker.thehoth.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                logomaker
+              </a>
+              .
+            </p>
+            <p>
+              I worked on this project for a total of around 4 weeks - building
+              the entire front end in that time-span. I also helped demo the POC
+              to multiple clients and partners.
+            </p>
+          </>
+        ),
+      },
+      {
+        title: "Equinor projects",
+        date: "2020",
+        shortText: "Worked on two separate projects at Equinor.",
+        slug: "/equinor",
+        text: (
+          <>
+            <p>
+              While working as a consultant for Idean, I worked on two separate
+              Equinor projects. I'll keep the descriptions a bit vauge, and with
+              no screenshots - since these are both internal projects.
+            </p>
+            <p>
+              On the first project, related to internal technology development
+              and documenting tool, I was hired as a replacement for a previous
+              frontender from Idean. There I worked for three months, helping
+              clean up various bugs and also developing a few new components -
+              including an animated expandable search-field. We used the SCRUM
+              methodology with a team of between 10-20 developers, mostly from
+              India. The project was setup using <strong>React.JS</strong>,{" "}
+              <strong>TypeScript</strong>, <strong>styled-components</strong>{" "}
+              and <strong>Formik</strong> + <strong>Yup</strong> for handling
+              forms and validation.
+            </p>
+            <p>
+              On the second project, related to internal documentation for the
+              various plants Equinor owns, I worked "pro-bono" in-between other
+              projects. I mostly developed new generic components like a
+              Table-component and an Accordion-component. The stack on this
+              project was quite similar, with <strong>React</strong> and{" "}
+              <strong>TypeScript</strong> - but this project notably used{" "}
+              <strong>LESS</strong> for styling and the code-structure was more
+              class/object-oriented.
+            </p>
+          </>
+        ),
+      },
       {
         title: "City for City",
         date: "2020",
@@ -226,6 +380,10 @@ const landingPageData = {
               This was my first website that I've made for a professional
               client.
             </p>
+            <img
+              src="https://haakon.dev/bokit.png"
+              alt="Screenshot of Ryfylke Bok & IT's website."
+            />
           </>
         ),
         url: "https://bok-it.no",
@@ -270,6 +428,7 @@ const landingPageData = {
         "SQL",
         "Firebase",
         "ContractExpress Author",
+        "Data visualisation",
         "Bash/Shell",
         "Logic Pro X",
         "Adobe Photoshop",

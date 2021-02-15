@@ -22,6 +22,12 @@ body {
   background-size: 22px 22px !important;
   background-attachment: fixed !important;
   overflow-y: scroll;
+  -ms-scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory;
+}
+
+#root {
+  scroll-snap-align: start;
 }
 
 code,

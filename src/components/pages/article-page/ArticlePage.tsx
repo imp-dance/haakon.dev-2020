@@ -25,6 +25,16 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [categoryNames, setCategoryNames] = useState<string[]>([""]);
   const [is404, set404] = useState(false);
 
+  const onScroll = (e: any) => {
+    const header = document.querySelector("#header");
+    const offset = window.pageYOffset;
+    if (offset < 5 && header) {
+      header.classList.remove("isSticky");
+    } else if (offset > 16) {
+      header?.classList.add("isSticky");
+    }
+  };
+
   useEffect(() => {
     GetPostBySlug(match.params.slug)
       .then((res: any) => {
@@ -73,6 +83,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
       setCategoryNames(categoryList);
     }
   }, [item, categories]);
+
+  useEffect(() => {
+    window.onscroll = onScroll;
+    return () => {
+      document.querySelector("#header")?.classList.remove("isSticky");
+      window.onscroll = null;
+    };
+  }, []);
+
   return is404 ? (
     <Suspense fallback={<>...</>}>
       <Article404 />

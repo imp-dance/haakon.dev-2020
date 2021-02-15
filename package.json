@@ -26,6 +26,7 @@
     "react-scripts": "3.4.3",
     "react-tsparticles": "^1.17.12",
     "styled-components": "^5.1.1",
+    "toggle-hu-react": "^1.0.1",
     "ts-debounce": "^2.0.1",
     "typescript": "~3.9.5"
   },

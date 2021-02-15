@@ -6,6 +6,7 @@ import Button from "../../core/buttons/Button";
 import { Container } from "../../core/layout";
 import Tag from "../../core/misc/Tag";
 import { EntryProps } from "../landing-page/experience-table/ExperienceTable";
+import Link from "../../core/links/Link";
 
 const { colors, typography, whitespace } = constants;
 
@@ -32,19 +33,36 @@ const ShowoffPage: React.FC<EntryProps> = ({
           {shortText} ({date})
         </Subline>
       </Header>
+      <BackLink to="/">&#8249; Back to portfolio</BackLink>
       <Content>{longText}</Content>
-      <GoButton
-        role="link"
-        secondary
-        onClick={() => {
-          window.open(url);
-        }}
-      >
-        Visit {isJob ? "company website" : "project"}
-      </GoButton>
+      {url && (
+        <GoButton
+          role="link"
+          secondary
+          onClick={() => {
+            window.open(url);
+          }}
+        >
+          Visit {isJob ? "company website" : "project"}
+        </GoButton>
+      )}
     </ShowoffPageContainer>
   );
 };
+
+const BackLink = styled(Link)`
+  animation: ${fadeInUp} 0.3s ease-in-out;
+  color: ${colors.lightBeige};
+  display: inline-block;
+  margin: 0 0 ${whitespace.s};
+  text-decoration: none;
+  opacity: 0.6;
+  font-size: ${typography.s};
+  &:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+`;
 
 const Content = styled.div`
   animation: ${fadeInUp} 0.3s ease-in-out;
