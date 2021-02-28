@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Particles from "react-tsparticles";
 import { Helmet } from "react-helmet";
@@ -34,6 +34,9 @@ const LandingPage: React.FC = () => {
     localStorage.setItem("hus-show-particles", JSON.stringify(newValue));
     setShowParticles(newValue);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Helmet>

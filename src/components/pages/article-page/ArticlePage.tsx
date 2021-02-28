@@ -27,7 +27,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
 
   const onScroll = (e: any) => {
     const header = document.querySelector("#header");
-    const offset = window.pageYOffset;
+    const offset = document.querySelector("body")?.scrollTop ?? 0;
     if (offset < 5 && header) {
       header.classList.remove("isSticky");
     } else if (offset > 16) {
@@ -85,10 +85,11 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   }, [item, categories]);
 
   useEffect(() => {
-    window.onscroll = onScroll;
+    document.querySelector("body")?.addEventListener("scroll", onScroll);
     return () => {
       document.querySelector("#header")?.classList.remove("isSticky");
-      window.onscroll = null;
+      document.querySelector("body")?.removeEventListener("scroll", onScroll);
+      // window.onscroll = null;
     };
   }, []);
 

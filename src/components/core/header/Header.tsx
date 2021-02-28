@@ -69,9 +69,9 @@ const StyledHeader = styled.div`
     transition: transform 0.18s ease-in-out;
   }
   @media screen and (min-width: 1200px) {
-    position: sticky;
-    top: 0px;
     &.isSticky {
+      position: sticky;
+      top: 0px;
       max-height: 73px;
       margin-bottom: 22.5px;
       top: -1px;

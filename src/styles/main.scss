@@ -8,6 +8,17 @@
   box-sizing: inherit;
 }
 
+body,
+html {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+  position: fixed;
+  height: 100%;
+  touch-action: none;
+  -ms-touch-action: none;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -22,12 +33,13 @@ body {
   background-size: 22px 22px !important;
   background-attachment: fixed !important;
   overflow-y: scroll;
-  -ms-scroll-snap-type: y mandatory;
-  scroll-snap-type: y mandatory;
 }
 
-#root {
-  scroll-snap-align: start;
+@media screen and (max-width: 600px) {
+  #tsParticles,
+  .hu-comp-toggle-label {
+    display: none;
+  }
 }
 
 code,
