@@ -228,6 +228,8 @@ const InfoSection = styled(LightSection)`
   &.findmeon {
     background: linear-gradient(to top left, #171727, #252454);
     border-top: 1rem solid #252453;
+    min-height: 50vh;
+    max-height: 800px;
   }
   > svg {
     position: absolute;
