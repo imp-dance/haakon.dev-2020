@@ -37,8 +37,8 @@ const landingPageData = {
             <p>
               Although I initially looked into full-time remote positions, I
               soon got a proposal to do contract work for a Norwegian
-              telecommunications company, which serves as a perfect springboard
-              to start my own company.
+              telecommunications company (<Link to="/#/telenor">Telenor</Link>),
+              which serves as a perfect springboard to start my own company.
             </p>
             <p>
               As of now, I'm the only employee at my company. Down the line I
@@ -52,7 +52,7 @@ const landingPageData = {
       {
         title: "Idean Norway (Capgemini Norge AS)",
         date: "2020 - 2021",
-        position: "Front End Developer",
+        position: "Front End Consultant",
         slug: "/idean",
         text: (
           <>
@@ -133,6 +133,29 @@ const landingPageData = {
       },
     ],
     projects: [
+      {
+        title: "Telenor",
+        date: "2021",
+        shortText: "Working as a front-end consultant on project.",
+        slug: "/telenor",
+        text: (
+          <>
+            <p>
+              Since February of 2021, I've been working as a front-end
+              consultant on a project at Telenor, a Norwegian telecommunications
+              company.
+            </p>
+            <p>
+              The project I'm working on is related to log analysis and
+              correlation of messages and log data from hardware and software.
+            </p>
+            <p>
+              This is my own company, Ryfylke React AS's first contract - and I
+              will most likely be working on this for the whole of 2021.
+            </p>
+          </>
+        ),
+      },
       {
         title: "NDLA IT-game",
         date: "2021",

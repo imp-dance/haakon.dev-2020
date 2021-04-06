@@ -10,6 +10,7 @@ import ExternalLink from "../../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
 
 import { ReactComponent as HeaderSVG } from "../../../assets/svg/vector.svg";
+import { ReactComponent as TilesSVG } from "../../../assets/svg/tiles.svg";
 import landingPageData from "../../../data/landingPage";
 import {
   fadeUpButtons,
@@ -19,6 +20,7 @@ import {
 } from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import particleOptions from "../../../data/particles.json";
+import { useHistory } from "react-router";
 
 const { colors, typography, whitespace } = constants;
 
@@ -29,6 +31,7 @@ const initialShowParticles = storedShowParticles
 
 const LandingPage: React.FC = () => {
   const [showParticles, setShowParticles] = useState(initialShowParticles);
+  const history = useHistory();
   const toggleParticles = () => {
     const newValue = !showParticles;
     localStorage.setItem("hus-show-particles", JSON.stringify(newValue));
@@ -36,7 +39,8 @@ const LandingPage: React.FC = () => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    document.body.scrollTop = 0;
+  }, [history.location]);
   return (
     <>
       <Helmet>
@@ -58,6 +62,7 @@ const LandingPage: React.FC = () => {
           <InnerContainer>
             <ExperienceTable />
           </InnerContainer>
+          <TilesSVG />
         </InfoSection>
         <DarkSection>
           <ToolsShowcaseContainer>
@@ -74,11 +79,10 @@ const LandingPage: React.FC = () => {
             </InnerContainer>
           </ToolsShowcaseContainer>
         </DarkSection>
-        <InfoSection>
+        <InfoSection className="findmeon">
           <Container>
             <LinksAndRefContainer>
               <LinksAndReferences className="linksAndReferences">
-                <p>You can find me on...</p>
                 {landingPageData.linksAndReferences.map((item, index) => (
                   <LinkReference to={item.url} key={`link-reference-${index}`}>
                     <i role="img" aria-label={`Icon for ${item.title}`}>
@@ -94,9 +98,9 @@ const LandingPage: React.FC = () => {
         </InfoSection>
         <DarkSection>
           <Container>
-            <IntroTitle>Psst, I also make music</IntroTitle>
+            <IntroTitle>🤫 Psst, I also make music</IntroTitle>
             <p>
-              You can find my music everywhere as <strong>sl1ck</strong>.
+              You can find my music anywhere as <strong>sl1ck</strong>.
             </p>
             <p>
               <ExternalLink to="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
@@ -212,12 +216,33 @@ const IntroSection = styled(DarkSection)`
 
 const InfoSection = styled(LightSection)`
   animation: ${fadeInUp} 0.4s ease-in-out;
+  position: relative;
+  overflow: hidden;
   .accordion-container,
   .linksAndReferences {
     //animation: ${fadeIn} 0.2s ease-in-out;
     //will-change: opacity;
     animation-fill-mode: both;
     animation-delay: 2.4s;
+  }
+  &.findmeon {
+    background: linear-gradient(to top left, #171727, #252454);
+    border-top: 1rem solid #252453;
+  }
+  > svg {
+    position: absolute;
+    bottom: -30px;
+    z-index: 1;
+    left: -50px;
+    height: 100%;
+    transform: translateY(50%) rotate(-7deg);
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
+  }
+  > div {
+    position: relative;
+    z-index: 2;
   }
 `;
 
@@ -282,7 +307,8 @@ const LinksAndRefBG = styled.div`
 
 const LinksAndReferences = styled.div`
   content-visibility: auto;
-  background: ${colors.gray};
+  background: ${colors.bgDark};
+  color: ${colors.beige};
   padding: ${whitespace.m};
   > *:first-child {
     margin-top: 0;
@@ -296,8 +322,8 @@ const LinkReference = styled(ExternalLink)`
   display: flex;
   align-items: center;
   padding: ${whitespace.s};
-  background: ${colors.beige};
-  color: ${colors.bgDark};
+  background: ${colors.bg};
+  color: ${colors.white};
   margin: 0 0 ${whitespace.s};
   text-decoration: none;
   position: relative;
@@ -315,7 +341,7 @@ const LinkReference = styled(ExternalLink)`
   span {
     margin-left: auto;
     font-size: ${typography.s};
-    opacity: 0.4;
+    opacity: 0.7;
     text-align: right;
   }
   &:hover,

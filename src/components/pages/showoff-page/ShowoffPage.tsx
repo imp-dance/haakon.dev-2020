@@ -7,6 +7,7 @@ import { Container } from "../../core/layout";
 import Tag from "../../core/misc/Tag";
 import { EntryProps } from "../landing-page/experience-table/ExperienceTable";
 import Link from "../../core/links/Link";
+import { useHistory } from "react-router";
 
 const { colors, typography, whitespace } = constants;
 
@@ -19,11 +20,12 @@ const ShowoffPage: React.FC<EntryProps> = ({
   longText,
   slug,
 }) => {
+  const {
+    location: { pathname },
+  } = useHistory();
   useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 100);
-  }, []);
+    document.body.scrollTop = 0;
+  }, [pathname]);
   return (
     <ShowoffPageContainer>
       <Header>

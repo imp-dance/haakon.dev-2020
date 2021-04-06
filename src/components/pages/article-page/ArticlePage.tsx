@@ -28,8 +28,8 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const onScroll = (e: any) => {
     const header = document.querySelector("#header");
     const offset = document.querySelector("body")?.scrollTop ?? 0;
-    if (offset < 5 && header) {
-      header.classList.remove("isSticky");
+    if (offset < 5) {
+      header?.classList.remove("isSticky");
     } else if (offset > 16) {
       header?.classList.add("isSticky");
     }
