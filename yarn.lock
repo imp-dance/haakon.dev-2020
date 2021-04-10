@@ -3036,9 +3036,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001131:
-  version "1.0.30001133"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001133.tgz#ec564c5495311299eb05245e252d589a84acd95e"
-  integrity sha512-s3XAUFaC/ntDb1O3lcw9K8MPeOW7KO3z9+GzAoBxfz1B0VdacXPMKgFUtG4KIsgmnbexmi013s9miVu4h+qMHw==
+  version "1.0.30001208"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001208.tgz"
+  integrity sha512-OE5UE4+nBOro8Dyvv0lfx+SRtfVIOM9uhKqFmJeUbGriqhhStgp1A0OyBpgy3OUF8AhYCT+PVwPC1gMl2ZcQMA==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -10880,10 +10880,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-toggle-hu-react@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/toggle-hu-react/-/toggle-hu-react-1.0.1.tgz#f25a3959a13f5274a132bdb5f402a41a60115649"
-  integrity sha512-U3H74+LhCkyqK0ovHKNR9vsLRj8ZeZX9Ge5BwyEhWaqHMLM14SOZSpRSLk7NR4EczLY8wKPlPu93AK4RmgulKQ==
+toggle-hu-react@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/toggle-hu-react/-/toggle-hu-react-1.0.3.tgz#7798384351c0ad86d40ddb582202aff72dd208b9"
+  integrity sha512-7bKEIqjqIpAsJr5dCjQTqRdjNQ/mIMoFCWiLQsmRssXeEGNPJNqwIKvNq5ZQIXzzR/c9Xmy4H1Qb55vPMr29DQ==
 
 toidentifier@1.0.0:
   version "1.0.0"
