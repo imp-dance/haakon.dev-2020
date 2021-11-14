@@ -1,8 +1,16 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, {
+  useEffect,
+  useState,
+  Suspense,
+  lazy,
+} from "react";
 import styled, { keyframes } from "styled-components";
 import parse from "html-react-parser";
 
-import { ArticleItem, ArticlePageProps } from "../../../interfaces/Article";
+import {
+  ArticleItem,
+  ArticlePageProps,
+} from "../../../interfaces/Article";
 import {
   Container,
   DarkSection,
@@ -10,7 +18,10 @@ import {
   LoadingText,
 } from "../../core/layout";
 import constants from "../../../styles/constants";
-import { fadeInUp, fadeInDown } from "../../../styles/animations";
+import {
+  fadeInUp,
+  fadeInDown,
+} from "../../../styles/animations";
 import { GetPostBySlug, GetCategories } from "../../core/API";
 import { Helmet } from "react-helmet";
 import Tag from "../../core/misc/Tag";
@@ -22,12 +33,15 @@ const Article404 = lazy(() => import("../404/Article404"));
 const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   const [item, setItem] = useState<ArticleItem | null>(null);
   const [categories, setCategories] = useState([]);
-  const [categoryNames, setCategoryNames] = useState<string[]>([""]);
+  const [categoryNames, setCategoryNames] = useState<string[]>([
+    "",
+  ]);
   const [is404, set404] = useState(false);
 
   const onScroll = (e: any) => {
     const header = document.querySelector("#header");
-    const offset = document.querySelector("body")?.scrollTop ?? 0;
+    const offset =
+      document.querySelector("body")?.scrollTop ?? 0;
     if (offset < 5) {
       header?.classList.remove("isSticky");
     } else if (offset > 16) {
@@ -75,7 +89,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
     if (item && categories) {
       const categoryList: string[] = [];
       item.categories.forEach((categoryID) => {
-        const filter = categories.filter((item: any) => item.id === categoryID);
+        const filter = categories.filter(
+          (item: any) => item.id === categoryID
+        );
         if (filter && filter.length > 0) {
           categoryList.push((filter[0] as any).name);
         }
@@ -85,10 +101,16 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   }, [item, categories]);
 
   useEffect(() => {
-    document.querySelector("body")?.addEventListener("scroll", onScroll);
+    document
+      .querySelector("body")
+      ?.addEventListener("scroll", onScroll);
     return () => {
-      document.querySelector("#header")?.classList.remove("isSticky");
-      document.querySelector("body")?.removeEventListener("scroll", onScroll);
+      document
+        .querySelector("#header")
+        ?.classList.remove("isSticky");
+      document
+        .querySelector("body")
+        ?.removeEventListener("scroll", onScroll);
       // window.onscroll = null;
     };
   }, []);
@@ -100,11 +122,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   ) : (
     <>
       <Helmet>
-        <title>{item ? parse(item.title.rendered) : document.title}</title>
+        <title>
+          {item ? parse(item.title.rendered) : document.title}
+        </title>
       </Helmet>
       <ArticleSection>
         <Container>
-          <ArticleTitle className={item ? `loadedTitle` : `notLoadedTitle`}>
+          <ArticleTitle
+            className={item ? `loadedTitle` : `notLoadedTitle`}
+          >
             {item ? parse(item.title.rendered) : <LoadingText />}
           </ArticleTitle>
           <Subtitle>
@@ -227,7 +253,11 @@ const ArticleContainer = styled(LightSection)`
   .introSection {
     padding: ${whitespace.m};
     border-left: ${whitespace.m} solid ${colors.pink};
-    background: linear-gradient(to right, ${colors.beige}, ${colors.beige}55);
+    background: linear-gradient(
+      to right,
+      ${colors.beige},
+      ${colors.beige}55
+    );
     max-width: 100%;
     font-family: "IBM Plex Mono", monospace;
     font-size: ${typography.s};
@@ -311,6 +341,13 @@ const ArticleContainer = styled(LightSection)`
       > div:last-child {
         max-width: 100%;
       }
+    }
+  }
+  .wp-block-video {
+    &.small-video {
+      padding: 0;
+      margin: 0;
+      max-width: 700px;
     }
   }
 `;

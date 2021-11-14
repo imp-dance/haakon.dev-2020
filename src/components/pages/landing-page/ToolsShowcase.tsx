@@ -13,10 +13,23 @@ interface ItemInterface {
 const ToolsShowcase: React.FC = () => {
   return (
     <ToolsContainer>
+      <header>
+        <p>
+          These are some of the technologies and subjects that I
+          have worked with on previous projects, and consider
+          myself experienced with. In no particular order.
+        </p>
+      </header>
       <ItemContainer>
-        {landingPageData.toolsAndTechnologies.map((item, index) => (
-          <Item title={item.title} items={item.items} key={`toolItem${index}`} />
-        ))}
+        {landingPageData.toolsAndTechnologies.map(
+          (item, index) => (
+            <Item
+              title={item.title}
+              items={item.items}
+              key={`toolItem${index}`}
+            />
+          )
+        )}
       </ItemContainer>
     </ToolsContainer>
   );
@@ -28,7 +41,7 @@ const Item: React.FC<ItemInterface> = ({ title, items }) => {
       <h3>{title}</h3>
       <InnerItemContainer>
         {items.map((item, index) => (
-          <span key={`${title}-item-${index}`}>{item}</span>
+          <li key={`${title}-item-${index}`}>{item}</li>
         ))}
       </InnerItemContainer>
     </StyledItem>
@@ -46,10 +59,13 @@ const StyledItem = styled.div`
     }
     white-space: nowrap;
   }
-  > div {
+  > div,
+  > ul {
     display: flex;
     margin-left: ${whitespace.m};
-    > span {
+    list-style: none;
+    padding: 0;
+    > li {
       border-radius: 2px;
       background: ${colors.beige};
       padding: ${whitespace.s} ${whitespace.m};
@@ -68,6 +84,14 @@ const ToolsContainer = styled.div`
   > p {
     margin: 0 0 ${whitespace.m};
   }
+  > header {
+    h3 {
+      font-size: ${typography.xl};
+    }
+    p {
+      font-size: ${typography.s};
+    }
+  }
 `;
 
 const ItemContainer = styled.div`
@@ -75,9 +99,14 @@ const ItemContainer = styled.div`
   color: ${colors.lightPink};
 `;
 
-const InnerItemContainer = styled.div`
-  overflow: auto;
-  user-select: all;
+const InnerItemContainer = styled.ul`
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  user-select: text;
   pointer-events: all;
   padding-bottom: ${whitespace.s};
 `;
