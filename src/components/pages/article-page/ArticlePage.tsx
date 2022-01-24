@@ -49,23 +49,40 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
     }
   };
 
+  const loadComments = () => {
+    const existingEl = document.getElementById("chirpy-loader");
+    if (existingEl) {
+      existingEl.remove();
+    }
+    const scriptEl = document.createElement("script");
+    scriptEl.setAttribute("defer", "defer");
+    scriptEl.setAttribute(
+      "src",
+      "https://chirpy.dev/bootstrap/comment.js"
+    );
+    scriptEl.setAttribute("data-chirpy-domain", "haakon.dev");
+    scriptEl.setAttribute("id", "chirpy-loader");
+    document.body.appendChild(scriptEl);
+  };
+
   useEffect(() => {
     GetPostBySlug(match.params.slug)
       .then((res: any) => {
         if (res.length > 0) {
           setItem(res[0]);
+          loadComments();
         } else {
           set404(true);
         }
       })
       .catch((err) => console.error(err));
-
     GetCategories()
       .then((response: any) => {
         setCategories(response);
       })
       .catch((err) => console.error(err));
   }, [match.params.slug]);
+
   useEffect(() => {
     if (item) {
       (window as any).Prism.highlightAll();
@@ -160,6 +177,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
               {parse(item.content.rendered)}
             </ArticleContainer>
           )}
+          <div data-chirpy-comment="true" />
         </Container>
       </ArticleSection>
     </>
