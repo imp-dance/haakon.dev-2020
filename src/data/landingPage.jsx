@@ -26,6 +26,7 @@ const landingPageData = {
       {
         title: "Ryfylke React AS",
         date: "2021 - now",
+        _date: new Date("01/02/2021"),
         position: "CEO / Front End Consultant",
         slug: "/ryfylkereact",
         text: (
@@ -69,10 +70,11 @@ const landingPageData = {
         url: "https://ryfylke.dev",
       },
       {
-        title: "Idean Norway (Capgemini Norge AS)",
+        title: "Idean (Capgemini)",
         date: "2020 - 2021",
         position: "Front End Consultant",
         slug: "/idean",
+        _date: new Date("01/04/2020"),
         text: (
           <>
             <p>
@@ -122,6 +124,7 @@ const landingPageData = {
         position:
           "Legal Tech Developer | Web Developer | IT-Consultant",
         slug: "/ligl",
+        _date: new Date("01/06/2016"),
         text: (
           <>
             <p>
@@ -168,6 +171,7 @@ const landingPageData = {
         shortText:
           "Working as a front-end consultant on project.",
         slug: "/telenor",
+        _date: new Date("01/02/2021"),
         text: (
           <>
             <p>
@@ -199,10 +203,11 @@ const landingPageData = {
       },
       {
         title: "NDLA IT-game",
-        date: "2021",
+        date: "2020",
         shortText:
           "Developed a network-simulation game for IT-students on the Norwegian Digital Learning Arena.",
         slug: "/ndla",
+        _date: new Date("25/11/2020"),
         text: (
           <>
             <p>
@@ -229,10 +234,11 @@ const landingPageData = {
       },
       {
         title: "Haystack",
-        date: "2021",
+        date: "2020",
         shortText:
           "Developed POC for data visualisation and anti-fraud tool.",
         slug: "/haystack",
+        _date: new Date("13/12/2020"),
         text: (
           <>
             <p>
@@ -301,6 +307,7 @@ const landingPageData = {
         date: "2020",
         shortText: "Worked on two separate projects at Equinor.",
         slug: "/equinor",
+        _date: new Date("01/06/2020"),
         text: (
           <>
             <p>
@@ -345,6 +352,7 @@ const landingPageData = {
         date: "2020",
         shortText: "Developed frontend & implemented CMS system",
         slug: "/cityforcity",
+        _date: new Date("01/05/2021"),
         text: (
           <>
             <p>
@@ -389,6 +397,7 @@ const landingPageData = {
         shortText:
           "Released first major version of Ida by LIGL.",
         slug: "/ida",
+        _date: new Date("01/01/2017"),
         text: (
           <>
             <p>
@@ -435,6 +444,7 @@ const landingPageData = {
         shortText:
           "Developed website & backend system based on his own design.",
         slug: "/eirik",
+        _date: new Date("01/02/2015"),
         text: (
           <>
             <p>
@@ -458,6 +468,7 @@ const landingPageData = {
         shortText:
           "Developed & designed their website in-house while working summer job.",
         slug: "/bokit",
+        _date: new Date("01/02/2015"),
         text: (
           <>
             <p>

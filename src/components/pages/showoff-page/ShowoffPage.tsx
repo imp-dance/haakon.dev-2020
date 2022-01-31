@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { fadeIn, fadeInUp, fadeInDown } from "../../../styles/animations";
+import {
+  fadeIn,
+  fadeInUp,
+  fadeInDown,
+} from "../../../styles/animations";
 import constants from "../../../styles/constants";
 import Button from "../../core/buttons/Button";
 import { Container } from "../../core/layout";
@@ -24,14 +28,18 @@ const ShowoffPage: React.FC<EntryProps> = ({
     location: { pathname },
   } = useHistory();
   useEffect(() => {
-    document.body.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
   return (
     <ShowoffPageContainer>
       <Header>
         <h2>{title}</h2>
         <Subline>
-          {isJob ? <JobTag>Position</JobTag> : <ProjectTag>Project</ProjectTag>}
+          {isJob ? (
+            <JobTag>Position</JobTag>
+          ) : (
+            <ProjectTag>Project</ProjectTag>
+          )}
           {shortText} ({date})
         </Subline>
       </Header>

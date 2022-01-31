@@ -19,6 +19,8 @@ export default {
     sm: "1rem",
     s: "0.85rem",
     xs: "0.7rem",
+    xxs: "0.5rem",
+    xxxs: "0.35rem",
   },
   whitespace: {
     xxl: "4rem",

@@ -50,7 +50,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
   };
 
   const loadComments = () => {
-    const existingEl = document.getElementById("chirpy-loader");
+    /*     const existingEl = document.getElementById("chirpy-loader");
     if (existingEl) {
       existingEl.remove();
     }
@@ -62,7 +62,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ match }) => {
     );
     scriptEl.setAttribute("data-chirpy-domain", "haakon.dev");
     scriptEl.setAttribute("id", "chirpy-loader");
-    document.body.appendChild(scriptEl);
+    document.body.appendChild(scriptEl); */
   };
 
   useEffect(() => {
@@ -267,6 +267,7 @@ const ArticleContainer = styled(LightSection)`
   > *:first-child {
     margin-top: 0;
   }
+
   > p:first-child:not(:empty),
   .introSection {
     padding: ${whitespace.m};

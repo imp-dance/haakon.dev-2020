@@ -4,7 +4,11 @@ import Particles from "react-tsparticles";
 import { Helmet } from "react-helmet";
 import Toggle from "toggle-hu-react";
 
-import { Container, DarkSection, LightSection } from "../../core/layout";
+import {
+  Container,
+  DarkSection,
+  LightSection,
+} from "../../core/layout";
 import ExperienceTable from "./experience-table/ExperienceTable";
 import ExternalLink from "../../core/links/ExternalLink";
 import ToolsShowcase from "./ToolsShowcase";
@@ -21,20 +25,32 @@ import {
 import constants from "../../../styles/constants";
 import particleOptions from "../../../data/particles.json";
 import { useHistory } from "react-router";
+import { ExperienceSection } from "./experience/Experience";
+import { useMediaQuery } from "react-responsive";
 
 const { colors, typography, whitespace } = constants;
 
-const storedShowParticles = localStorage.getItem("hus-show-particles");
+const storedShowParticles = localStorage.getItem(
+  "hus-show-particles"
+);
 const initialShowParticles = storedShowParticles
   ? JSON.parse(storedShowParticles)
   : true;
 
 const LandingPage: React.FC = () => {
-  const [showParticles, setShowParticles] = useState(initialShowParticles);
+  const [showParticles, setShowParticles] = useState(
+    initialShowParticles
+  );
+  const showTable = useMediaQuery({
+    query: "(max-width: 1100px)",
+  });
   const history = useHistory();
   const toggleParticles = () => {
     const newValue = !showParticles;
-    localStorage.setItem("hus-show-particles", JSON.stringify(newValue));
+    localStorage.setItem(
+      "hus-show-particles",
+      JSON.stringify(newValue)
+    );
     setShowParticles(newValue);
   };
   useEffect(() => {
@@ -50,29 +66,40 @@ const LandingPage: React.FC = () => {
         <IntroSection>
           <Container>
             <IntroTitle>
-              {landingPageData.header.title.split(" ").map((item, index) => (
-                <i key={`title-letter-${index}`}>{item} </i>
-              ))}
+              {landingPageData.header.title
+                .split(" ")
+                .map((item, index) => (
+                  <i key={`title-letter-${index}`}>{item} </i>
+                ))}
             </IntroTitle>
             {landingPageData.header.text}
           </Container>
           <HeaderSVG />
         </IntroSection>
         <InfoSection>
-          <InnerContainer>
+          {showTable ? (
             <ExperienceTable />
-          </InnerContainer>
+          ) : (
+            <ExperienceSection />
+          )}
           <TilesSVG />
         </InfoSection>
         <DarkSection>
           <ToolsShowcaseContainer>
             <Toggle
-              label={showParticles ? "Hide particles" : "Show particles"}
+              label={
+                showParticles
+                  ? "Hide particles"
+                  : "Show particles"
+              }
               checked={showParticles}
               onChange={toggleParticles}
             />
             {showParticles && (
-              <Particles id="tsParticles" options={particleOptions} />
+              <Particles
+                id="tsParticles"
+                options={particleOptions}
+              />
             )}
             <InnerContainer>
               <ToolsShowcase />
@@ -83,14 +110,25 @@ const LandingPage: React.FC = () => {
           <Container>
             <LinksAndRefContainer>
               <LinksAndReferences className="linksAndReferences">
-                {landingPageData.linksAndReferences.map((item, index) => (
-                  <LinkReference to={item.url} key={`link-reference-${index}`}>
-                    <i role="img" aria-label={`Icon for ${item.title}`}>
-                      {item.icon}
-                    </i>
-                    {item.title} {item.context && <span>{item.context}</span>}
-                  </LinkReference>
-                ))}
+                {landingPageData.linksAndReferences.map(
+                  (item, index) => (
+                    <LinkReference
+                      to={item.url}
+                      key={`link-reference-${index}`}
+                    >
+                      <i
+                        role="img"
+                        aria-label={`Icon for ${item.title}`}
+                      >
+                        {item.icon}
+                      </i>
+                      {item.title}{" "}
+                      {item.context && (
+                        <span>{item.context}</span>
+                      )}
+                    </LinkReference>
+                  )
+                )}
               </LinksAndReferences>
               <LinksAndRefBG />
             </LinksAndRefContainer>
@@ -100,7 +138,8 @@ const LandingPage: React.FC = () => {
           <Container>
             <IntroTitle>🤫 Psst, I also make music</IntroTitle>
             <p>
-              You can find my music anywhere as <strong>sl1ck</strong>.
+              You can find my music anywhere as{" "}
+              <strong>sl1ck</strong>.
             </p>
             <p>
               <ExternalLink to="https://open.spotify.com/artist/5nieID8LGLw0nMgwbIIsVq?si=gkshKgypQiSbLlz4iILbMQ">
@@ -202,7 +241,8 @@ const IntroSection = styled(DarkSection)`
   #headerPath {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
-    animation: dash 2s cubic-bezier(0.29, 0.74, 0.8, 0.34) forwards;
+    animation: dash 2s cubic-bezier(0.29, 0.74, 0.8, 0.34)
+      forwards;
     will-change: stroke-dashoffset;
     animation-fill-mode: both;
     animation-delay: 1s;
@@ -379,10 +419,15 @@ const LinkReference = styled(ExternalLink)`
     will-change: transform, opacity;
     opacity: 0;
     transform-origin: left;
-    transition: transform 0.3s ease-in-out, opacity 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out,
+      opacity 0.4s ease-in-out;
     transform: scaleX(0);
     border-bottom: 2px solid;
-    border-image: linear-gradient(150deg, rgb(177, 92, 92), rgb(116, 110, 195));
+    border-image: linear-gradient(
+      150deg,
+      rgb(177, 92, 92),
+      rgb(116, 110, 195)
+    );
     border-image-slice: 1;
   }
 `;
