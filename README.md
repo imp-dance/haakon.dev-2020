@@ -25,4 +25,4 @@ The design is also coupled with a lot of animations, mainly on the borders. I co
 
 The site also features a lot of gradients, going mainly from purple to pink in different directions.
 
-> PS: you can read more about my portfolio in [this article](https://haakon.dev/#/article/redesigning-my-portfolio-for-the-nth-time), on my portfolio (so meta).
+> PS: you can read more about my portfolio in [this article](https://impedans.me/web/redesigning-my-portfolio-for-the-nth-time/), on my portfolio (so meta).
